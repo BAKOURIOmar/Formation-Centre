@@ -1,0 +1,98 @@
+/* Agrega estos estilos a tu archivo CSS o SCSS */
+
+/* .login {
+  background-color: #f0f0f0;
+  font-family: 'Arial', sans-serif;
+} */
+
+.example-card {
+  max-width: 400px; /* Ancho máximo de la tarjeta */
+  margin: auto; /* Centrar la tarjeta en la pantalla */
+  text-align: center; /* Alinear el contenido al centro */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.header-image {
+  padding: 0; /* Eliminar el relleno del encabezado */
+}
+
+.titulo {
+  width: 100%; /* Ancho completo del formulario */
+}
+
+.mat-form-field {
+  margin-bottom: 15px; /* Espacio entre campos de formulario */
+}
+
+.mat-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mat-icon {
+  cursor: pointer; /* Cursor de apuntador sobre el icono de visibilidad */
+}
+
+.mat-card-actions {
+  margin-top: 20px; /* Espacio superior para los botones */
+}
+
+/* Estilo para el mensaje de error */
+.text-danger {
+  color: #dc3545; /* Color rojo */
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Estilos para los botones */
+button {
+  white-space: nowrap; /* Evitar el salto de línea en el botón */
+}
+body {
+  overflow: hidden;
+}
+.container-fluid {
+  position: relative;
+  top: 0px;
+}
+
+.login {
+  width: 100%;
+  font-family: "Titillium Web", sans-serif;
+  background-image: url(../../../assets/img/hamburguesa-sin-abrir.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.btn-signin {
+  /* width: 340px; */
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
+  background: #009ee3;
+  text-transform: uppercase;
+  border: 0;
+  font-size: 1em;
+  font-family: "Titillium Web", sans-serif;
+}
+
+mat-icon {
+  cursor: pointer;
+}
+
+.example-card {
+  max-width: 400px;
+  border-radius: 12px;
+}
+
+.header-image {
+  width: 96px;
+  height: 96px;
+  margin: 30px auto 30px;
+  display: block;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}

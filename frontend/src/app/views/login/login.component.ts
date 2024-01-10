@@ -1,8 +1,10 @@
+import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { UserAuthService } from "src/app/shared/services/user-auth.service";
-import { UserService } from "src/app/shared/services/user.service";
+
+import Swal from "sweetalert2";
+import { UserService } from "../../shared/services/user.service";
 
 @Component({
   selector: 'app-login',
@@ -10,25 +12,45 @@ import { UserService } from "src/app/shared/services/user.service";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  loginForm;
-  showPassword: boolean = true;
-  constructor(private userService: UserService,
-    private userAuthService: UserAuthService,
-    private router:Router,
-    private formBuilder: FormBuilder
+  hide = true;
+  errorLogin: boolean = false;
+  errorPermiso: boolean = false;
+  errorDetalle: boolean = false;
+  public myForm: FormGroup = this.fb.group({
+      username: ['', [Validators.required]],
+      password: ['', Validators.required]
+    });
 
-    ){
-      this.loginForm=this.formBuilder.group({
-        userName: ['', [Validators.required, Validators.minLength(4)]],
-        userPassword: ['', [Validators.required,Validators.maxLength(15),Validators.minLength(6)]],
-
-      })
-
-  }
-
+  constructor(private http: HttpClient, private fb: FormBuilder ,private userService: UserService,private router :Router  ) { }
 
   ngOnInit(): void {
 
   }
 
+
+
+  // Función para manejar el envío del formulario
+  onSubmit() {
+    const { username, password } = this.myForm.value;
+    let authRequest ={
+      username: username,
+      password: password
+    }
+ //console.log(email,'    ' ,password )
+    this.userService.login(authRequest)
+      .subscribe({
+        next: (response ) =>{
+          console.log(response)
+
+          this.router.navigateByUrl('/home')} ,
+        error: (message) => {
+          console.log('tamo aquiii  ')
+          console.log(message)
+          console.log(message.error.text)
+          //Swal.fire('Error', message, 'error' )
+          this.myForm.markAllAsTouched();
+        }
+      })
+
+  }
 }

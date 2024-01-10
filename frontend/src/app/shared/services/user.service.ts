@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { UserAuthService } from "./user-auth.service";
+import { Observable } from "rxjs";
 
 
 @Injectable({
@@ -8,15 +9,15 @@ import { UserAuthService } from "./user-auth.service";
 })
 export class UserService {
 
-  private API_BASE_URL = "http://localhost:9095/auth";
+  private API_BASE_URL = "http://localhost:8080/auth";
 
   constructor(
     private httpClient: HttpClient,
     private userAuthService: UserAuthService
   ) { }
 
-  public login(loginData: any) {
-    return this.httpClient.post(this.API_BASE_URL + "/generateToken", loginData);
+  public login(loginData: any):Observable<string> {
+    return this.httpClient.post<string>(this.API_BASE_URL + "/generateToken", loginData);
   }
 
 

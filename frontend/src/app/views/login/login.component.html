@@ -1,25 +1,47 @@
-<div class="container mt-5">
-    <div class="card text-center" style="padding: 20px;">
-  
-      <form [formGroup]="loginForm" novalidate>
-  
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Username</mat-label>
-          <input matInput placeholder="Enter your username" type="text" formControlName="userName">
-        </mat-form-field>
-  
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Password</mat-label>
-          <input matInput placeholder="Enter your password" [type]="showPassword ? 'password' : 'text'" formControlName="userPassword">
-          
-        </mat-form-field>
-  
-        <button class="w-100" mat-raised-button color="primary">Login</button>
-  
-      </form>
-    </div>
-    <div class="text-center">
-      <button class="w-100 mt-2" mat-raised-button>Create Account</button>
-    </div>
+<div class="container">
+  <div class="d-flex align-items-center justify-content-center flex-column min-vh-100">
+      <mat-card class="example-card">
+          <mat-card-header class="header-image mt-3">
+                  <img src="../../../assets/img/hamburguesa-sin-abrir.png">
+          </mat-card-header>
+
+          <form [formGroup]="myForm" class="d-flex flex-column">
+              <div class="mb-3">
+                  <div *ngIf="errorLogin" class="text-danger text-center">
+                      Usuario y/o contraseña incorrectos.
+                  </div>
+                  <div *ngIf="errorPermiso" class="text-danger text-center">
+                      El usuario introducido no tiene permisos.
+                  </div>
+                  <div *ngIf="errorDetalle" class="text-danger text-center">
+                      Error al devolver el detalle del usuario.
+                  </div>
+              </div>
+              <mat-card-content>
+                  <div class="d-flex col-12 justify-content-center ml-auto mr-auto mt-2">
+                      <mat-form-field appearance="outline" class="titulo w-100">
+                          <mat-label>Usuario</mat-label>
+                          <input matInput [formControlName]="'username'">
+                          <mat-error *ngIf="myForm.get('username')?.hasError('required')">
+                              *Usuario obligatorio
+                          </mat-error>
+                      </mat-form-field>
+                  </div>
+                  <div class="d-flex col-12 justify-content-center ml-auto mr-auto mt-2">
+                      <mat-form-field appearance="outline" class="titulo w-100">
+                          <mat-label>Contraseña</mat-label>
+                          <input matInput [type]="hide ? 'password' : 'text'" [formControlName]="'password'">
+                          <mat-error *ngIf="myForm.get('password')?.hasError('required')">
+                              *Contraseña obligatoria
+                          </mat-error>
+                          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                      </mat-form-field>
+                  </div>
+              </mat-card-content>
+              <mat-card-actions class="d-flex col-10 justify-content-center m-auto">
+                  <button mat-raised-button class="w-100" color="primary" (click)="onSubmit()">Entrar</button>
+              </mat-card-actions>
+          </form>
+        </mat-card>
   </div>
-  
+</div>
