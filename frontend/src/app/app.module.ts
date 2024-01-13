@@ -12,6 +12,11 @@ import { HomeComponent } from './views/home/home.component';
 import { LoginComponent } from './views/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgrupaMaterialModule } from './material/agrupa-material.module';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { AccueilleComponent } from './views/accueille/accueille.component';
+import { RegisterComponent } from './views/register/register.component';
+import { HomeRoutingModule } from './views/home/home-routing.module';
+import { PlanificationsComponent } from './views/home/planifications/planifications.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +24,10 @@ import { AgrupaMaterialModule } from './material/agrupa-material.module';
     HeaderComponent,
     HomeComponent,
     LoginComponent,
+    SidenavComponent,
+    AccueilleComponent,
+    RegisterComponent,
+    PlanificationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,6 +40,7 @@ import { AgrupaMaterialModule } from './material/agrupa-material.module';
     FormsModule,
     ReactiveFormsModule,
     AgrupaMaterialModule,
+    HomeRoutingModule
 
   ],
   providers: [],
