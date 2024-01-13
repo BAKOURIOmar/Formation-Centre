@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.GrantedAuthority;
-
+import univ.iwa.dto.Userdto;
 import univ.iwa.model.AuthRequest;
 import univ.iwa.model.UserInfo;
 import univ.iwa.service.JwtService;
@@ -33,8 +33,8 @@ public class UserController {
     public String welcome() {return "Welcome this endpoint is not secure";}
     
     @PostMapping("/addNewUser") 
-    public String addNewUser(@RequestBody UserInfo userInfo) { 
-        return service.addUser(userInfo); 
+    public Userdto addNewUser(@RequestBody Userdto userdto) {
+        return service.addUser(userdto);
     } 
     @GetMapping("/user/userProfile") 
     @PreAuthorize("hasAuthority('ROLE_USER')") 

@@ -19,6 +19,7 @@ public class UserInfo {
 	private String motcles;
 	private String note;
 	private String password; 
-	private String roles; 
+	private String roles;
+	private String type;
 } 
 
