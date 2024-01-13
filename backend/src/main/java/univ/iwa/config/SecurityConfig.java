@@ -35,9 +35,11 @@ public class SecurityConfig {
 			.requestMatchers("/auth/admin/**").authenticated()
 								.requestMatchers("/form/addformation").authenticated()
 								.requestMatchers("/form/getformation").permitAll()
-								.requestMatchers("/form/updateformation/**","/form/deleteform/{id}").authenticated()
-								.requestMatchers("/form/getformationcat/**","/getbyville/{ville}").authenticated()
-
+								.requestMatchers("/form/updateformation/**").authenticated()
+								.requestMatchers("/form/deleteform/{id}").authenticated()
+								.requestMatchers("form/getbyville/{ville}").authenticated()
+								.requestMatchers("/form/getformationcat/**").authenticated()
+								.requestMatchers("/entr/**").authenticated()
 			).csrf(csrf->csrf.disable())
 			.authenticationProvider(authenticationProvider()) 
 			.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class) ;	

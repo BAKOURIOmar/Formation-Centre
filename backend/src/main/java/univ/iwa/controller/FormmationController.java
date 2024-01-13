@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import univ.iwa.model.Formation;
 import univ.iwa.service.FormationService;
-
+import univ.iwa.dto.Formationdto;
 @RestController
 @RequestMapping("/form")
 public class FormmationController {
@@ -15,20 +15,24 @@ public class FormmationController {
  //ajouter une formation
  @PostMapping("/addformation")
  @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
- public String adduser(@RequestBody Formation formation) {
+ public String adduser(@RequestBody Formationdto formation) {
 	 formservice.addformation(formation);
 	 return "formationadded succefully";
  }
 
+ //get the formation
  @GetMapping("/getformation")
-    public List<Formation> allformation(){
+    public List<Formationdto> allformation(){
      return formservice.getAllFormations();
  }
+
+ //update les formation
  @PutMapping("/updateformation/{id}")
  @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
- public void updateformation(@PathVariable Long id,@RequestBody Formation form){
+ public void updateformation(@PathVariable Long id,@RequestBody Formationdto form){
   formservice.updateformation(id,form);
  }
+ //supprimer une formation
  @DeleteMapping("/deleteform/{id}")
  @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
  public String deleteFormation(@PathVariable Long id) {
@@ -36,14 +40,17 @@ public class FormmationController {
   return "Formation deleted succesfuly";
  }
 
+ //recuperer les formation par categorie
  @GetMapping("/getformationcat/{categorie}")
  @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSITANT')")
- public List<Formation> getformatiocate(@PathVariable String categorie){
+ public List<Formationdto> getformatiocate(@PathVariable String categorie){
   return  formservice.getformationcategorie(categorie);
  }
+ //recuper les formation par ville
 @GetMapping("/getbyville/{ville}")
 @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSITANT')")
- public List<Formation> getbyville(@PathVariable String ville){
+ public List<Formationdto> getbyville(@PathVariable String ville){
   return formservice.getformtionville(ville);
 }
+
 }
