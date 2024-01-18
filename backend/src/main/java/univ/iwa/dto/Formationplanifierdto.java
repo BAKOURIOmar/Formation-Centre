@@ -3,7 +3,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import univ.iwa.model.*;
-
+import univ.iwa.dto.*;
 import java.util.Date;
 
 @Data
@@ -13,8 +13,9 @@ public class Formationplanifierdto {
 
     private Long id;
     private Date date;
-    UserInfo formateur;
-    Entreprise entreprise;
-    Individuals groupe;
+    Formationdto formation;
+    Userdto formateur;
+    Entreprisedto entreprise;
+    Inndividualsdto groupe;
 
 }

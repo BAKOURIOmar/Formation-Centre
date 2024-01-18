@@ -15,6 +15,11 @@ public class Formationplanifier {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date date;
+    
+    @ManyToOne
+    @JoinColumn(name="formation_id")
+    private Formation formation;
+
     @ManyToOne
     @JoinColumn(name = "formateur_id")
     private UserInfo formateur;

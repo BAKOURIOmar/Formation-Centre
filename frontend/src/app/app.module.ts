@@ -12,13 +12,18 @@ import { HomeComponent } from './views/home/home.component';
 import { LoginComponent } from './views/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgrupaMaterialModule } from './material/agrupa-material.module';
-
+import { AcceuilComponent } from './views/acceuil/acceuil.component';
+import { CardformationComponent } from './components/cardformation/cardformation.component';
 @NgModule({
+  
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
     LoginComponent,
+    AcceuilComponent,
+    CardformationComponent,
+
   ],
   imports: [
     BrowserModule,
