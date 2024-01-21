@@ -17,17 +17,22 @@ import { AccueilleComponent } from './views/accueille/accueille.component';
 import { RegisterComponent } from './views/register/register.component';
 import { HomeRoutingModule } from './views/home/home-routing.module';
 import { PlanificationsComponent } from './views/home/planifications/planifications.component';
-
+import { CardformationComponent } from './components/cardformation/cardformation.component';
 @NgModule({
+
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
     LoginComponent,
+
+    CardformationComponent,
+
     SidenavComponent,
     AccueilleComponent,
     RegisterComponent,
     PlanificationsComponent,
+
   ],
   imports: [
     BrowserModule,

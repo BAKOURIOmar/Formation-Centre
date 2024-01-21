@@ -19,7 +19,7 @@ public class Entreprise {
     private Long id;
     private String name;
     private String adresse;
-    private Long tel;
+    private String  tel;
     private String url;
     private String email;
 }

@@ -15,4 +15,5 @@ public interface FormationReposetory extends JpaRepository<Formation, Long>{
 	List<Formation> findAll();
 	List<Formation> findByCategorie(String categorie);
    List<Formation> findByVille(String ville);
+   Formation findByName(String name);
 }
