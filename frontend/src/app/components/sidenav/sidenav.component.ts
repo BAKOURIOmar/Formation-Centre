@@ -7,13 +7,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./sidenav.component.css']
 })
 export class SidenavComponent {
+logOut() {
+throw new Error('Method not implemented.');
+}
 
   mobileQuery: MediaQueryList;
 
   menuNav = [
-    {name: "Home", route: "home", icon: "home"},
-    {name: "Categorías", route: "home", icon: "category"},
-    {name: "Productos", route: "home", icon: "production_quantity_limits"}
+    {name: "planification", route: "planification", icon: "home"},
+    {name: "Formations", route: "formations", icon: "category"},
+    {name: "Formateurs", route: "formateurs", icon: "production_quantity_limits"},
+    {name: "Assistants", route: "assistants", icon: "production_quantity_limits"}
   ]
 
   constructor(media: MediaMatcher) {

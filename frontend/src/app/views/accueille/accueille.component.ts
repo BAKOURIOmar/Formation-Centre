@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AccueilleComponent {
 
+
+  logOut() {
+throw new Error('Method not implemented.');
+}
+
 }

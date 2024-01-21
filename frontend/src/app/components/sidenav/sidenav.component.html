@@ -4,7 +4,7 @@
   <!-- empieza toolbar-->
   <mat-toolbar color="primary" class="dashboard-toolbar">
       <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-      <h1 class="app-name">S-Inventory</h1>
+      <h1 class="app-name">Formationes Gonzales</h1>
 
       <div class="right">
           <ul>
@@ -17,8 +17,8 @@
                   <button mat-button [matMenuTriggerFor]="menu">
                       <mat-icon>person_outline</mat-icon>
                   </button>
-                  <mat-menu #menu="matMenu">
-                      <mat-icon>exit_to_app</mat-icon>
+                  <mat-menu #menu="matMenu" (click)="logOut()">
+                      <mat-icon >exit_to_app</mat-icon>
                       Cerrar Sesión
                   </mat-menu>
               </li>
@@ -55,7 +55,7 @@
           </mat-sidenav>
 
           <mat-sidenav-content>
-              <router-outlet></router-outlet>
+             <router-outlet></router-outlet>
           </mat-sidenav-content>
 
   </mat-sidenav-container>
