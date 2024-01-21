@@ -8,7 +8,8 @@ import jakarta.persistence.GenerationType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jakarta.persistence.Id; 
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob; 
 @Entity
 @Data 
 @AllArgsConstructor 
@@ -19,10 +20,10 @@ public class Formation {
 	private long id ;
 	private String name;
 	private Long nombreh;
-	 private  double cout;
-	 private String programme;
-	 private String ville;
-	 private String categorie;
-	
-
+	private  double cout;
+	private String programme;
+	private String ville;
+	private String categorie;
+	@Lob
+	private String image;
 }

@@ -19,5 +19,6 @@ public class Formationdto {
     private String programme;
     private String ville;
     private String categorie;
+    private String image;
 
 }

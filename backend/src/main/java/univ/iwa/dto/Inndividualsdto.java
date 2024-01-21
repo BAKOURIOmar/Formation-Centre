@@ -1,6 +1,8 @@
 package univ.iwa.dto;
 
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,4 +18,5 @@ public class Inndividualsdto {
     String ville;
     String email;
     String tel;
+    Date dateDeNaissance;
 }

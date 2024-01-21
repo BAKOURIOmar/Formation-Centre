@@ -25,7 +25,7 @@ public class SecurityConfig {
 	@Autowired JwtAuthFilter authFilter; 
 	@Bean
 	public UserDetailsService userDetailsService() { 
-		return new UserInfoService(); 
+		return new UserInfoService(null); 
 	} 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception { 
@@ -40,6 +40,11 @@ public class SecurityConfig {
 								.requestMatchers("form/getbyville/{ville}").authenticated()
 								.requestMatchers("/form/getformationcat/**").authenticated()
 								.requestMatchers("/entr/**").authenticated()
+								.requestMatchers("/indiv/addindividu").permitAll()
+								.requestMatchers("/indiv/getallindividus").authenticated()
+								.requestMatchers("/indiv/deleteindividu/{id}").authenticated()
+								.requestMatchers("/indiv/updateIndividu/{id}").permitAll()
+								.requestMatchers("/auth/addFormateur").authenticated()
 			).csrf(csrf->csrf.disable())
 			.authenticationProvider(authenticationProvider()) 
 			.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class) ;	

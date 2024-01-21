@@ -1,5 +1,7 @@
 package univ.iwa.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity; 
 import jakarta.persistence.GeneratedValue; 
 import jakarta.persistence.GenerationType; 
@@ -10,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
+@JsonIgnoreProperties
 public class UserInfo { 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 

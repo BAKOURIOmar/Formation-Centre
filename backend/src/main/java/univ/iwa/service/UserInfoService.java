@@ -8,9 +8,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
+import univ.iwa.model.Individuals;
 import univ.iwa.model.UserInfo;
 import univ.iwa.model.UserInfoDetails;
 import univ.iwa.repository.UserInfoRepository;
+import org.modelmapper.ModelMapper;
 
 import java.util.Optional;
 
@@ -19,6 +21,7 @@ import univ.iwa.dto.Userdto;
 public class UserInfoService implements UserDetailsService { 
 	@Autowired UserInfoRepository repository; 
 	@Autowired PasswordEncoder encoder; 
+	private ModelMapper modelMapper;
 	@Override
 	public UserDetails  loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<UserInfo> userDetail = repository.findByName(username);
@@ -26,16 +29,21 @@ public class UserInfoService implements UserDetailsService {
 		return  userDetail.map(UserInfoDetails::new)
 				.orElseThrow(() -> new UsernameNotFoundException("User not found " + username));
 	}
+	
+	public UserInfoService(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+    }
+	
 	public Userdto addUser(Userdto userdto) {
-		UserInfo user=new UserInfo();
-		user.setId(userdto.getId());
-         user.setName(userdto.getName());
-		 user.setMotcles(userdto.getMotcles());
-		 user.setEmail(userdto.getEmail());
-		// user.setPassword(userdto.getPassword());
-		 user.setRoles("");
+		UserInfo user = modelMapper.map(userdto, UserInfo.class);
 		repository.save(user);
 		return userdto;
+	} 
+	public Userdto addFormateur(Userdto userdto) {
+		UserInfo user = modelMapper.map(userdto, UserInfo.class);
+		user.setRoles("ROLE_FORMATEUR");
+	        repository.save(user);
+	        return userdto;
 	} 
 	@PostConstruct
 	public void addAdmin() {

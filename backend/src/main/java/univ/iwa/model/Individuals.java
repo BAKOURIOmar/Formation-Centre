@@ -1,5 +1,7 @@
 package univ.iwa.model;
 
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,4 +23,5 @@ public class Individuals {
 	String ville;
 	String email;
 	String tel;
+	Date dateDeNaissance;
 }
