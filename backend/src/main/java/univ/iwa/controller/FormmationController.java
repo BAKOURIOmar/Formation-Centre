@@ -42,13 +42,13 @@ public class FormmationController {
 
  //recuperer les formation par categorie
  @GetMapping("/getformationcat/{categorie}")
- @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSITANT')")
+ @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
  public List<Formationdto> getformatiocate(@PathVariable String categorie){
   return  formservice.getformationcategorie(categorie);
  }
  //recuper les formation par ville
 @GetMapping("/getbyville/{ville}")
-@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSITANT')")
+@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
  public List<Formationdto> getbyville(@PathVariable String ville){
   return formservice.getformtionville(ville);
 }

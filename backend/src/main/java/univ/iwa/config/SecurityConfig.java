@@ -40,6 +40,9 @@ public class SecurityConfig {
 								.requestMatchers("form/getbyville/{ville}").authenticated()
 								.requestMatchers("/form/getformationcat/**").authenticated()
 								.requestMatchers("/entr/**").authenticated()
+								.requestMatchers("/plan/**").authenticated()
+
+
 			).csrf(csrf->csrf.disable())
 			.authenticationProvider(authenticationProvider()) 
 			.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class) ;	

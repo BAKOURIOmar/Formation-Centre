@@ -13,7 +13,7 @@ public class EntrepriseController {
 
     //ajouter une entreprise
     @PostMapping("/addentreprise")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSITANT')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
     public String addentreprise(@RequestBody Entreprisedto entr){
         entreser.addentreprise(entr);
         return "added";
@@ -21,20 +21,20 @@ public class EntrepriseController {
 
     //recuperer la liste des entreprises
     @GetMapping ("/getentreprise")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSITANT')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
     public List<Entreprisedto> getallentreprise(){
        return entreser.getallentreprise();
     }
     //suprimer une entreprise
     @DeleteMapping("/deleteentreprise/{id}")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSITANT')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
     public String deleteentreprise(@PathVariable Long id){
-        entreser.deleteentreprisse(id);
+        entreser.deleteEntreprise(id);
         return "deleted";
     }
     //update entreprise
     @PutMapping("/updateentreprise/{id}")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSITANT')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
     public String updateentreprise(@PathVariable Long id,@RequestBody Entreprisedto entreprise){
         entreser.updateentreprise(id,entreprise);
         return "updated";

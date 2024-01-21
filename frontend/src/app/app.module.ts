@@ -12,17 +12,26 @@ import { HomeComponent } from './views/home/home.component';
 import { LoginComponent } from './views/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgrupaMaterialModule } from './material/agrupa-material.module';
-import { AcceuilComponent } from './views/acceuil/acceuil.component';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { AccueilleComponent } from './views/accueille/accueille.component';
+import { RegisterComponent } from './views/register/register.component';
+import { HomeRoutingModule } from './views/home/home-routing.module';
+import { PlanificationsComponent } from './views/home/planifications/planifications.component';
 import { CardformationComponent } from './components/cardformation/cardformation.component';
 @NgModule({
-  
+
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
     LoginComponent,
-    AcceuilComponent,
+
     CardformationComponent,
+
+    SidenavComponent,
+    AccueilleComponent,
+    RegisterComponent,
+    PlanificationsComponent,
 
   ],
   imports: [
@@ -36,6 +45,7 @@ import { CardformationComponent } from './components/cardformation/cardformation
     FormsModule,
     ReactiveFormsModule,
     AgrupaMaterialModule,
+    HomeRoutingModule
 
   ],
   providers: [],
