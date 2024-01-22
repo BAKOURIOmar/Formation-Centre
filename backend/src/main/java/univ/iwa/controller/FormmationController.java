@@ -7,6 +7,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.jsonwebtoken.io.IOException;
 
 import java.util.*;
@@ -19,49 +23,39 @@ public class FormmationController {
  @Autowired
  FormationService formservice;
  
- /*ajouter une formation
+ //Ajouter Formation
  @PostMapping("/addformation")
  @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
- public String adduser(@RequestBody Formationdto formation) {
-	 formservice.addformation(formation);
-	 return "formationadded succefully";
- }*/
- /*@PostMapping("/addformation")
- @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
- public ResponseEntity<String> addFormation(@RequestBody Formationdto formation,
-                                         @RequestParam(value = "image", required = false) MultipartFile image) throws IOException, java.io.IOException {
-
-         formservice.addformation(formation, image);
-         return ResponseEntity.ok("Formation added successfully");
-     
- }*/
- @PostMapping("/addformation")
- @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
- public ResponseEntity<String> addFormation(@RequestBody Formationdto formation,
-                                            @RequestParam(value = "image", required = false) MultipartFile image) throws IllegalStateException, java.io.IOException {
+ public ResponseEntity<String> addFormation(@ModelAttribute Formationdto formationdto) throws java.io.IOException {
      try {
-         Formation addedFormation = formservice.addformation(formation, image);
-         return ResponseEntity.status(HttpStatus.CREATED).body("Formation added successfully. ID: " + addedFormation.getId());
+         formservice.addFormation(formationdto);
+         System.out.print("Requête envoyée");
+         return ResponseEntity.ok("Formation ajoutée avec succès");
      } catch (IOException e) {
-         e.printStackTrace(); // Log the exception for debugging purposes
-         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add formation with image.");
+         e.printStackTrace(); // Enregistrez l'exception à des fins de débogage
+         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Échec de l'ajout de la formation avec l'image.");
      }
  }
 
-
- //get the formation
+ //Afficher tous les formations
  @GetMapping("/getformation")
-    public List<Formationdto> allformation(){
+    public List<Formationdto> allformation() throws java.io.IOException{
      return formservice.getAllFormations();
  }
 
- //update les formation
+ //Modifier formation
  @PutMapping("/updateformation/{id}")
  @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
- public void updateformation(@PathVariable Long id,@RequestBody Formationdto form){
-  formservice.updateformation(id,form);
+ public ResponseEntity<String> updateformation(
+         @PathVariable Long id,
+         @RequestPart("image") MultipartFile image,
+         @ModelAttribute("form") Formationdto form) throws java.io.IOException {
+     String result = formservice.updateformation(id, form, image);
+     System.out.print("Requête envoyée");
+     return ResponseEntity.ok(result);
  }
- //supprimer une formation
+
+ //Supprimer Formation
  @DeleteMapping("/deleteform/{id}")
  @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
  public String deleteFormation(@PathVariable Long id) {
@@ -69,13 +63,13 @@ public class FormmationController {
   return "Formation deleted succesfuly";
  }
 
- //recuperer les formation par categorie
+ //Récupere Formation par categorie
  @GetMapping("/getformationcat/{categorie}")
  @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSITANT')")
  public List<Formationdto> getformatiocate(@PathVariable String categorie){
   return  formservice.getformationcategorie(categorie);
  }
- //recuper les formation par ville
+ //Récupere Formation par ville
 @GetMapping("/getbyville/{ville}")
 @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSITANT')")
  public List<Formationdto> getbyville(@PathVariable String ville){

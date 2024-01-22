@@ -1,6 +1,8 @@
 package univ.iwa.dto;
 
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +21,10 @@ public class Formationdto {
     private String programme;
     private String ville;
     private String categorie;
-    private String image;
+    private MultipartFile image;
+   // private String imagePath;
+    private byte[] imageBytes;
+    
+    
 
 }
