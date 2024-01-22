@@ -1,16 +1,42 @@
-<mat-toolbar color="primary" class="mat-toolbar-single-row">
-    <span>
-        Gestion Formation
-    </span>
+<div class="dashboard-container">
 
-    <span class="space-buttons"></span>
-    <button mat-raised-button color="accent"  routerLink="/login"> 
-        Login
-    </button>
-</mat-toolbar>
+  <mat-toolbar color="primary" class="dashboard-toolbar">
 
-<mat-toolbar color="primary">
-    <button   mat-raised-button color="primary" routerLink="/home">
-        Home
-      </button>
-</mat-toolbar>
+    <button mat-icon-button routerLink="accueille"><mat-icon>dashboard</mat-icon></button>
+    <h1 class="app-name">Formationes Gonzales</h1>
+
+    <div class="search-bar mt-4">
+      <mat-form-field appearance="fill" class="search-field ">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput placeholder="Buscar">
+      </mat-form-field>
+    </div>
+
+
+    <div class="right mt-3">
+      <ul>
+        <li>
+          <button mat-icon-button>
+            <mat-icon>help_outline</mat-icon>
+          </button>
+        </li>
+        <!-- <li>
+              <button mat-button [matMenuTriggerFor]="menu">
+                  <mat-icon>person_outline</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu" (click)="logOut()">
+                  <mat-icon >exit_to_app</mat-icon>
+                  Cerrar Sesión
+              </mat-menu>
+          </li> -->
+        <li>
+          <button mat-button>Sign In</button>
+        </li>
+        <li>
+          <button mat-button>Log In</button>
+        </li>
+      </ul>
+    </div>
+
+  </mat-toolbar>
+</div>

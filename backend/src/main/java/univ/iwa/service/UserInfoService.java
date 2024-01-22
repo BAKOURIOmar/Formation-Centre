@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException; 
 import org.springframework.security.crypto.password.PasswordEncoder; 
 import org.springframework.stereotype.Service;
-
+import org.modelmapper.ModelMapper;
 import jakarta.annotation.PostConstruct;
 import univ.iwa.model.Individuals;
 import univ.iwa.model.UserInfo;
@@ -14,11 +14,14 @@ import univ.iwa.model.UserInfoDetails;
 import univ.iwa.repository.UserInfoRepository;
 import org.modelmapper.ModelMapper;
 
+import univ.iwa.config.ModelMapperConfig;
 import java.util.Optional;
 
 import univ.iwa.dto.Userdto;
 @Service
-public class UserInfoService implements UserDetailsService { 
+public class UserInfoService implements UserDetailsService {
+	@Autowired
+	ModelMapper modelMapper;
 	@Autowired UserInfoRepository repository; 
 	@Autowired PasswordEncoder encoder; 
 	private ModelMapper modelMapper;
@@ -35,7 +38,8 @@ public class UserInfoService implements UserDetailsService {
     }
 	
 	public Userdto addUser(Userdto userdto) {
-		UserInfo user = modelMapper.map(userdto, UserInfo.class);
+		UserInfo user=modelMapper.map(userdto,UserInfo.class);
+		 user.setRoles("ROLE_FORMATEUR");
 		repository.save(user);
 		return userdto;
 	} 
@@ -47,43 +51,25 @@ public class UserInfoService implements UserDetailsService {
 	} 
 	@PostConstruct
 	public void addAdmin() {
-		Userdto admindto=new Userdto();
-		admindto.setId(1);
-		admindto.setName("admin");
-		admindto.setRoles("ROLE_ADMIN");
 		UserInfo admin= new UserInfo();
-		admin.setId(admindto.getId());
-		admin.setName(admindto.getName());
-		admin.setRoles(admindto.getRoles());
+		admin.setId(1);
+		admin.setName("admin");
+		admin.setRoles("ROLE_ADMIN");
 		admin.setPassword(encoder.encode("adminadmin"));
 		repository.save(admin);
 	}
 	@PostConstruct
 	public void addassistant() {
-		Userdto assistantdto=new Userdto();
-		assistantdto.setId(2);
-		assistantdto.setName("assistant");
-		assistantdto.setEmail("assistant1@gmail.com");
-		assistantdto.setRoles("ROLE_ASSISTANT");
-		assistantdto.setPassword(encoder.encode("assistant"));
 		UserInfo assistant=new UserInfo();
-		assistant.setId(assistantdto.getId());
-		assistant.setName(assistantdto.getName());
-		assistant.setEmail(assistantdto.getEmail());
-		assistant.setPassword(assistantdto.getPassword());
-		assistant.setRoles(assistantdto.getRoles());
+		assistant.setId(2);
+		assistant.setName("assistant");
+		assistant.setEmail("assistant1@gmail.com");
+		assistant.setPassword(encoder.encode("assistant"));
+		assistant.setRoles("ROLE_ASSISTANT");
 		repository.save(assistant);
 		
 	}
 
-	public Userdto convertEntityToDto(UserInfo user){
-		Userdto userdto=new Userdto();
-		userdto.setId(user.getId());
-		userdto.setName(user.getName());
-		userdto.setMotcles(user.getMotcles());
-		userdto.setEmail(user.getEmail());
-		user.setRoles("ROLE_FORMATEUR");
-		return userdto;
-	}
-	
+
+
 } 

@@ -45,6 +45,9 @@ public class SecurityConfig {
 								.requestMatchers("/indiv/deleteindividu/{id}").authenticated()
 								.requestMatchers("/indiv/updateIndividu/{id}").permitAll()
 								.requestMatchers("/auth/addFormateur").authenticated()
+								.requestMatchers("/plan/**").authenticated()
+
+
 			).csrf(csrf->csrf.disable())
 			.authenticationProvider(authenticationProvider()) 
 			.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class) ;	
