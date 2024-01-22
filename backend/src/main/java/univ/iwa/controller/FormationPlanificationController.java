@@ -27,8 +27,7 @@ public class FormationPlanificationController {
     @GetMapping("/getform")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
     public List<Formationplanifierdto> getallplanification(@RequestParam (required = false) String nom,@RequestParam (required = false)String date ) throws ParseException {
-        System.out.println("Received nom: " + nom);
-        System.out.println("Received date: " + date);
+       
       return planserv.afficherformation(nom,date);
 
     }

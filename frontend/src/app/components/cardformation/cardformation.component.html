@@ -1,9 +1,19 @@
-<div class="grid-container">
 
-<!--
-<div *ngFor="let data of Formationdata ">
-<p>{{data.name}}</p>
+<div *ngFor="let formation of FormationData">
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>{{formation.name}}</mat-card-title>
+    <mat-card-subtitle>{{formation.categorie}}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p>
+   {{formation.programme}}
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button >S'inscrire</button>
+    <button mat-button>explore</button>
+  </mat-card-actions>
+</mat-card>
 </div>
-
-
-</div> -->

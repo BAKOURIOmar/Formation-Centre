@@ -34,10 +34,12 @@ import { CardformationComponent } from './components/cardformation/cardformation
     SidenavComponent,
     AccueilleComponent,
     RegisterComponent,
+
     GestionFormatuersComponent,
     GestionAssistantsComponent,
     GestionFormationsComponent,
     PlanificationComponent,
+
   ],
   imports: [
     BrowserModule,

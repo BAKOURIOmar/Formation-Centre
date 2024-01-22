@@ -17,8 +17,12 @@ public class CorsConfig {
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:4200"); // Reemplaza con la URL de tu aplicación Angular
         config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
+        config.addAllowedMethod("DELETE");
+        config.addAllowedMethod("GET");
+        config.addAllowedMethod("POST");
+        config.addAllowedMethod("PUT");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
+
     }
 }
