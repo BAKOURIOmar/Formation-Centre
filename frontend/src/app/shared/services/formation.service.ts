@@ -3,7 +3,9 @@ import { HttpClient,HttpErrorResponse,HttpHeaders} from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
 import { UserAuthService } from './user-auth.service';
 import { Token } from '@angular/compiler';
+
 import { FormationModel } from '../Models/FormationModel.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +15,7 @@ export class FormationService {
   private  apiurl= 'http://localhost:8080/form/getformation';
 
   constructor(private httpClient:HttpClient){}
+
 
   public recupererformation(): Observable<FormationModel[]> {
     const url = `${this.apiurl}`;
@@ -25,6 +28,7 @@ export class FormationService {
       })
     );
   }
+
 
 
 

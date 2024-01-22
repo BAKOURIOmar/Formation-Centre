@@ -16,8 +16,13 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { AccueilleComponent } from './views/accueille/accueille.component';
 import { RegisterComponent } from './views/register/register.component';
 import { HomeRoutingModule } from './views/home/home-routing.module';
-import { PlanificationsComponent } from './views/home/planifications/planifications.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { GestionFormatuersComponent } from './views/home/gestion-formatuers/gestion-formatuers.component';
+import { GestionAssistantsComponent } from './views/home/gestion-assistants/gestion-assistants.component';
+import { GestionFormationsComponent } from './views/home/gestion-formations/gestion-formations.component';
+import { PlanificationComponent } from './views/home/planification/planification.component';
 import { CardformationComponent } from './components/cardformation/cardformation.component';
+
 @NgModule({
 
   declarations: [
@@ -25,14 +30,15 @@ import { CardformationComponent } from './components/cardformation/cardformation
     HeaderComponent,
     HomeComponent,
     LoginComponent,
-
     CardformationComponent,
-
     SidenavComponent,
     AccueilleComponent,
     RegisterComponent,
-    PlanificationsComponent,
-    
+
+    GestionFormatuersComponent,
+    GestionAssistantsComponent,
+    GestionFormationsComponent,
+    PlanificationComponent,
 
   ],
   imports: [
@@ -46,7 +52,8 @@ import { CardformationComponent } from './components/cardformation/cardformation
     FormsModule,
     ReactiveFormsModule,
     AgrupaMaterialModule,
-    HomeRoutingModule
+    HomeRoutingModule,
+    FullCalendarModule,
 
   ],
   providers: [],

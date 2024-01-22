@@ -1,0 +1,29 @@
+import { Component } from '@angular/core';
+import { CalendarOptions } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+
+@Component({
+  selector: 'app-gestion-assistants',
+  templateUrl: './gestion-assistants.component.html',
+  styleUrls: ['./gestion-assistants.component.css']
+})
+export class GestionAssistantsComponent {
+  Events: any[] = [];
+  calendarOptions: CalendarOptions = {
+    plugins: [dayGridPlugin, interactionPlugin],
+    initialView: 'dayGridMonth',
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
+    },
+    weekends: true,
+    editable: true,
+    selectable: true,
+    selectMirror: true,
+    dayMaxEvents: true,
+  };
+  constructort() {}
+
+}

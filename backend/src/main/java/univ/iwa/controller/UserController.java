@@ -35,7 +35,11 @@ public class UserController {
     @PostMapping("/addNewUser") 
     public Userdto addNewUser(@RequestBody Userdto userdto) {
         return service.addUser(userdto);
-    } 
+    }
+    @PostMapping("/addFormateur") 
+    public Userdto addFormateur(@RequestBody Userdto userdto) {
+        return service.addFormateur(userdto);
+    }
     @GetMapping("/user/userProfile") 
     @PreAuthorize("hasAuthority('ROLE_USER')") 
     public String userProfile() { return "Welcome to User Profile"; } 
