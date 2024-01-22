@@ -32,6 +32,7 @@ import { CardformationComponent } from './components/cardformation/cardformation
     AccueilleComponent,
     RegisterComponent,
     PlanificationsComponent,
+    
 
   ],
   imports: [

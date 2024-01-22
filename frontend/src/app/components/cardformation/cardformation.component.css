@@ -1,7 +1,23 @@
 .example-card {
   max-width: 400px;
+  margin-bottom: 20px;
+  border-radius: 8px; /* Ajoute une bordure arrondie */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  display: flex; /* Utilisez Flexbox */
+  justify-content: space-between; 
+}
+.example-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Changement d'ombre lors du survol */
+}
+.mat-card-actions button {
+  margin-right: 8px; /* Ajoute une marge à droite des boutons */
 }
 
+.mat-card-header {
+  background-color: #f3f3f3; /* Couleur de fond de l'en-tête */
+  padding: 8px; /* Ajoute un espacement au contenu de l'en-tête */
+}
 .example-header-image {
   background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
   background-size: cover;
