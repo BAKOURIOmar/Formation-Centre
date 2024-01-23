@@ -1,7 +1,10 @@
 package univ.iwa.service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
+
 import io.jsonwebtoken.io.IOException;
 
 import java.io.ByteArrayInputStream;
@@ -77,12 +80,17 @@ public class FormationService {
 	    return formationdtos;
 	}
 // Modifier Formation
-	public String updateformation(Long id, Formationdto forma, MultipartFile image) throws java.io.IOException {
+	public Formationdto updateformation(Long id, Formationdto forma, MultipartFile image) throws java.io.IOException {
 	    Optional<Formation> formoption = formrepo.findById(id);
 	    Formation form = new Formation();
 	    if (formoption.isPresent()) {
 	        form = formoption.get();
-	        modelMapper.map(forma, form);
+	        form.setName(forma.getName());
+	        form.setNombreh(forma.getNombreh());
+	        form.setCout(forma.getCout());
+	        form.setProgramme(forma.getProgramme());
+	        form.setVille(forma.getVille());
+	        form.setCategorie(forma.getCategorie());
 
 	        // Mettez à jour le champ image si le fichier est présent
 	        if (image != null && !image.isEmpty()) {
@@ -98,17 +106,23 @@ public class FormationService {
 	                throw new IOException("Failed to save image.", e);
 	            }
 	        }
-	    }
+	        return  modelMapper.map(formrepo.save(form), Formationdto.class);
+	       
+	    } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Skill with ID %d does not exist", id));
+        }
 
-	    formrepo.save(form);
-	    return "updated";
+	    
+	    
 	}
 
 // Supprimer Formation
-	public String DeleteFormation(Long formationId) {
-		Optional<Formation> formationD = formrepo.findById(formationId);
-		formrepo.delete(formationD.get());
-		return "Formation deleted";
+	public boolean DeleteFormation(Long formationId) {
+		if (!formrepo.existsById(formationId)) {
+	      return false; // Devuelve false si el usuario no existe
+	    }
+		formrepo.deleteById(formationId);
+		return true;
 
 	}
 //Afficher les formations par catégoeies

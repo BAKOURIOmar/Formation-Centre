@@ -24,7 +24,6 @@ import univ.iwa.service.JwtService;
 import univ.iwa.service.UserInfoService;
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:57914")
 public class UserController { 
     @Autowired UserInfoService service; 
     @Autowired JwtService jwtService; 
@@ -33,12 +32,12 @@ public class UserController {
     public String welcome() {return "Welcome this endpoint is not secure";}
     
     @PostMapping("/addNewUser") 
-    public Userdto addNewUser(@RequestBody Userdto userdto) {
-        return service.addUser(userdto);
+    public ResponseEntity<Userdto> addNewUser(@RequestBody Userdto userdto) {
+        return new ResponseEntity<Userdto>(service.addUser(userdto),HttpStatus.OK);
     }
     @PostMapping("/addFormateur") 
-    public Userdto addFormateur(@RequestBody Userdto userdto) {
-        return service.addFormateur(userdto);
+    public ResponseEntity<Userdto> addFormateur(@RequestBody Userdto userdto) {
+        return new ResponseEntity<Userdto>(service.addFormateur(userdto),HttpStatus.OK); 
     }
     @GetMapping("/user/userProfile") 
     @PreAuthorize("hasAuthority('ROLE_USER')") 

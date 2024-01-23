@@ -39,18 +39,19 @@ public class FormmationController {
 
  //Afficher tous les formations
  @GetMapping("/getformation")
-    public List<Formationdto> allformation() throws java.io.IOException{
-     return formservice.getAllFormations();
+    public ResponseEntity<List<Formationdto>> allformation() throws java.io.IOException{
+     return new ResponseEntity<List<Formationdto>>(formservice.getAllFormations(),HttpStatus.OK);
+     
  }
 
  //Modifier formation
  @PutMapping("/updateformation/{id}")
  @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
- public ResponseEntity<String> updateformation(
+ public ResponseEntity<Formationdto> updateformation(
          @PathVariable Long id,
          @RequestPart("image") MultipartFile image,
          @ModelAttribute("form") Formationdto form) throws java.io.IOException {
-     String result = formservice.updateformation(id, form, image);
+	 Formationdto result = formservice.updateformation(id, form, image);
      System.out.print("Requête envoyée");
      return ResponseEntity.ok(result);
  }
@@ -58,22 +59,21 @@ public class FormmationController {
  //Supprimer Formation
  @DeleteMapping("/deleteform/{id}")
  @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
- public String deleteFormation(@PathVariable Long id) {
-  formservice.DeleteFormation(id);
-  return "Formation deleted succesfuly";
+ public ResponseEntity<Boolean> deleteFormation(@PathVariable Long id) {
+  return new ResponseEntity<Boolean>(formservice.DeleteFormation(id),HttpStatus.OK);
  }
 
  //Récupere Formation par categorie
  @GetMapping("/getformationcat/{categorie}")
  @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
- public List<Formationdto> getformatiocate(@PathVariable String categorie){
-  return  formservice.getformationcategorie(categorie);
+ public ResponseEntity<List<Formationdto>> getformatiocate(@PathVariable String categorie){
+  return  new ResponseEntity<List<Formationdto>>( formservice.getformationcategorie(categorie),HttpStatus.OK);
  }
  //Récupere Formation par ville
 @GetMapping("/getbyville/{ville}")
 @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
- public List<Formationdto> getbyville(@PathVariable String ville){
-  return formservice.getformtionville(ville);
+ public ResponseEntity<List<Formationdto>> getbyville(@PathVariable String ville){
+  return new ResponseEntity<List<Formationdto>>( formservice.getformtionville(ville),HttpStatus.OK);
 }
 
 

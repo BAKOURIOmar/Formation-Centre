@@ -20,6 +20,8 @@ export class PlanificationComponent {
     },
     initialView: 'dayGridMonth',
     editable: true,
+    selectable: true,
+    dateClick: this.handleDateClick.bind(this),
     events: [
       // Puedes agregar eventos aquí
       { title: 'Evento 1', date: '2024-01-20' },
@@ -27,7 +29,7 @@ export class PlanificationComponent {
     ],
   };
 
-  handleDateClick(arg: any): void {
-    alert('Fecha seleccionada: ' + arg.dateStr);
+  handleDateClick(arg:any) {
+
   }
 }

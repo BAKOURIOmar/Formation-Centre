@@ -25,7 +25,7 @@ public class SecurityConfig {
 	@Autowired JwtAuthFilter authFilter; 
 	@Bean
 	public UserDetailsService userDetailsService() { 
-		return new UserInfoService(null); 
+		return new UserInfoService(); 
 	} 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception { 
