@@ -24,7 +24,7 @@ public class UserInfoService implements UserDetailsService {
 	ModelMapper modelMapper;
 	@Autowired UserInfoRepository repository; 
 	@Autowired PasswordEncoder encoder; 
-	private ModelMapper modelMapper;
+
 	@Override
 	public UserDetails  loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<UserInfo> userDetail = repository.findByName(username);
