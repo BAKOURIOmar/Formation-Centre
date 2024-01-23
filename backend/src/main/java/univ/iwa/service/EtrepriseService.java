@@ -1,6 +1,10 @@
 package univ.iwa.service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+
 import univ.iwa.dto.Userdto;
 import univ.iwa.model.Entreprise;
 import univ.iwa.model.UserInfo;
@@ -19,8 +23,7 @@ ModelMapper modelMapper;
     //ajouter une liste d entreprises
     public Entreprisedto addentreprise(Entreprisedto entreprisedto){
         Entreprise entreprise= modelMapper.map(entreprisedto,Entreprise.class);
-        entrorepo.save(entreprise);
-        return entreprisedto;
+        return modelMapper.map(entrorepo.save(entreprise),Entreprisedto.class);
     }
      //recuperer la listes des entreprises
     public List<Entreprisedto> getallentreprise(){
@@ -31,17 +34,29 @@ ModelMapper modelMapper;
         return entrepriseDtos;
     }
     //suprimer une entreprise
-        public void deleteEntreprise(long id) {
+        public boolean deleteEntreprise(long id) {
+        	if (!entrorepo.existsById(id)) {
+        	      return false; // Devuelve false si el usuario no existe
+        	    }
             entrorepo.deleteById(id);
+            return true;
         }
     //update the entreprise
     public Entreprisedto updateentreprise(Long id,Entreprisedto entreprisedto){
-       Optional<Entreprise> entreprise=entrorepo.findById(id);
-       Entreprise entr=new Entreprise();
-        if(entreprise.isPresent()){
-          modelMapper.map(entreprisedto,Entreprise.class);
-        }
-        entrorepo.save(entr);
-        return entreprisedto;
+       Optional<Entreprise> result=entrorepo.findById(id);
+       if (result.isPresent()) {
+    	   Entreprise entreprise = result.get();
+    	   entreprise.setName(entreprisedto.getName());
+    	   entreprise.setUrl(entreprisedto.getUrl());
+    	   entreprise.setEmail(entreprisedto.getEmail());
+    	   entreprise.setAdresse(entreprisedto.getAdresse());
+    	   entreprise.setTel(entreprisedto.getTel());
+    	   
+    	   
+    	   Entreprise updatedEtreprise = entrorepo.save(entreprise);
+           return modelMapper.map(updatedEtreprise, Entreprisedto.class);
+       } else {
+           throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Entreprise with ID %d does not exist", id));
+       }
     }
 }

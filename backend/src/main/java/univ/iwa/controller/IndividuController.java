@@ -3,6 +3,8 @@ package univ.iwa.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import univ.iwa.dto.Inndividualsdto;
+import univ.iwa.dto.Userdto;
 import univ.iwa.service.IndividuService;
 
 @RestController
@@ -25,28 +28,26 @@ public class IndividuController {
 	 //Ajouter un individu
     @PostMapping("/addindividu")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSITANT')")
-    public String addindividu(@RequestBody Inndividualsdto indiv){
-        individuservice.addindividu(indiv);
-        return "added";
+    public ResponseEntity<Inndividualsdto> addindividu(@RequestBody Inndividualsdto indiv){
+        return new ResponseEntity<Inndividualsdto>(individuservice.addindividu(indiv),HttpStatus.OK);
     }
     //Récuperer un individu
     @GetMapping ("/getallindividus")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSITANT')")
-    public List<Inndividualsdto> getallindividus(){
-       return individuservice.getallindividus();
+    public ResponseEntity<List<Inndividualsdto>>  getallindividus(){
+       return new ResponseEntity<List<Inndividualsdto>>(individuservice.getallindividus(),HttpStatus.OK);
     }
     //Supprimer un individu
     @DeleteMapping("/deleteindividu/{id}")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSITANT')")
-    public String deleteindividu(@PathVariable Long id){
-        individuservice.deleteindividu(id);
-        return "deleted";
+    public ResponseEntity<Boolean> deleteindividu(@PathVariable Long id){  
+        return new ResponseEntity<Boolean>(individuservice.deleteindividu(id),HttpStatus.OK);
     }
     //Modifier l'individu
     @PutMapping("/updateIndividu/{id}")
-    public String updateIndividu(@PathVariable Long id,@RequestBody Inndividualsdto individu){
-        individuservice.updateIndividu(id,individu);
-        return "updated";
+    public ResponseEntity<Inndividualsdto> updateIndividu(@PathVariable Long id,@RequestBody Inndividualsdto individu){
+        
+        return new ResponseEntity<Inndividualsdto>(individuservice.updateIndividu(id,individu),HttpStatus.OK);
 
 }
 }
