@@ -24,16 +24,16 @@ this.showformation();
  }
 
  public showformation() {
-  this.formationservice.getFormations().subscribe(
-    (data: FormationModel[]) => {
-      this.FormationData = data;
-      console.log("retourne")
-    },
-    (error) => {
-      console.log("ne pas afficher");
-      console.error('Error fetching formations:', error);
-    }
-  );
+  // this.formationservice.getFormations().subscribe(
+  //   (data: FormationModel[]) => {
+  //     this.FormationData = data;
+  //     console.log("retourne")
+  //   },
+  //   (error) => {
+  //     console.log("ne pas afficher");
+  //     console.error('Error fetching formations:', error);
+  //   }
+  // );
 }
 exploreDetails(formationId: number){
     this.router.navigate(['/detail', formationId]);

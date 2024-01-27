@@ -54,7 +54,6 @@ public class FormmationController {
  @PutMapping("/updateformation/{id}")
  @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
  public ResponseEntity<Formationdto> updateformation(
- public ResponseEntity<Formationdto> updateformation(
          @PathVariable Long id,
          @RequestPart("picture") MultipartFile picture,
          @RequestPart("form") Formationdto form) throws java.io.IOException {
@@ -81,16 +80,13 @@ public class FormmationController {
 @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
  public ResponseEntity<List<Formationdto>> getbyville(@PathVariable String ville){
   return new ResponseEntity<List<Formationdto>>( formservice.getformtionville(ville),HttpStatus.OK);
- public ResponseEntity<List<Formationdto>> getbyville(@PathVariable String ville){
-  return new ResponseEntity<List<Formationdto>>( formservice.getformtionville(ville),HttpStatus.OK);
 }
-*/
  
  //recuperer formation par id 
- @GetMapping("/getformationbyid/{id}")
- public ResponseEntity<Formationdto> recuperformaationid(@PathVariable long id){
-	 Formationdto formation = formservice.getformationid(id);
-	  return new ResponseEntity<>(formation, HttpStatus.OK);
- }
+// @GetMapping("/getformationbyid/{id}")
+// public ResponseEntity<Formationdto> recuperformaationid(@PathVariable long id){
+//	 Formationdto formation = formservice.getformationid(id);
+//	  return new ResponseEntity<>(formation, HttpStatus.OK);
+// }
 
 }

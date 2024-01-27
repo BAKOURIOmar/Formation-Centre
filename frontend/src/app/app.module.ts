@@ -36,6 +36,7 @@ import { SignupComponent } from './components/signup/signup.component';
 
 import { DetailsComponent } from './views/details/details.component';
 import { MatIconModule } from '@angular/material/icon';
+import { CommonModule, DatePipe } from '@angular/common';
 @NgModule({
 
   declarations: [
@@ -63,6 +64,7 @@ import { MatIconModule } from '@angular/material/icon';
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     MatToolbarModule,
     MatButtonModule,
@@ -77,7 +79,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule,
 
   ],
-  providers: [
+  providers: [DatePipe ,
     AuthGuard,
     {
     provide:HTTP_INTERCEPTORS,

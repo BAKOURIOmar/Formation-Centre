@@ -13,6 +13,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SignupService } from '../../shared/services/signup.service';
 import { parseISO } from 'date-fns';
+import { DatePipe } from '@angular/common';
 
 type LocalDate = Date | null; // Changer le type de LocalDate à Date
 
@@ -34,56 +35,36 @@ export class SignupComponent implements OnInit {
     dateNaissance: ['', Validators.required]
   });
 
-  constructor(private fb: FormBuilder, private signupService: SignupService, private router: Router) { }
+  constructor(private fb: FormBuilder, private signupService: SignupService, private router: Router,private datePipe: DatePipe) { }
 
   ngOnInit(): void { }
 
-  // Ajoutez la méthode getter pour la date de naissance
-  get dateNaissance(): LocalDate {
-    const dateControl = this.myForm.get('dateNaissance');
-    const dateValue = dateControl ? dateControl.value : null;
-    return dateValue ? new Date(dateValue) : null;
-  }
+
 
   onSubmit() {
     const { nom, prenom, email, tel, ville, dateNaissance } = this.myForm.value;
     console.log("Date avant conversion", dateNaissance);
 
     // Convertissez la date avant de l'envoyer au serveur
-    const dateNaissanceFormatted: LocalDate = this.dateNaissance;
-    console.log("dateNaissanceFormatted", dateNaissanceFormatted);
+    const dateDeNaissance = this.datePipe.transform(dateNaissance,'yyyy-MM-dd');
+    console.log("dateNaissanceFormatted", dateDeNaissance);
+    const signupRequest ={nom, prenom, email, tel, ville,dateDeNaissance}
 
-    if (dateNaissanceFormatted !== null) {
-      console.log("dateNaissanceFormatted", dateNaissanceFormatted);
-      const dateNaissanceValue: string = dateNaissanceFormatted.toISOString(); // Formatez la date en ISO 8601
-      console.log("dateNaissanceValue", dateNaissanceValue);
-
-      let signupRequest = {
-        nom: nom,
-        prenom: prenom,
-        email: email,
-        tel: tel,
-        ville: ville,
-        dateNaissance: dateNaissanceValue,
-      };
 
       console.log(signupRequest);
-      this.signupService.signup(signupRequest).subscribe({
+      this.signupService.signupIndividu(signupRequest).subscribe({
         next: (response) => {
           console.log("added");
           console.log(response);
-          this.router.navigateByUrl('/login');
+          //this.router.navigateByUrl('/login');
         },
         error: (message) => {
-          console.log("error");
-          console.log(message);
-          console.log(message.error.text);
-          this.errorSignup = true;
+
           this.myForm.markAllAsTouched();
         }
       });
-    }
-    console.log("Date après conversion", dateNaissance);
+
+
   }
 
 }

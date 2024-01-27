@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {FormationService} from'src/app/shared/services/formation.service';
-import{FormationModel} from 'src/app/shared/Models/FormationModel.model';
+
 
 @Component({
   selector: 'app-details',
@@ -9,8 +9,8 @@ import{FormationModel} from 'src/app/shared/Models/FormationModel.model';
   styleUrls: ['./details.component.css']
 })
 export class DetailsComponent {
-formationdata:FormationModel[]=[];
-formation: FormationModel | undefined;
+// formationdata:FormationModel[]=[];
+// formation: FormationModel | undefined;
 idformation:Number|undefined;
 constructor(private route: ActivatedRoute,private formationservice:FormationService){}
 
@@ -23,16 +23,16 @@ ngOnInit(){
   }
 }
 getformationformationdetails(formationId: Number){
-  this.formationservice.getFormationByid(formationId).subscribe(
-    (formationData: FormationModel) => {
-      console.log("les donnes recus")
-      this.formation = formationData;
-    },
-    (error) => {
-      console.error('Error fetching formation details:', error);
-      // Handle error, e.g., display an error message to the user
-    }
-  )
+  // this.formationservice.getFormationByid(formationId).subscribe(
+  //   (formationData: FormationModel) => {
+  //     console.log("les donnes recus")
+  //     this.formation = formationData;
+  //   },
+  //   (error) => {
+  //     console.error('Error fetching formation details:', error);
+  //     // Handle error, e.g., display an error message to the user
+  //   }
+  // )
 }
 
 }
