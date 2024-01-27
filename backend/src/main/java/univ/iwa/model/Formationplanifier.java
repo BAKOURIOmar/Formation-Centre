@@ -1,4 +1,5 @@
 package univ.iwa.model;
+import java.time.LocalDate;
 import java.util.*;
 
 import jakarta.persistence.*;
@@ -14,7 +15,7 @@ public class Formationplanifier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private Date date;
+    private LocalDate date;
     
     @ManyToOne
     @JoinColumn(name="formation_id")
@@ -27,9 +28,9 @@ public class Formationplanifier {
     @JoinColumn(name = "Entreprise_id")
     private Entreprise entreprise;
 
-    @ManyToOne
+    @OneToMany
     @JoinColumn(name = "groupe_id")
-    private Individuals groupe;
+    private List<Individuals> groupe;
 
 
 }

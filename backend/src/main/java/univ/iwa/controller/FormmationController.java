@@ -11,8 +11,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import io.jsonwebtoken.io.IOException;
+import java.io.IOException;
 
+import java.nio.file.Path;
 import java.util.*;
 import univ.iwa.model.Formation;
 import univ.iwa.service.FormationService;
@@ -23,58 +24,95 @@ public class FormmationController {
  @Autowired
  FormationService formservice;
  
+ 
  //Ajouter Formation
  @PostMapping("/addformation")
  @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
- public ResponseEntity<String> addFormation(@ModelAttribute Formationdto formationdto) throws java.io.IOException {
+ public ResponseEntity<String> addFormation(@RequestParam Long id,
+                                            @RequestParam String name,
+                                            @RequestParam Long nombreh,
+                                            @RequestParam double cout,
+                                            @RequestParam String programme, @RequestParam String ville,
+                                            @RequestParam String categorie, @RequestParam(required = false) MultipartFile imagePath) throws java.io.IOException {
+     System.out.println("====================================================");
+     System.out.println("id" + id);
+     System.out.println("nom" + name);
+     System.out.println("file" + imagePath);
+
      try {
-         formservice.addFormation(formationdto);
-         System.out.print("Requête envoyée");
+         Formationdto formation = new Formationdto( id,name, nombreh, cout, categorie, programme, ville, "");
+        // Formation forma = formservice.addFormation(formation);
+  
+   if (imagePath != null) {
+             String pathphoto = "src/main/resources/static/photos/"+formation.getId()+".png";
+             System.out.println("idimage"+formation.getId());
+             imagePath.transferTo(Path.of(pathphoto));
+             String url = "http://localhost:8080/photos/"+formation.getId()+".png";
+             System.out.println("idimageurl"+formation.getId());
+             formation.setImagePath(url);
+             formservice.addFormation(formation);
+         }
+
          return ResponseEntity.ok("Formation ajoutée avec succès");
      } catch (IOException e) {
-         e.printStackTrace(); // Enregistrez l'exception à des fins de débogage
-         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Échec de l'ajout de la formation avec l'image.");
+         e.printStackTrace();
+         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                 .body("Échec de l'ajout de la formation avec l'image.");
      }
  }
-
  //Afficher tous les formations
  @GetMapping("/getformation")
-    public List<Formationdto> allformation() throws java.io.IOException{
-     return formservice.getAllFormations();
+ public ResponseEntity<List<Formationdto>> allformation() throws java.io.IOException {
+     List<Formationdto> formations = formservice.getAllFormations();
+
+     // Ajouter le chemin de l'image pour chaque formation
+     for (Formationdto formation : formations) {
+         String imagePath = "http://localhost:8080/photos/" + formation.getId() + ".png";
+         formation.setImagePath(imagePath);
+     }
+
+     return new ResponseEntity<List<Formationdto>>(formations, HttpStatus.OK);
  }
 
- //Modifier formation
- @PutMapping("/updateformation/{id}")
+
+    //Modifier formation
+/* @PutMapping("/updateformation/{id}")
  @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
- public ResponseEntity<String> updateformation(
+ public ResponseEntity<Formationdto> updateformation(
          @PathVariable Long id,
          @RequestPart("image") MultipartFile image,
          @ModelAttribute("form") Formationdto form) throws java.io.IOException {
-     String result = formservice.updateformation(id, form, image);
+	 Formationdto result = formservice.updateformation(id, form, image);
      System.out.print("Requête envoyée");
      return ResponseEntity.ok(result);
- }
+ }*/
 
  //Supprimer Formation
- @DeleteMapping("/deleteform/{id}")
+/* @DeleteMapping("/deleteform/{id}")
  @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
- public String deleteFormation(@PathVariable Long id) {
-  formservice.DeleteFormation(id);
-  return "Formation deleted succesfuly";
- }
+ public ResponseEntity<Boolean> deleteFormation(@PathVariable Long id) {
+  return new ResponseEntity<Boolean>(formservice.DeleteFormation(id),HttpStatus.OK);
+ }*/
 
  //Récupere Formation par categorie
- @GetMapping("/getformationcat/{categorie}")
+/* @GetMapping("/getformationcat/{categorie}")
  @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
- public List<Formationdto> getformatiocate(@PathVariable String categorie){
-  return  formservice.getformationcategorie(categorie);
- }
+ public ResponseEntity<List<Formationdto>> getformatiocate(@PathVariable String categorie){
+  return  new ResponseEntity<List<Formationdto>>( formservice.getformationcategorie(categorie),HttpStatus.OK);
+ }*/
  //Récupere Formation par ville
-@GetMapping("/getbyville/{ville}")
+/*@GetMapping("/getbyville/{ville}")
 @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
- public List<Formationdto> getbyville(@PathVariable String ville){
-  return formservice.getformtionville(ville);
+ public ResponseEntity<List<Formationdto>> getbyville(@PathVariable String ville){
+  return new ResponseEntity<List<Formationdto>>( formservice.getformtionville(ville),HttpStatus.OK);
 }
-
+*/
+ 
+ //recuperer formation par id 
+ @GetMapping("/getformationbyid/{id}")
+ public ResponseEntity<Formationdto> recuperformaationid(@PathVariable long id){
+	 Formationdto formation = formservice.getformationid(id);
+	  return new ResponseEntity<>(formation, HttpStatus.OK);
+ }
 
 }

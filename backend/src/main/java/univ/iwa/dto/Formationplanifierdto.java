@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import univ.iwa.model.*;
 import univ.iwa.dto.*;
+
+import java.time.LocalDate;
 import java.util.Date;
 import univ.iwa.dto.*;
 @Data
@@ -12,7 +14,7 @@ import univ.iwa.dto.*;
 public class Formationplanifierdto {
 
     private long id;
-    private String date;
+    private LocalDate date;
     private Formationdto formation;
     private Userdto formateur;
     private Entreprisedto entreprise;

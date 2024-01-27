@@ -1,36 +1,30 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,HttpErrorResponse,HttpHeaders} from '@angular/common/http';
-import { Observable, catchError } from 'rxjs';
+import { HttpClient,HttpHeaders} from '@angular/common/http';
+import { Observable, catchError, map } from 'rxjs';
 import { UserAuthService } from './user-auth.service';
 import { Token } from '@angular/compiler';
-
-import { FormationModel } from '../Models/FormationModel.model';
-
-
+import { FormationModel } from 'src/app/shared/Models/FormationModel.model';
 @Injectable({
   providedIn: 'root'
 })
 export class FormationService {
+ Formationdata:FormationModel[]=[];
+  private apiurl = "http://localhost:8080/form";
 
-  private  apiurl= 'http://localhost:8080/form/getformation';
-
-  constructor(private httpClient:HttpClient){}
-
-
-  public recupererformation(): Observable<FormationModel[]> {
-    const url = `${this.apiurl}`;
-    console.log("Before request");
-    return this.httpClient.get<FormationModel[]>(url, { responseType: 'json' }).pipe(
-      catchError((error: HttpErrorResponse) => {
-      console.error("Error during request:", error);
-      console.error("Server response:", error.status, error.statusText);
-      throw error;
-      })
-    );
+  constructor(private httpClient: HttpClient) {}
+//recuperer tous le sformation
+getFormations(): Observable<FormationModel[]> {
+    const url = `${this.apiurl}/getformation`;
+  console.log("formation recuperer ");
+    return this.httpClient.get<FormationModel[]>(url);
   }
+//recupererformation par id
+getFormationByid(formationId:Number):Observable<FormationModel>{
+  console.log("les donnes avant l appel");
+  const url=`${this.apiurl}/getformationbyid/${formationId}`;
+  console.log("les donnes appele");
+   return this.httpClient.get<FormationModel>(url);
 
-
-
-
+}
 
 }

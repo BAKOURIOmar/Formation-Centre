@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {FormationService} from 'src/app/shared/services/formation.service';
+import { FormationModel } from 'src/app/shared/Models/FormationModel.model';
+import { Router } from '@angular/router';
 
-import {FormationModel} from 'src/app/shared/Models/FormationModel.model';
+
 
 @Component({
   selector: 'app-cardformation',
@@ -13,33 +15,32 @@ import {FormationModel} from 'src/app/shared/Models/FormationModel.model';
 export class CardformationComponent implements OnInit {
 
   FormationData:FormationModel[]=[];
-  showForm = false; // Ajout de la propriété pour contrôler l'affichage du formulaire
-  nom: string = ""; // Ajout de la propriété pour stocker le nom du participant
-  email: string = "";
+  showForm = false; // Ajout de la propriété pour contrôler l'affichage du formulaire nom: string = ""; // Ajout de la propriété pour stocker le nom du participant email: string = "";
 
- constructor(private formationservice:FormationService){}
+ constructor(private formationservice:FormationService, private router: Router){}
 
  ngOnInit(): void {
-//    this.showformation();
+this.showformation();
  }
 
-
-public showformation() {
-  console.log("avant l appel ")
-this.formationservice.recupererformation().subscribe(
-  (res: FormationModel[])=>{
-    this.FormationData= res;
-  },
-  (err)=>{
-    console.log(err);
-  }
-)
+ public showformation() {
+  this.formationservice.getFormations().subscribe(
+    (data: FormationModel[]) => {
+      this.FormationData = data;
+      console.log("retourne")
+    },
+    (error) => {
+      console.log("ne pas afficher");
+      console.error('Error fetching formations:', error);
+    }
+  );
 }
- onSubmit(){
-  console.log("called");
-  console.log("Nom:", this.nom);
-  console.log("Email:", this.email);
- }
-
+exploreDetails(formationId: number){
+    this.router.navigate(['/detail', formationId]);
+    console.log("id", formationId);
+    console.log("rederiger");
 
 }
+
+}
+

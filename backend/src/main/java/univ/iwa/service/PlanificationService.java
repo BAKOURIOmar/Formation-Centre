@@ -1,8 +1,11 @@
 package univ.iwa.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
+
 import univ.iwa.dto.Formationdto;
 import univ.iwa.repository.FormationReposetory;
 import univ.iwa.repository.PlanificationReposertory;
@@ -14,6 +17,7 @@ import org.modelmapper.ModelMapper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,15 +38,14 @@ public class PlanificationService {
         Formationplanifier formation=new Formationplanifier();
       formation= modelMapper.map(formplani,Formationplanifier.class);
         System.out.println("date is : "+formation.getDate());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date parsedDate = dateFormat.parse(formplani.getDate());
+        LocalDate parsedDate = formplani.getDate();
         System.out.println("date is : "+parsedDate);
         formation.setDate(parsedDate);
       planirepo.save(formation);
      return formplani;
     }
   //recuper les planification d une formation
-public List<Formationplanifierdto> afficherformation( String nom, String date) throws ParseException {
+/*public List<Formationplanifierdto> afficherformation( String nom, String date) throws ParseException {
        System.out.println("recus");
         List<Formationplanifierdto>formationdto= new ArrayList<>();
         if( date== null && nom==null){
@@ -71,40 +74,43 @@ public List<Formationplanifierdto> afficherformation( String nom, String date) t
 
         }
     return formationdto;
-}
+}*/
 
-//modifier une planification
-public  String modiferPlanification(long id,Formationplanifierdto formationplan){
-        Optional<Formationplanifier> formationplanifier=planirepo.findById(id);
-      Formationplanifierdto formationdto=new Formationplanifierdto();
-      if(formationplanifier.isPresent()){
 
-          Formationplanifier form   =modelMapper.map(formationplanifier.get(),Formationplanifier.class);
-          planirepo.save(form);
-      }
-    return "updated";
-    }
     //supprimer une formation
-    public String  delete(long id ){
+    public boolean  delete(long id ){
+    	if (!planirepo.existsById(id)) {
+  	      return false; // Devuelve false si el usuario no existe
+  	    }
         planirepo.deleteById(id);
-        return "deleted";
+        return true;
     }
 
     //update une planification
-    public String updateplanification(long id ,Formationplanifierdto formationplan){
+    public Formationplanifierdto updateplanification(long id ,Formationplanifierdto formationplan){
         Optional<Formationplanifier> formation= planirepo.findById(id);
 
         if(formation.isPresent()){
             Formationplanifier  form=formation.get();
-           form =modelMapper.map(formationplan,Formationplanifier.class);
+            form.setDate(formationplan.getDate());
+            form.setFormation(modelMapper.map(formationplan.getFormation(), Formation.class));
+            form.setFormateur(modelMapper.map(formationplan.getFormateur(), UserInfo.class));
+            form.setEntreprise(modelMapper.map(formationplan.getEntreprise(), Entreprise.class));
+//            TODO groupe
+            
             planirepo.save(form);
+            return modelMapper.map(planirepo.save(form),Formationplanifierdto.class);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Formationplanifier with ID %d does not exist", id));
         }
-     return "update";
     }
 
     //supprimer une planification
-    public void  supprimerplanification(long id){
+    public boolean  supprimerplanification(long id){
+    	if (!planirepo.existsById(id)) {
+    	      return false; // Devuelve false si el usuario no existe
+    	    }
         planirepo.deleteById(id);
-
+        return true;
     }
 }

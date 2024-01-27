@@ -1,0 +1,86 @@
+.details-container {
+  width: 100%;
+  margin-top: 70px;
+ background-color: rgb(7, 7, 8);
+  color: rgb(255, 247, 247);
+  height: 400px;
+  justify-content: space-between; /* Pour espacer les éléments à l'intérieur horizontalement */
+}
+.bloc-intern{
+  margin-right: 50px;
+  float: right;
+  height: 700px;
+  display: flex;
+  flex-direction: column;
+}
+.bloc-image {
+  padding-top: 0px;
+  border: 2px,solid,#171616;
+  border-radius: 8px;
+}
+.details-container {
+  width: 100%;
+  margin-top: 70px;
+
+  color: rgb(255, 254, 254);
+  height: 400px;
+  justify-content: space-between; /* Pour espacer les éléments à l'intérieur horizontalement */
+}
+.bloc-intern{
+  margin-right: 80px;
+  float: right;
+  height: 700px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(160, 160, 207);
+}
+.bloc-intern button{
+margin-top: 150px;
+padding-top: 20px;
+}
+.bloc-image {
+  padding-top: 40px;
+  border: 2px,solid,#171616;
+  border-radius: 8px;
+}
+.bloc-image img {
+  width: 300px; /* Définissez la largeur souhaitée */
+  height: 200px; /* Définissez la hauteur souhaitée */
+  display: block; /* Pour s'assurer que les dimensions sont appliquées correctement */
+  margin: 0 auto; /* Pour centrer l'image horizontalement */
+}
+.formation-name {
+ padding-top: 30px;
+ font-size: 40px;
+ font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+ display: flex;
+ justify-content: center;
+}
+.bloc-formation{
+  padding-left: 20px;
+
+}
+.list-item{
+  padding-top: 35px;
+  font-size: 20px;
+}
+
+
+.formation-name {
+ padding-top: 30px;
+ font-size: 40px;
+ font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+ display: flex;
+ justify-content: center;
+
+}
+
+.bloc-formation{
+  padding-left: 20px;
+
+}
+.list-item{
+  padding-top: 35px;
+  font-size: 20px;
+}
+

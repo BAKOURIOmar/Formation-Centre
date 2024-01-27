@@ -6,7 +6,9 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import univ.iwa.dto.Inndividualsdto;
 import univ.iwa.model.Individuals;
@@ -42,8 +44,12 @@ public class IndividuService {
     }
 
     // Supprimer un individu
-    public void deleteindividu(Long id) {
+    public boolean deleteindividu(Long id) {
+    	if (!individurepo.existsById(id)) {
+    	      return false; // Devuelve false si el usuario no existe
+    	    }
         individurepo.deleteById(id);
+        return true;
     }
     
     // Modifier l'individu
@@ -52,12 +58,16 @@ public class IndividuService {
 
         if (existingIndividuOptional.isPresent()) {
             Individuals existingIndividu = existingIndividuOptional.get();
-            modelMapper.map(updatedIndividudto, existingIndividu);
+            existingIndividu.setNom(updatedIndividudto.getNom());
+            existingIndividu.setPrenom(updatedIndividudto.getPrenom());
+            existingIndividu.setVille(updatedIndividudto.getVille());
+            existingIndividu.setTel(updatedIndividudto.getTel());
+            existingIndividu.setEmail(updatedIndividudto.getEmail());
+            existingIndividu.setDateDeNaissance(updatedIndividudto.getDateDeNaissance());
             individurepo.save(existingIndividu);
             return modelMapper.map(existingIndividu, Inndividualsdto.class);
         } else {
-            
-            return null;
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Inndividu with ID %d does not exist", id));
         }
     }
 }

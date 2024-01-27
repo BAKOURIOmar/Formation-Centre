@@ -20,11 +20,12 @@ import java.util.Optional;
 import univ.iwa.dto.Userdto;
 @Service
 public class UserInfoService implements UserDetailsService {
+	@Autowired 
+	private UserInfoRepository repository; 
+	@Autowired 
+	private PasswordEncoder encoder; 
 	@Autowired
-	ModelMapper modelMapper;
-	@Autowired UserInfoRepository repository; 
-	@Autowired PasswordEncoder encoder; 
-
+	private ModelMapper modelMapper;
 	@Override
 	public UserDetails  loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<UserInfo> userDetail = repository.findByName(username);
@@ -33,21 +34,18 @@ public class UserInfoService implements UserDetailsService {
 				.orElseThrow(() -> new UsernameNotFoundException("User not found " + username));
 	}
 	
-	public UserInfoService(ModelMapper modelMapper) {
-        this.modelMapper = modelMapper;
-    }
-	
+
 	public Userdto addUser(Userdto userdto) {
 		UserInfo user=modelMapper.map(userdto,UserInfo.class);
 		 user.setRoles("ROLE_FORMATEUR");
-		repository.save(user);
-		return userdto;
+		 UserInfo createdUser = repository.save(user);
+		return modelMapper.map(createdUser,Userdto.class);
 	} 
 	public Userdto addFormateur(Userdto userdto) {
 		UserInfo user = modelMapper.map(userdto, UserInfo.class);
-		user.setRoles("ROLE_FORMATEUR");
-	        repository.save(user);
-	        return userdto;
+			user.setRoles("ROLE_FORMATEUR");
+			 UserInfo createdUser = repository.save(user);
+		return modelMapper.map(createdUser,Userdto.class);
 	} 
 	@PostConstruct
 	public void addAdmin() {

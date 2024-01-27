@@ -25,7 +25,7 @@ public class SecurityConfig {
 	@Autowired JwtAuthFilter authFilter; 
 	@Bean
 	public UserDetailsService userDetailsService() { 
-		return new UserInfoService(null); 
+		return new UserInfoService(); 
 	} 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception { 
@@ -46,6 +46,8 @@ public class SecurityConfig {
 								.requestMatchers("/indiv/updateIndividu/{id}").permitAll()
 								.requestMatchers("/auth/addFormateur").authenticated()
 								.requestMatchers("/plan/**").authenticated()
+								.requestMatchers("/photos/**").permitAll()
+								.requestMatchers("/form/getformationbyid/**").permitAll()
 
 
 			).csrf(csrf->csrf.disable())

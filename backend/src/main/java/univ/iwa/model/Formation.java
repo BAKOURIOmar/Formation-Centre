@@ -18,8 +18,8 @@ import jakarta.persistence.Transient;
 @AllArgsConstructor 
 @NoArgsConstructor
 public class Formation {
-	@Id 
-	@GeneratedValue(strategy = GenerationType.IDENTITY) 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id ;
 	private String name;
 	private Long nombreh;
@@ -27,10 +27,9 @@ public class Formation {
 	private String programme;
 	private String ville;
 	private String categorie;
-	//@Transient
-    //private MultipartFile image;
-	/*@Lob
-    private byte[] image;
-	private String imagePath;*/
+	//private MultipartFile image;
 	private String imagePath;
+
+
+
 }

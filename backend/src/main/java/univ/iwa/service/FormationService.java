@@ -1,7 +1,10 @@
 package univ.iwa.service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
+
 import io.jsonwebtoken.io.IOException;
 
 import java.io.ByteArrayInputStream;
@@ -27,62 +30,39 @@ public class FormationService {
 	@Autowired
 	FormationReposetory formrepo;
 //Ajouter Formation
-	public Formation addFormation(Formationdto formationdto) throws IOException, java.io.IOException {
-	    Formation formation = modelMapper.map(formationdto, Formation.class);
+public Formation addFormation(Formationdto formationdto) throws IOException, java.io.IOException {
+	
+    Formation formation = modelMapper.map(formationdto, Formation.class);
 
-	    MultipartFile image = formationdto.getImage();
+    return  formrepo.save(formation);
 
-	    if (image != null && !image.isEmpty()) {
-	        try {
-	            // Enregistrer l'image
-	            byte[] imageBytes = image.getBytes();
-	            Path imagePath = Path.of("src/main/resources/static/photos/" + formation.getId() + ".png");
-	            Files.copy(new ByteArrayInputStream(imageBytes), imagePath, StandardCopyOption.REPLACE_EXISTING);
+}
+    // Lister tous les formations
+    public List<Formationdto> getAllFormations() throws java.io.IOException {
+		List<Formation> formations = formrepo.findAll();
+		System.out.println("les image recuperer");
+		List<Formationdto> formationdtos = new ArrayList<>();
 
-	            // Mettre à jour le champ image dans la formation
-	            formation.setImagePath(imagePath.toString());
-	            System.out.print("Requête envoyée");
-	        } catch (IOException e) {
-	            throw new IOException("Failed to save image.", e);
-	        }
-	    }
+		for (Formation formation : formations) {
+			Formationdto formationdto = modelMapper.map(formation, Formationdto.class);
+			System.out.println("les images transforme");
+			formationdtos.add(formationdto);
+		}
 
-	    return formrepo.save(formation);
-	}
+		return formationdtos;
 
-	//Lister tous les formations
-	public List<Formationdto> getAllFormations() throws java.io.IOException {
-	    List<Formation> formations = formrepo.findAll();
-	    List<Formationdto> formationdtos = new ArrayList<>();
-
-	    for (Formation formation : formations) {
-	        Formationdto formationdto = modelMapper.map(formation, Formationdto.class);
-
-	        // Vérifier si le champ imagePath est non null
-	        if (formation.getImagePath() != null) {
-	            // Charger le contenu de l'image en tant que tableau de bytes
-	            try {
-	                Path imagePath = Path.of(formation.getImagePath());
-	                byte[] imageBytes = Files.readAllBytes(imagePath);
-	                formationdto.setImageBytes(imageBytes);
-	            } catch (IOException e) {
-	                // Gérer l'exception, par exemple en journalisant l'erreur
-	                e.printStackTrace();
-	            }
-	        }
-
-	        formationdtos.add(formationdto);
-	    }
-
-	    return formationdtos;
-	}
 // Modifier Formation
-	public String updateformation(Long id, Formationdto forma, MultipartFile image) throws java.io.IOException {
+	/*public Formationdto updateformation(Long id, Formationdto forma, MultipartFile image) throws java.io.IOException {
 	    Optional<Formation> formoption = formrepo.findById(id);
 	    Formation form = new Formation();
 	    if (formoption.isPresent()) {
 	        form = formoption.get();
-	        modelMapper.map(forma, form);
+	        form.setName(forma.getName());
+	        form.setNombreh(forma.getNombreh());
+	        form.setCout(forma.getCout());
+	        form.setProgramme(forma.getProgramme());
+	        form.setVille(forma.getVille());
+	        form.setCategorie(forma.getCategorie());
 
 	        // Mettez à jour le champ image si le fichier est présent
 	        if (image != null && !image.isEmpty()) {
@@ -98,17 +78,23 @@ public class FormationService {
 	                throw new IOException("Failed to save image.", e);
 	            }
 	        }
-	    }
+	        return  modelMapper.map(formrepo.save(form), Formationdto.class);
+	       
+	    } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Skill with ID %d does not exist", id));
+        }
 
-	    formrepo.save(form);
-	    return "updated";
-	}
+	    
+	    
+	}*/
 
 // Supprimer Formation
-	public String DeleteFormation(Long formationId) {
-		Optional<Formation> formationD = formrepo.findById(formationId);
-		formrepo.delete(formationD.get());
-		return "Formation deleted";
+	/*public boolean DeleteFormation(Long formationId) {
+		if (!formrepo.existsById(formationId)) {
+	      return false; // Devuelve false si el usuario no existe
+	    }
+		formrepo.deleteById(formationId);
+		return true;
 
 	}
 //Afficher les formations par catégoeies
@@ -139,10 +125,10 @@ public class FormationService {
 	            .collect(Collectors.toList());
 
 	    return formationsdto;
-	}
+	}*/
 
 //Afficher les formations par les villes
-	public List<Formationdto> getformtionville(String ville) {
+	/*public List<Formationdto> getformtionville(String ville) {
 	    List<Formation> formations = formrepo.findByVille(ville);
 	    List<Formationdto> formationdto = formations.stream()
 	            .map(formation -> {
@@ -170,7 +156,18 @@ public class FormationService {
 	            .collect(Collectors.toList());
 
 	    return formationdto;
+	}*/
+
 	}
-
-
+    
+    //recuperer la formation par id
+    public Formationdto getformationid (long id){
+    	if (!formrepo.existsById(id)) {
+    	    return null; // Return null if the formation doesn't exist
+    	  }
+    	 Formation form= formrepo.findById(id).get();
+    	 return modelMapper.map(form, Formationdto.class);
+    	  
+    	}
+    
 }

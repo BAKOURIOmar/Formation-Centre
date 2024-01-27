@@ -1,6 +1,7 @@
 package univ.iwa.dto;
 
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -18,5 +19,5 @@ public class Inndividualsdto {
     String ville;
     String email;
     String tel;
-    Date dateDeNaissance;
+    LocalDate dateDeNaissance;
 }

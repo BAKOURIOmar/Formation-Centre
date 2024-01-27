@@ -22,7 +22,8 @@ import { GestionAssistantsComponent } from './views/home/gestion-assistants/gest
 import { GestionFormationsComponent } from './views/home/gestion-formations/gestion-formations.component';
 import { PlanificationComponent } from './views/home/planification/planification.component';
 import { CardformationComponent } from './components/cardformation/cardformation.component';
-
+import { DetailsComponent } from './views/details/details.component';
+import { MatIconModule } from '@angular/material/icon';
 @NgModule({
 
   declarations: [
@@ -39,6 +40,7 @@ import { CardformationComponent } from './components/cardformation/cardformation
     GestionAssistantsComponent,
     GestionFormationsComponent,
     PlanificationComponent,
+    DetailsComponent,
 
   ],
   imports: [
@@ -54,6 +56,7 @@ import { CardformationComponent } from './components/cardformation/cardformation
     AgrupaMaterialModule,
     HomeRoutingModule,
     FullCalendarModule,
+    MatIconModule,
 
   ],
   providers: [],

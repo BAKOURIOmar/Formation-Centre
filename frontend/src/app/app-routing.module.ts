@@ -8,7 +8,7 @@ import { HomeComponent } from './views/home/home.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 import { PlanificationComponent } from './views/home/planification/planification.component';
-
+import { DetailsComponent } from './views/details/details.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent,children:[
@@ -21,7 +21,8 @@ const routes: Routes = [
   { path: 'accueille', component: AccueilleComponent},
   { path: 'register', component: RegisterComponent},
   { path: 'login', component: LoginComponent},
-  { path: '**', redirectTo: 'accueille'}
+  { path: 'detail/:id', component: DetailsComponent },
+  { path: '**', redirectTo: 'accueille'},
 ];
 
 @NgModule({

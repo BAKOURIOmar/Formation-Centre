@@ -1,10 +1,11 @@
 
-export interface FormationModel{
-   id:number ;
-  name :String ;
-	 nombreh: number ;
-	  cout:number ;
-  programme:String ;
-	 ville :String;
-	  categorie :String ;
+export interface FormationModel {
+  id: number;
+  name: String;
+  nombreh: number;
+  cout: number;
+  programme: String;
+  ville: String;
+  categorie: String;
+  imagePath:String
 }
