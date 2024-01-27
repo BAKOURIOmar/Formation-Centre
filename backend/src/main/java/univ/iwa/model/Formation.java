@@ -4,7 +4,10 @@ import java.util.Date;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import lombok.AllArgsConstructor;
@@ -32,5 +35,9 @@ public class Formation {
 	/*@Lob
     private byte[] image;
 	private String imagePath;*/
-	private String imagePath;
+//	private String imagePath;
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	@Column( name ="picture", columnDefinition = "longblob")
+	private byte[] picture;
 }

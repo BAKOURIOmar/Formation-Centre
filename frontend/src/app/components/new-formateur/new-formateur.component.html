@@ -1,0 +1,53 @@
+
+<h2 mat-dialog-title> {{ estatForm }} une nouvelle formation </h2>
+<mat-dialog-content>
+
+    <form [formGroup]="formateurForm">
+        <div class="product-container">
+
+            <mat-form-field>
+                <input matInput placeholder="Nom" formControlName="name" required/>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput  placeholder="Email" formControlName="email" required />
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Comptences" formControlName="motcles" required />
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput  placeholder="Remarque" formControlName="remarque" required />
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput  placeholder="Mot de pass" formControlName="password" required />
+        </mat-form-field>
+
+        <!-- <mat-form-field>
+          <input matInput  placeholder="type" formControlName="type" required />
+      </mat-form-field> -->
+
+
+
+
+
+
+
+        </div>
+
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+
+    <button mat-button color="primary" (click)="onSave()" [disabled]="formateurForm.invalid">
+        <mat-icon>save</mat-icon> Sauvgarder
+    </button>
+
+    <button mat-button color="primary" (click)="onCancel()">
+        <mat-icon>cancel</mat-icon> Annuler
+    </button>
+
+</mat-dialog-actions>

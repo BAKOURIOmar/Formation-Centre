@@ -5,6 +5,8 @@ import { Router } from "@angular/router";
 
 import Swal from "sweetalert2";
 import { UserService } from "../../shared/services/user.service";
+import { UserAuthService } from "src/app/shared/services/user-auth.service";
+
 
 @Component({
   selector: 'app-login',
@@ -21,7 +23,7 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     });
 
-  constructor(private http: HttpClient, private fb: FormBuilder ,private userService: UserService,private router :Router  ) { }
+  constructor(private http: HttpClient, private fb: FormBuilder ,private userService: UserService, private userAuthService: UserAuthService,private router :Router  ) { }
 
   ngOnInit(): void {
 
@@ -39,8 +41,11 @@ export class LoginComponent implements OnInit {
  //console.log(email,'    ' ,password )
     this.userService.login(authRequest)
       .subscribe({
-        next: (response ) =>{
-          console.log(response)
+        next: (response :any) =>{
+          this.userAuthService.setRoles(response.role);
+          this.userAuthService.setToken(response.message)
+          const role = response.role;
+          console.log(response);
 
           this.router.navigateByUrl('/home')} ,
         error: (message) => {

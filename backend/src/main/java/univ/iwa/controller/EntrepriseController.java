@@ -8,40 +8,36 @@ import org.springframework.web.bind.annotation.*;
 import univ.iwa.service.*;
 import univ.iwa.dto.*;
 @RestController
-@RequestMapping("/entr")
+@RequestMapping("/entreprise")
 public class EntrepriseController {
     @Autowired
     EtrepriseService entreser;
 
     //ajouter une entreprise
-    @PostMapping("/addentreprise")
+    @PostMapping("/addEntreprise")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
     public ResponseEntity<Entreprisedto> addentreprise(@RequestBody Entreprisedto entr){        
         return new ResponseEntity<Entreprisedto>(entreser.addentreprise(entr),HttpStatus.OK);
     }
 
     //recuperer la liste des entreprises
-    @GetMapping ("/getentreprise")
+    @GetMapping ("/getEntreprise")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
     public ResponseEntity<List<Entreprisedto>> getallentreprise(){
        return new ResponseEntity<List<Entreprisedto>>(entreser.getallentreprise(),HttpStatus.OK);
     }
     //suprimer une entreprise
-    @DeleteMapping("/deleteentreprise/{id}")
+    @DeleteMapping("/deleteEntreprise/{id}")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
     public ResponseEntity<Boolean> deleteentreprise(@PathVariable Long id){
         
         return new ResponseEntity<Boolean>(entreser.deleteEntreprise(id),HttpStatus.OK);
     }
     //update entreprise
-    @PutMapping("/updateentreprise/{id}")
+    @PutMapping("/updateEntreprise/{id}")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
     public ResponseEntity<Entreprisedto> updateentreprise(@PathVariable Long id,@RequestBody Entreprisedto entreprise){
-        System.out.println("==============================================");
-        System.out.println("id : "+id);
-        System.out.println("enterprise : "+entreprise);
-        
-        System.out.println("==============================================");
+
         return new ResponseEntity<Entreprisedto>(entreser.updateentreprise(id,entreprise),HttpStatus.OK);
     }
 

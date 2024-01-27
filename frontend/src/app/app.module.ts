@@ -22,6 +22,16 @@ import { GestionAssistantsComponent } from './views/home/gestion-assistants/gest
 import { GestionFormationsComponent } from './views/home/gestion-formations/gestion-formations.component';
 import { PlanificationComponent } from './views/home/planification/planification.component';
 import { CardformationComponent } from './components/cardformation/cardformation.component';
+import { AuthGuard } from './shared/guards/auth.guard';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './shared/auth.interceptor';
+import { UserAuthService } from './shared/services/user-auth.service';
+import { NewFormateurComponent } from './components/new-formateur/new-formateur.component';
+import { ConfirmationComponent } from './components/confirmation/confirmation.component';
+import { NewFormationComponent } from './components/new-formation/new-formation.component';
+import { NewAssistantComponent } from './components/new-assistant/new-assistant.component';
+import { GestionEntrepriseComponent } from './views/home/gestion-entreprise/gestion-entreprise.component';
+import { NewEntrepriseComponent } from './components/new-entreprise/new-entreprise.component';
 
 @NgModule({
 
@@ -39,6 +49,12 @@ import { CardformationComponent } from './components/cardformation/cardformation
     GestionAssistantsComponent,
     GestionFormationsComponent,
     PlanificationComponent,
+    NewFormateurComponent,
+    ConfirmationComponent,
+    NewFormationComponent,
+    NewAssistantComponent,
+    GestionEntrepriseComponent,
+    NewEntrepriseComponent,
 
   ],
   imports: [
@@ -56,7 +72,14 @@ import { CardformationComponent } from './components/cardformation/cardformation
     FullCalendarModule,
 
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    {
+    provide:HTTP_INTERCEPTORS,
+    useClass:AuthInterceptor,
+    multi:true
+  },UserAuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -28,7 +28,7 @@ public class Formationplanifier {
     @JoinColumn(name = "Entreprise_id")
     private Entreprise entreprise;
 
-    @ManyToOne
+    @OneToMany
     @JoinColumn(name = "groupe_id")
     private List<Individuals> groupe;
 

@@ -1,1 +1,108 @@
-<p>gestion-formations works!</p>
+<mat-card>
+
+  <h2 class="alinear">Liste des formations </h2>
+  <mat-card-header>
+
+      <div>
+          <mat-form-field hintLabel="Cherche formation" appearance="fill">
+
+              <mat-label>Cherche Formation</mat-label>
+              <input matInput #input (keyup)="buscar(input.value)">
+          </mat-form-field>
+      </div>
+  </mat-card-header>
+
+  <mat-card-header>
+
+      <div class="right">
+          <ul>
+              <li>
+                  <button mat-raised-button color="primary" (click)="openProductDialog()">Agregar Formation</button>
+              </li>
+          </ul>
+      </div>
+
+  </mat-card-header>
+
+  <div mat-card-image></div>
+
+  <mat-card-content>
+
+      <table mat-table [dataSource]="dataSource" class="mat-cell">
+
+          <!-- id column-->
+          <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef> Nº</th>
+              <td mat-cell *matCellDef="let element"> {{ element.id}}</td>
+          </ng-container>
+
+
+          <!-- name column -->
+          <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Nom</th>
+              <td mat-cell *matCellDef="let element"> {{ element.name}}</td>
+          </ng-container>
+
+          <!-- price column -->
+          <ng-container matColumnDef="nombreh">
+              <th mat-header-cell *matHeaderCellDef> Duration </th>
+              <td mat-cell *matCellDef="let element"> {{ element.nombreh}}</td>
+          </ng-container>
+
+          <!-- account column-->
+          <ng-container matColumnDef="cout">
+              <th mat-header-cell *matHeaderCellDef> Cout </th>
+              <td mat-cell *matCellDef="let element"> {{ element.cout}}</td>
+          </ng-container>
+
+          <!-- category column -->
+          <ng-container matColumnDef="programme">
+              <th mat-header-cell *matHeaderCellDef> Programme </th>
+              <td mat-cell *matCellDef="let element"> {{ element.programme}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="ville">
+            <th mat-header-cell *matHeaderCellDef> Ville </th>
+            <td mat-cell *matCellDef="let element"> {{ element.ville}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="categorie">
+          <th mat-header-cell *matHeaderCellDef> Categorie </th>
+          <td mat-cell *matCellDef="let element"> {{ element.categorie}}</td>
+      </ng-container>
+
+          <!-- picture column -->
+          <ng-container matColumnDef="picture">
+              <th mat-header-cell *matHeaderCellDef> Foto </th>
+              <td mat-cell *matCellDef="let element"> <img [src]="element.picture" width="50" height="50"></td>
+          </ng-container>
+
+          <!-- actions-->
+          <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> Acciones </th>
+              <td mat-cell *matCellDef="let element; let i=index;">
+
+                  <button mat-icon-button color="accent" (click)="edit(element.id, element.name, element.nombreh, element.cout, element.programme, element.ville, element.categorie)">
+                      <mat-icon aria-label="Edit">edit</mat-icon>
+                  </button>
+
+                  <button mat-icon-button color="accent" (click)="delete(element.id)">
+                      <mat-icon aria-label="Delete">delete</mat-icon>
+                  </button>
+              </td>
+
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+  </mat-card-content>
+
+
+</mat-card>
+

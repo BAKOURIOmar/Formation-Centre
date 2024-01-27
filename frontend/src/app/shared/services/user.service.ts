@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { UserAuthService } from "./user-auth.service";
 import { Observable } from "rxjs";
@@ -11,13 +11,17 @@ export class UserService {
 
   private API_BASE_URL = "http://localhost:8080/auth";
 
+  requestHeader = new HttpHeaders(
+    { "NO-Auth": "True" }
+  );
+
   constructor(
     private httpClient: HttpClient,
     private userAuthService: UserAuthService
   ) { }
 
   public login(loginData: any):Observable<string> {
-    return this.httpClient.post<string>(this.API_BASE_URL + "/generateToken", loginData);
+    return this.httpClient.post<string>(this.API_BASE_URL + "/generateToken", loginData,{headers:this.requestHeader});
   }
 
 
@@ -36,9 +40,15 @@ export class UserService {
 
   public roleMatch(allowedRoles: string[]): boolean {
     const userRoles: string = this.userAuthService.getRoles();
+
     if (userRoles !== '') {
-      return allowedRoles.some(role => userRoles.includes(role));
+      // Divise la chaîne des rôles en un tableau
+      const userRolesArray = userRoles.split(',');
+
+      // Vérifie si au moins un des rôles autorisés est présent dans le tableau
+      return allowedRoles.some(role => userRolesArray.includes(role.trim()));
     }
+
     return false;
   }
 
