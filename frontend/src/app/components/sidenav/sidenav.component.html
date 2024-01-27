@@ -1,62 +1,85 @@
-
 <div class="dashboard-container" [class.is-mobile]="mobileQuery.matches">
 
   <!-- empieza toolbar-->
   <mat-toolbar color="primary" class="dashboard-toolbar">
-      <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-      <h1 class="app-name">Formationes Gonzales</h1>
+    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+    <h1 class="app-name">Formationes Gonzales</h1>
 
-      <div class="right">
-          <ul>
-              <li>
-                  <button mat-icon-button>
-                      <mat-icon>help_outline</mat-icon>
-                  </button>
-              </li>
-              <li>
-                  <button mat-button [matMenuTriggerFor]="menu">
-                      <mat-icon>person_outline</mat-icon>
-                  </button>
-                  <mat-menu #menu="matMenu" (click)="logOut()">
-                      <mat-icon >exit_to_app</mat-icon>
-                      Cerrar Sesión
-                  </mat-menu>
-              </li>
-          </ul>
-      </div>
+    <div class="right">
+      <ul>
+        <li>
+          <button mat-icon-button>
+            <mat-icon>help_outline</mat-icon>
+          </button>
+        </li>
+        <li>
+          <button mat-button [matMenuTriggerFor]="menu">
+            <mat-icon>person_outline</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" (click)="logOut()">
+            <mat-icon>exit_to_app</mat-icon>
+            Cerrar Sesión
+          </mat-menu>
+        </li>
+      </ul>
+    </div>
 
   </mat-toolbar>
 
   <!-- empieza sidenav-->
-  <mat-sidenav-container class="sidenav-container"
-                          [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-          <mat-sidenav #snav [mode]="mobileQuery.matches? 'over': 'side'"
-                  [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+  <mat-sidenav-container class="sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav [mode]="mobileQuery.matches? 'over': 'side'" [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56">
 
-              <mat-nav-list>
-                  <!--profile-->
-                  <div class="profile-card">
-                      <div class="header">
-                          <h2>Alfredo Leal</h2>
-                          <h4>alfredo.leal.pinogmail.com</h4>
-                      </div>
-                  </div>
+      <mat-nav-list>
+        <!--profile-->
+        <div class="profile-card">
+          <div class="header">
+            <h2>Alfredo Leal</h2>
+            <h4>alfredo.leal.pinogmail.com</h4>
+          </div>
+        </div>
 
-                  <mat-divider></mat-divider>
+        <mat-divider></mat-divider>
 
-                  <a mat-list-item [routerLink]="nav.route" *ngFor="let nav of menuNav">
-                      <mat-icon class="icono"> {{ nav.icon }}</mat-icon>
-                      <span class="name">{{nav.name}}</span>
+        <a mat-list-item [routerLink]="menuNav[0].route">
+          <mat-icon class="icono"> {{ menuNav[0].icon }}</mat-icon>
+          <span class="name">{{menuNav[0].name}}</span>
 
-                  </a>
+        </a>
 
-              </mat-nav-list>
+        <a mat-list-item [routerLink]="menuNav[1].route" *ngIf="isAddmin()">
+          <mat-icon class="icono"> {{ menuNav[1].icon }}</mat-icon>
+          <span class="name">{{menuNav[1].name}}</span>
 
-          </mat-sidenav>
+        </a>
 
-          <mat-sidenav-content>
-             <router-outlet></router-outlet>
-          </mat-sidenav-content>
+        <a mat-list-item [routerLink]="menuNav[2].route">
+          <mat-icon class="icono"> {{ menuNav[2].icon }}</mat-icon>
+          <span class="name">{{menuNav[2].name}}</span>
+
+        </a>
+
+        <a mat-list-item [routerLink]="menuNav[3].route">
+          <mat-icon class="icono"> {{ menuNav[3].icon }}</mat-icon>
+          <span class="name">{{menuNav[3].name}}</span>
+
+        </a>
+
+        <a mat-list-item [routerLink]="menuNav[4].route">
+          <mat-icon class="icono"> {{ menuNav[4].icon }}</mat-icon>
+          <span class="name">{{menuNav[4].name}}</span>
+
+        </a>
+
+
+      </mat-nav-list>
+
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
 
   </mat-sidenav-container>
 </div>

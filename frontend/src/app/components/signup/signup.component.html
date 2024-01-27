@@ -1,0 +1,75 @@
+<div class="container">
+    <div class="d-flex align-items-center justify-content-center flex-column min-vh-100">
+        <mat-card class="example-card">
+            <mat-card-header class="header-image mt-3">
+                <img src="../../../assets/img/hamburguesa-sin-abrir.png">
+            </mat-card-header>
+
+            <form [formGroup]="myForm" class="d-flex flex-column">
+                <div class="mb-3">
+                    <!-- ... Gestion des messages d'erreur -->
+                </div>
+                <mat-card-content>
+                    <!-- Ajout des champs pour Nom, Prénom, Email, Tel, Ville, Date de naissance -->
+                    <div class="d-flex col-12 justify-content-center ml-auto mr-auto mt-2">
+                        <mat-form-field appearance="outline" class="titulo w-100">
+                            <mat-label>Nom</mat-label>
+                            <input matInput [formControlName]="'nom'">
+                            <mat-error *ngIf="myForm.get('nom')?.hasError('required')">
+                                *Nom obligatoire
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="d-flex col-12 justify-content-center ml-auto mr-auto mt-2">
+                        <mat-form-field appearance="outline" class="titulo w-100">
+                            <mat-label>Prénom</mat-label>
+                            <input matInput [formControlName]="'prenom'">
+                            <mat-error *ngIf="myForm.get('prenom')?.hasError('required')">
+                                *Prénom obligatoire
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="d-flex col-12 justify-content-center ml-auto mr-auto mt-2">
+                        <mat-form-field appearance="outline" class="titulo w-100">
+                            <mat-label>Email</mat-label>
+                            <input matInput [formControlName]="'email'" type="email">
+                            <mat-error *ngIf="myForm.get('email')?.hasError('required')">
+                                *Email obligatoire
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="d-flex col-12 justify-content-center ml-auto mr-auto mt-2">
+                        <mat-form-field appearance="outline" class="titulo w-100">
+                            <mat-label>Tel</mat-label>
+                            <input matInput [formControlName]="'tel'" type="tel">
+                            <mat-error *ngIf="myForm.get('tel')?.hasError('required')">
+                                *Tel obligatoire
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="d-flex col-12 justify-content-center ml-auto mr-auto mt-2">
+                        <mat-form-field appearance="outline" class="titulo w-100">
+                            <mat-label>Ville</mat-label>
+                            <input matInput [formControlName]="'ville'">
+                            <mat-error *ngIf="myForm.get('ville')?.hasError('required')">
+                                *Ville obligatoire
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="d-flex col-12 justify-content-center ml-auto mr-auto mt-2">
+                        <mat-form-field appearance="outline" class="titulo w-100">
+                            <mat-label>Date de naissance</mat-label>
+                            <input matInput [formControlName]="'dateNaissance'" type="date">
+                            <mat-error *ngIf="myForm.get('dateNaissance')?.hasError('required')">
+                                *Date de naissance obligatoire
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions class="d-flex col-10 justify-content-center m-auto">
+                    <button mat-raised-button class="w-100" color="primary" (click)="onSubmit()">Entrar</button>
+                </mat-card-actions>
+            </form>
+        </mat-card>
+    </div>
+</div>

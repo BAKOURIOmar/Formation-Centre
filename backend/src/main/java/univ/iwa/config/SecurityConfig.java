@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain; 
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import org.springframework.web.cors.CorsConfiguration;
 import univ.iwa.filters.JwtAuthFilter;
 import univ.iwa.service.UserInfoService; 
 
@@ -25,13 +26,16 @@ public class SecurityConfig {
 	@Autowired JwtAuthFilter authFilter; 
 	@Bean
 	public UserDetailsService userDetailsService() { 
-		return new UserInfoService(null); 
+		return new UserInfoService(); 
 	} 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception { 
-		http.authorizeHttpRequests((auth)->auth
-			.requestMatchers("/auth/welcome", "/auth/addNewUser", "/auth/generateToken").permitAll()
+		http
+		.cors(cors->cors.configurationSource(request -> new CorsConfiguration(corsFilter())))
+		.authorizeHttpRequests((auth)->auth
+			.requestMatchers("/auth/welcome",  "/auth/generateToken").permitAll()
 			.requestMatchers("/auth/user/**").authenticated()
+			.requestMatchers("/auth/users").authenticated()
 			.requestMatchers("/auth/admin/**").authenticated()
 								.requestMatchers("/form/addformation").authenticated()
 								.requestMatchers("/form/getformation").permitAll()
@@ -39,12 +43,16 @@ public class SecurityConfig {
 								.requestMatchers("/form/deleteform/{id}").authenticated()
 								.requestMatchers("form/getbyville/{ville}").authenticated()
 								.requestMatchers("/form/getformationcat/**").authenticated()
-								.requestMatchers("/entr/**").authenticated()
+								.requestMatchers("/entreprise/**").authenticated()
 								.requestMatchers("/indiv/addindividu").permitAll()
 								.requestMatchers("/indiv/getallindividus").authenticated()
 								.requestMatchers("/indiv/deleteindividu/{id}").authenticated()
 								.requestMatchers("/indiv/updateIndividu/{id}").permitAll()
+								.requestMatchers("/auth/addAssistant").authenticated()
 								.requestMatchers("/auth/addFormateur").authenticated()
+								.requestMatchers("/auth/updateAssistant/**").authenticated()
+								.requestMatchers("/auth/updateFormateur/**").authenticated()
+								.requestMatchers("/auth/supprimerUser/**").authenticated()
 								.requestMatchers("/plan/**").authenticated()
 
 
@@ -52,7 +60,16 @@ public class SecurityConfig {
 			.authenticationProvider(authenticationProvider()) 
 			.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class) ;	
 		return http.build();
-	} 
+	}
+	
+	public CorsConfiguration corsFilter() {
+		CorsConfiguration config = new CorsConfiguration();
+		config.setAllowCredentials(true);
+		config.addAllowedOrigin("http://localhost:4200");
+		config.addAllowedHeader("*");
+		config.addAllowedMethod("*");
+		return config;
+	}
 	// Password Encoding 
 	@Bean
 	public PasswordEncoder passwordEncoder() { 

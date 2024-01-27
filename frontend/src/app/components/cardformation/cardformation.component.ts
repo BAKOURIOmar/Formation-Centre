@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {FormationService} from 'src/app/shared/services/formation.service';
+import { FormationModel } from 'src/app/shared/models/FormationModel.model';
 
-import {FormationModel} from 'src/app/shared/Models/FormationModel.model';
+
 
 @Component({
   selector: 'app-cardformation',
@@ -25,15 +26,8 @@ export class CardformationComponent implements OnInit {
 
 
 public showformation() {
-  console.log("avant l appel ")
-this.formationservice.recupererformation().subscribe(
-  (res: FormationModel[])=>{
-    this.FormationData= res;
-  },
-  (err)=>{
-    console.log(err);
-  }
-)
+
+
 }
  onSubmit(){
   console.log("called");

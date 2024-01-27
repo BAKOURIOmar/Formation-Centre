@@ -11,9 +11,10 @@ public class Userdto {
 
     private long id;
     private String name;
+    private String Ville;
     private String email;
     private String motcles;
-    private String note;
+    private String remarque;
     private String password;
     private String roles;
     private String type;

@@ -1,4 +1,96 @@
-<p>gestion-formatuers works!</p>
-<!-- <div class="container">
-  <full-calendar [options]="calendarOptions"></full-calendar>
-</div> -->
+<mat-card>
+
+  <h2 class="alinear">Liste de Formateurs</h2>
+  <mat-card-header>
+
+      <div>
+          <mat-form-field hintLabel="Cherche nom" appearance="fill">
+
+              <mat-label>Cherche nom</mat-label>
+              <input matInput #input (keyup)="buscar(input.value)">
+          </mat-form-field>
+      </div>
+  </mat-card-header>
+
+  <mat-card-header>
+
+      <div class="right">
+          <ul>
+              <li>
+                  <button mat-raised-button color="primary" (click)="openFormateurDialog()">Ajouter Formateur</button>
+              </li>
+          </ul>
+      </div>
+
+  </mat-card-header>
+
+  <div mat-card-image></div>
+
+  <mat-card-content>
+
+      <table mat-table [dataSource]="dataSource" class="mat-cell">
+
+
+          <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef> Nº</th>
+              <td mat-cell *matCellDef="let element"> {{ element.id}}</td>
+          </ng-container>
+
+
+
+          <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Nom</th>
+              <td mat-cell *matCellDef="let element"> {{ element.name}}</td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="motcles">
+            <th mat-header-cell *matHeaderCellDef> Comptences</th>
+            <td mat-cell *matCellDef="let element"> {{ element.motcles}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> Email</th>
+          <td mat-cell *matCellDef="let element"> {{ element.email}}</td>
+        </ng-container>
+
+
+          <ng-container matColumnDef="remarque">
+              <th mat-header-cell *matHeaderCellDef> Remarque </th>
+              <td mat-cell *matCellDef="let element"> {{ element.remarque}}</td>
+          </ng-container>
+
+
+
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef> Type </th>
+          <td mat-cell *matCellDef="let element"> {{ element.type}}</td>
+      </ng-container>
+
+          <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> Acciones </th>
+              <td mat-cell *matCellDef="let element; let i=index;">
+
+                  <button mat-icon-button color="accent" (click)="edit(element.id,element.name , element.motcles, element.email, element.remarque)">
+                      <mat-icon aria-label="Edit">edit</mat-icon>
+                  </button>
+
+                  <button mat-icon-button color="accent" (click)="delete(element.id)">
+                      <mat-icon aria-label="Delete">delete</mat-icon>
+                  </button>
+              </td>
+
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+  </mat-card-content>
+
+
+</mat-card>

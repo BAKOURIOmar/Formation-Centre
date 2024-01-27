@@ -1,5 +1,6 @@
 package univ.iwa.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
@@ -23,5 +24,5 @@ public class Individuals {
 	String ville;
 	String email;
 	String tel;
-	Date dateDeNaissance;
+	LocalDate dateDeNaissance;
 }
