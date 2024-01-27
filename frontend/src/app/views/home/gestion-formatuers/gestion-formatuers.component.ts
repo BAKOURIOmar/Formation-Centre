@@ -6,6 +6,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { ConfirmationComponent } from 'src/app/components/confirmation/confirmation.component';
+import { NewFormateurComponent } from 'src/app/components/new-formateur/new-formateur.component';
+import { User } from 'src/app/shared/interfaces/user.interface';
+import { FormateurService } from 'src/app/shared/services/formateur.service';
 @Component({
   selector: 'app-gestion-formatuers',
   templateUrl: './gestion-formatuers.component.html',
@@ -13,99 +17,88 @@ import interactionPlugin from '@fullcalendar/interaction';
 })
 export class GestionFormatuersComponent {
 
-  // private categoryService = inject(CategoryService);
+  private formateurService = inject(FormateurService);
   private snackBar = inject(MatSnackBar);
   public dialog = inject(MatDialog);
 
   ngOnInit(): void {
-    this.getCategories();
+    this.getFormateurs();
   }
 
-  displayedColumns: string[] = ['id', 'name', 'description', 'actions'];
-  dataSource = new MatTableDataSource<CategoryElement>();
+  displayedColumns: string[] = ['id', 'name', 'motcles', 'email','remarque','type','actions'];
+  dataSource = new MatTableDataSource<User>();
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
-  getCategories(): void {
+  getFormateurs(): void {
+   console.log("hshshshsh")
+    this.formateurService.getUsersByRole('ROLE_FORMATEUR')
+      .subscribe( (data:any) => {
 
-    // this.categoryService.getCategories()
-    //   .subscribe( (data:any) => {
+        this.processCategoriesResponse(data);
 
-    //     console.log("respuesta categories: ", data);
-    //     this.processCategoriesResponse(data);
-
-    //   }, (error: any) => {
-    //     console.log("error: ", error);
-    //   })
+      }, (error: any) => {
+        console.log("error: ", error);
+      })
   }
 
   processCategoriesResponse(resp: any){
 
-    const dataCategory: CategoryElement[] = [];
-
-    if( resp.metadata[0].code == "00") {
-
-      let listCategory = resp.categoryResponse.category;
-
-      listCategory.forEach((element: CategoryElement) => {
-        dataCategory.push(element);
-      });
-
-      this.dataSource = new MatTableDataSource<CategoryElement>(dataCategory);
+      this.dataSource.data = resp;
       this.dataSource.paginator = this.paginator;
 
-    }
 
   }
 
-  openCategoryDialog(){
-    // const dialogRef = this.dialog.open(NewCategoryComponent , {
-    //   width: '450px'
-    // });
+  openFormateurDialog(){
+    const dialogRef = this.dialog.open(NewFormateurComponent , {
+      width: '450px'
+    });
 
-    // dialogRef.afterClosed().subscribe((result:any) => {
+    dialogRef.afterClosed().subscribe((result:any) => {
 
-    //   if( result == 1){
-    //     this.openSnackBar("Categoria Agregada", "Exitosa");
-    //     this.getCategories();
-    //   } else if (result == 2) {
-    //     this.openSnackBar("Se produjo un error al guardar categoria", "Error");
-    //   }
-    // });
+      if( result == 1){
+        this.openSnackBar("Formateur Ajouter", "Exitosa");
+        this.getFormateurs();
+      } else if (result == 2) {
+        this.openSnackBar("un erreur se produit a l'heur d'ajoter le formateur ", "Error");
+      }
+    });
   }
 
-  edit(id:number, name: string, description: string){
-    // const dialogRef = this.dialog.open(NewCategoryComponent , {
-    //   width: '450px',
-    //   data: {id: id, name: name, description: description}
-    // });
+  edit(id:number, name: string, motcles: string, email: string, remarque: string){
+    const dialogRef = this.dialog.open(NewFormateurComponent , {
+      width: '450px',
+      data: {id: id, name: name, motcles: motcles, email: email , remarque: remarque}
+    });
 
-    // dialogRef.afterClosed().subscribe((result:any) => {
+    dialogRef.afterClosed().subscribe((result:any) => {
 
-    //   if( result == 1){
-    //     this.openSnackBar("Categoria Actualizada", "Exitosa");
-    //     this.getCategories();
-    //   } else if (result == 2) {
-    //     this.openSnackBar("Se produjo un error al actualizar categoria", "Error");
-    //   }
-    // });
+      if( result == 1){
+        this.openSnackBar("Formateur Actualiser", "Exitosa");
+        this.getFormateurs();
+      } else if (result == 2) {
+        this.openSnackBar("un erreur a produit l'heur de la modification de formateur", "Error");
+      }
+    });
   }
 
   delete(id: any){
-    // const dialogRef = this.dialog.open(ConfirmComponent , {
-    //   data: {id: id, module: "category"}
-    // });
+    const dialogRef = this.dialog.open(ConfirmationComponent , {
+      width: '450px',
+      data: {id: id, module: "formateur"}
+    });
 
-    // dialogRef.afterClosed().subscribe((result:any) => {
+    dialogRef.afterClosed().subscribe((result:any) => {
 
-    //   if( result == 1){
-    //     this.openSnackBar("Categoria Eliminada", "Exitosa");
-    //     this.getCategories();
-    //   } else if (result == 2) {
-    //     this.openSnackBar("Se produjo un error al eliminar categoria", "Error");
-    //   }
-    // });
+      if( result == 1){
+        this.openSnackBar("Formateur supprimer", "OK");
+        this.getFormateurs();
+      } else if (result == 2) {
+        this.openSnackBar("un erreur se produit a l'heure de supprimer la Formateur", "Error");
+      }
+    });
   }
 
   buscar( termino: string){
@@ -129,9 +122,3 @@ export class GestionFormatuersComponent {
 
 }
 
-
-export interface CategoryElement {
-  description: string;
-  id: number;
-  name: string;
-}

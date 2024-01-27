@@ -1,4 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
+import { MatTableDataSource } from '@angular/material/table';
+import { ConfirmationComponent } from 'src/app/components/confirmation/confirmation.component';
+import { NewFormateurComponent } from 'src/app/components/new-formateur/new-formateur.component';
+import { NewFormationComponent } from 'src/app/components/new-formation/new-formation.component';
+import { Formation } from 'src/app/shared/interfaces/formation.interface';
+import { FormationService } from 'src/app/shared/services/formation.service';
 
 @Component({
   selector: 'app-gestion-formations',
@@ -7,4 +16,133 @@ import { Component } from '@angular/core';
 })
 export class GestionFormationsComponent {
 
+  private formationService = inject(FormationService);
+  private snackBar = inject(MatSnackBar);
+  public dialog = inject(MatDialog);
+
+  ngOnInit(): void {
+    this.getFormations();
+  }
+
+  displayedColumns: string[] = ['id', 'name', 'nombreh', 'cout', 'programme','ville', 'categorie','picture', 'actions'];
+  dataSource = new MatTableDataSource<Formation>();
+
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
+
+  getFormations() {
+    this.formationService.getFormations()
+      .subscribe((data: any) => {
+        console.log("respuesta de productos: ", data);
+        this.processFormationResponse(data);
+      }, (error: any) => {
+        console.log("error en productos: ", error);
+      })
+  }
+
+  processFormationResponse(resp: any) {
+    const dateFormation: Formation[] = [];
+
+       resp.forEach((element: Formation) => {
+         //element.category = element.category.name;
+         element.picture = 'data:image/jpeg;base64,'+element.picture;
+         dateFormation.push(element);
+       });
+
+       //set the datasource
+    this.dataSource.data = resp;
+    this.dataSource.paginator = this.paginator;
+  }
+
+
+openProductDialog(){
+  const dialogRef = this.dialog.open( NewFormationComponent, {
+    width: '450px'
+  });
+
+  dialogRef.afterClosed().subscribe((result:any) => {
+
+    if( result == 1){
+      this.openSnackBar("Formaion Ajouter", "Exitosa");
+      this.getFormations();
+    } else if (result == 2) {
+      this.openSnackBar("un Erruer se produit a l'heure de ajouter une formation", "Error");
+    }
+  });
 }
+
+openSnackBar(message: string, action: string) : MatSnackBarRef < SimpleSnackBar > {
+  return this.snackBar.open(message, action, {
+    duration: 2000
+  })
+
+}
+
+  edit(id:number, name: string, nombreh: number, cout: number, programme: string, ville: string, categorie: string){
+    const dialogRef = this.dialog.open(NewFormationComponent , {
+      width: '450px',
+      data: {id: id, name: name, nombreh: nombreh, cout: cout, programme: programme, ville: ville, categorie: categorie}
+    });
+
+    dialogRef.afterClosed().subscribe((result:any) => {
+
+      if( result == 1){
+        this.openSnackBar("Producto editado", "Exitosa");
+        this.getFormations();
+      } else if (result == 2) {
+        this.openSnackBar("Se produjo un error al editar producto", "Error");
+      }
+    });
+
+
+  }
+
+  delete(id: any){
+    const dialogRef = this.dialog.open(ConfirmationComponent , {
+      width: '450px',
+      data: {id: id, module: "formation"}
+    });
+
+    dialogRef.afterClosed().subscribe((result:any) => {
+
+      if( result == 1){
+        this.openSnackBar("Formation supprimer", "Exitosa");
+        this.getFormations();
+      } else if (result == 2) {
+        this.openSnackBar("un erreur se produit a l'heure de supprimer la formation", "Error");
+      }
+    });
+  }
+
+  buscar(name: any){
+  //   if ( name.length === 0){
+  //     return this.getProducts();
+  //   }
+
+  //   this.productService.getProductByName(name)
+  //       .subscribe( (resp: any) =>{
+  //         this.processProductResponse(resp);
+  //       })
+  }
+
+  // exportExcel(){
+
+  //   this.productService.exportProduct()
+  //       .subscribe( (data: any) => {
+  //         let file = new Blob([data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  //         let fileUrl = URL.createObjectURL(file);
+  //         var anchor = document.createElement("a");
+  //         anchor.download = "products.xlsx";
+  //         anchor.href = fileUrl;
+  //         anchor.click();
+
+  //         this.openSnackBar("Archivo exportado correctamente", "Exitosa");
+  //       }, (error: any) =>{
+  //         this.openSnackBar("No se pudo exportar el archivo", "Error");
+  //       })
+
+  // }
+
+}
+
+

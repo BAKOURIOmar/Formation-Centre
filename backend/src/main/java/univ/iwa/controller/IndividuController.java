@@ -27,7 +27,6 @@ public class IndividuController {
 	
 	 //Ajouter un individu
     @PostMapping("/addindividu")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSITANT')")
     public ResponseEntity<Inndividualsdto> addindividu(@RequestBody Inndividualsdto indiv){
         return new ResponseEntity<Inndividualsdto>(individuservice.addindividu(indiv),HttpStatus.OK);
     }

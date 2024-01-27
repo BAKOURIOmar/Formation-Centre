@@ -16,13 +16,14 @@ import lombok.NoArgsConstructor;
 public class UserInfo { 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
-	private long id;
-	private String name; 
-	private String email; 
-	private String motcles;
-	private String note;
-	private String password; 
-	private String roles;
-	private String type;
+	private long id;//both
+	private String name; //both
+	private String Ville;//assitant
+	private String email; //both
+	private String motcles;//formateur
+	private String remarque;//formateur
+	private String password; //both
+	private String roles;//both
+	private String type;//formateur
 } 
 
