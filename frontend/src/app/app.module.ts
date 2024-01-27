@@ -32,6 +32,7 @@ import { NewFormationComponent } from './components/new-formation/new-formation.
 import { NewAssistantComponent } from './components/new-assistant/new-assistant.component';
 import { GestionEntrepriseComponent } from './views/home/gestion-entreprise/gestion-entreprise.component';
 import { NewEntrepriseComponent } from './components/new-entreprise/new-entreprise.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 @NgModule({
 
@@ -44,7 +45,7 @@ import { NewEntrepriseComponent } from './components/new-entreprise/new-entrepri
     SidenavComponent,
     AccueilleComponent,
     RegisterComponent,
-
+    SignupComponent,
     GestionFormatuersComponent,
     GestionAssistantsComponent,
     GestionFormationsComponent,
