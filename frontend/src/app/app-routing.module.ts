@@ -8,19 +8,22 @@ import { HomeComponent } from './views/home/home.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 import { PlanificationComponent } from './views/home/planification/planification.component';
+import { AuthGuard } from './shared/guards/auth.guard';
+import { GestionEntrepriseComponent } from './views/home/gestion-entreprise/gestion-entreprise.component';
 
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent,children:[
-    {path: 'planification', component: PlanificationComponent},
-    {path: 'formateurs', component: GestionFormatuersComponent},
-    {path: 'formations', component: GestionFormationsComponent},
-    {path: 'assistants', component: GestionAssistantsComponent},
+  { path: 'home', component: HomeComponent ,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN','ROLE_FORMATEUR']},children:[
+    {path: 'planification', component: PlanificationComponent ,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN','ROLE_FORMATEUR']}},
+    {path: 'formateurs', component: GestionFormatuersComponent,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN','ROLE_FORMATEUR']}},
+    {path: 'formations', component: GestionFormationsComponent,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN','ROLE_FORMATEUR']}},
+    {path: 'assistants', component: GestionAssistantsComponent,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN','ROLE_FORMATEUR']}},
+    {path: 'entreprises', component: GestionEntrepriseComponent,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN','ROLE_FORMATEUR']}},
     { path: '', pathMatch: 'full', redirectTo: 'planification' },
   ]},
   { path: 'accueille', component: AccueilleComponent},
   { path: 'register', component: RegisterComponent},
-  { path: 'login', component: LoginComponent},
+  { path: 'login', component: LoginComponent,},
   { path: '**', redirectTo: 'accueille'}
 ];
 

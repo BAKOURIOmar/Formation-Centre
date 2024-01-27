@@ -1,4 +1,5 @@
 package univ.iwa.service;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import org.modelmapper.ModelMapper;
 import univ.iwa.dto.Userdto;
 import univ.iwa.model.Formation;
 import univ.iwa.repository.FormationReposetory;
+import univ.iwa.util.Util;
 import univ.iwa.dto.Formationdto;
 import java.nio.file.StandardCopyOption;
 
@@ -29,162 +31,135 @@ public class FormationService {
 	ModelMapper modelMapper;
 	@Autowired
 	FormationReposetory formrepo;
+
 //Ajouter Formation
-	public Formation addFormation(Formationdto formationdto) throws IOException, java.io.IOException {
-	    Formation formation = modelMapper.map(formationdto, Formation.class);
+	public Formationdto addFormation(MultipartFile picture, String name, Long nombreh, double cout, String programme,
+			String ville, String categorie) throws IOException, java.io.IOException {
+		Formationdto formationdto = new Formationdto();
+		formationdto.setName(name);
+		formationdto.setNombreh(nombreh);
+		formationdto.setNombreh(nombreh);
+		formationdto.setCout(cout);
+		formationdto.setProgramme(programme);
+		formationdto.setVille(ville);
+		formationdto.setCategorie(categorie);
+		formationdto.setPicture(Util.compressZLib(picture.getBytes()));
 
-	    MultipartFile image = formationdto.getImage();
-
-	    if (image != null && !image.isEmpty()) {
-	        try {
-	            // Enregistrer l'image
-	            byte[] imageBytes = image.getBytes();
-	            Path imagePath = Path.of("src/main/resources/static/photos/" + formation.getId() + ".png");
-	            Files.copy(new ByteArrayInputStream(imageBytes), imagePath, StandardCopyOption.REPLACE_EXISTING);
-
-	            // Mettre à jour le champ image dans la formation
-	            formation.setImagePath(imagePath.toString());
-	            System.out.print("Requête envoyée");
-	        } catch (IOException e) {
-	            throw new IOException("Failed to save image.", e);
-	        }
-	    }
-
-	    return formrepo.save(formation);
+		Formation formation = modelMapper.map(formationdto, Formation.class);
+		return modelMapper.map(formrepo.save(formation), Formationdto.class);
 	}
 
-	//Lister tous les formations
+	// Lister tous les formations
 	public List<Formationdto> getAllFormations() throws java.io.IOException {
-	    List<Formation> formations = formrepo.findAll();
-	    List<Formationdto> formationdtos = new ArrayList<>();
+		List<Formation> list = new ArrayList();
+		try {
+			List<Formation> formations = formrepo.findAll();
 
-	    for (Formation formation : formations) {
-	        Formationdto formationdto = modelMapper.map(formation, Formationdto.class);
+			if (formations.size() > 0) {
 
-	        // Vérifier si le champ imagePath est non null
-	        if (formation.getImagePath() != null) {
-	            // Charger le contenu de l'image en tant que tableau de bytes
-	            try {
-	                Path imagePath = Path.of(formation.getImagePath());
-	                byte[] imageBytes = Files.readAllBytes(imagePath);
-	                formationdto.setImageBytes(imageBytes);
-	            } catch (IOException e) {
-	                // Gérer l'exception, par exemple en journalisant l'erreur
-	                e.printStackTrace();
-	            }
-	        }
+				formations.stream().forEach((f) -> {
+					byte[] imageDescompressed = Util.decompressZLib(f.getPicture());
+					f.setPicture(imageDescompressed);
+					list.add(f);
+				});
 
-	        formationdtos.add(formationdto);
-	    }
+			} else {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("there is no Formations"));
+			}
+		} catch (Exception e) {
+			e.getStackTrace();
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Error catch"));
 
-	    return formationdtos;
+		}
+
+		return list.stream().map(f -> modelMapper.map(f, Formationdto.class)).collect(Collectors.toList());
 	}
+
 // Modifier Formation
-	public Formationdto updateformation(Long id, Formationdto forma, MultipartFile image) throws java.io.IOException {
-	    Optional<Formation> formoption = formrepo.findById(id);
-	    Formation form = new Formation();
-	    if (formoption.isPresent()) {
-	        form = formoption.get();
-	        form.setName(forma.getName());
-	        form.setNombreh(forma.getNombreh());
-	        form.setCout(forma.getCout());
-	        form.setProgramme(forma.getProgramme());
-	        form.setVille(forma.getVille());
-	        form.setCategorie(forma.getCategorie());
+	public Formationdto updateformation(Long id, Formationdto formationdto, MultipartFile picture)
+			throws java.io.IOException {
+		Optional<Formation> result = formrepo.findById(id);
+		if (result.isPresent()) {
+			Formation formation = result.get();
+			formation.setName(formationdto.getName());
+			formation.setNombreh(formationdto.getNombreh());
+			formation.setCout(formationdto.getCout());
+			formation.setProgramme(formationdto.getProgramme());
+			formation.setVille(formationdto.getVille());
+			formation.setCategorie(formationdto.getCategorie());
+			formation.setPicture(Util.compressZLib(picture.getBytes()));
+			return modelMapper.map(formrepo.save(formation), Formationdto.class);
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+					String.format("Formation with ID %d does not exist", id));
+		}
 
-	        // Mettez à jour le champ image si le fichier est présent
-	        if (image != null && !image.isEmpty()) {
-	            try {
-	                byte[] imageBytes = image.getBytes();
-	                Path imagePath = Path.of("src/main/resources/static/photos/" + form.getId() + ".png");
-	                Files.copy(new ByteArrayInputStream(imageBytes), imagePath, StandardCopyOption.REPLACE_EXISTING);
-
-	                // Mettez à jour le champ image dans la formation
-	                form.setImagePath(imagePath.toString());
-	                System.out.print("Requête envoyée");
-	            } catch (IOException e) {
-	                throw new IOException("Failed to save image.", e);
-	            }
-	        }
-	        return  modelMapper.map(formrepo.save(form), Formationdto.class);
-	       
-	    } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Skill with ID %d does not exist", id));
-        }
-
-	    
-	    
 	}
 
-// Supprimer Formation
+//
+//// Supprimer Formation
 	public boolean DeleteFormation(Long formationId) {
 		if (!formrepo.existsById(formationId)) {
-	      return false; // Devuelve false si el usuario no existe
-	    }
+			return false; // Devuelve false si el usuario no existe
+		}
 		formrepo.deleteById(formationId);
 		return true;
 
 	}
-//Afficher les formations par catégoeies
+
+////Afficher les formations par catégoeies
 	public List<Formationdto> getformationcategorie(String categorie) {
-	    List<Formation> formations = formrepo.findByCategorie(categorie);
-	    List<Formationdto> formationsdto = formations.stream()
-	            .map(formation -> {
-	                Formationdto formationdto = modelMapper.map(formation, Formationdto.class);
-	               
-	             // Vérifier si le champ imagePath est non null
-	    	        if (formation.getImagePath() != null) {
-	    	            // Charger le contenu de l'image en tant que tableau de bytes
-	    	            try {
-	    	                Path imagePath = Path.of(formation.getImagePath());
-	    	                byte[] imageBytes = Files.readAllBytes(imagePath);
-	    	                formationdto.setImageBytes(imageBytes);
-	    	            } catch (IOException e) {
-	    	                // Gérer l'exception, par exemple en journalisant l'erreur
-	    	                e.printStackTrace();
-	    	            } catch (java.io.IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-	    	        }
+		List<Formation> list = new ArrayList();
+		try {
+			List<Formation> formations = formrepo.findByCategorie(categorie);
 
-	                return formationdto;
-	            })
-	            .collect(Collectors.toList());
+			if (formations.size() > 0) {
 
-	    return formationsdto;
+				formations.stream().forEach((f) -> {
+					byte[] imageDescompressed = Util.decompressZLib(f.getPicture());
+					f.setPicture(imageDescompressed);
+					list.add(f);
+				});
+
+			} else {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("there is no Formations"));
+			}
+		} catch (Exception e) {
+			e.getStackTrace();
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Error catch"));
+
+		}
+
+		return list.stream().map(f -> modelMapper.map(f, Formationdto.class)).collect(Collectors.toList());
 	}
-
-//Afficher les formations par les villes
+//
+////Afficher les formations par les villes
 	public List<Formationdto> getformtionville(String ville) {
-	    List<Formation> formations = formrepo.findByVille(ville);
-	    List<Formationdto> formationdto = formations.stream()
-	            .map(formation -> {
-	                Formationdto dto = modelMapper.map(formation, Formationdto.class);
+		List<Formation> list = new ArrayList();
+	try {
+		List<Formation> formations = formrepo.findByVille(ville);
+	    
+	    
+		if( formations.size() > 0) {
+			
+			formations.stream().forEach( (f) -> {
+				byte[] imageDescompressed = Util.decompressZLib(f.getPicture());
+				f.setPicture(imageDescompressed);
+				list.add(f);
+			});
+			
+		} else {
+			 throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("there is no Formations"));
+		}
+	} catch (Exception e) {
+		e.getStackTrace();
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Error catch"));
 
-	                // Vérifier si le champ imagePath est non null
-	                if (formation.getImagePath() != null) {
-	                    // Charger le contenu de l'image en tant que tableau de bytes
-	                    try {
-	                        Path imagePath = Path.of(formation.getImagePath());
-	                        byte[] imageBytes = Files.readAllBytes(imagePath);
-	                        // Mettre à jour le champ image dans l'objet Formationdto
-	                        dto.setImageBytes(imageBytes);
-	                    } catch (IOException e) {
-	                        // Gérer l'exception, par exemple en journalisant l'erreur
-	                        e.printStackTrace();
-	                    } catch (java.io.IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-	                }
+	} 
 
-	                return dto;
-	            })
-	            .collect(Collectors.toList());
-
-	    return formationdto;
+    return list.stream()
+            .map(f -> modelMapper.map(f, Formationdto.class))
+            .collect(Collectors.toList());
 	}
-
 
 }

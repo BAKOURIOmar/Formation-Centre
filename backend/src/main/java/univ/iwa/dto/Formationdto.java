@@ -21,9 +21,9 @@ public class Formationdto {
     private String programme;
     private String ville;
     private String categorie;
-    private MultipartFile image;
+//    private MultipartFile image;
    // private String imagePath;
-    private byte[] imageBytes;
+    private byte[] picture;
     
     
 
