@@ -34,6 +34,8 @@ import { GestionEntrepriseComponent } from './views/home/gestion-entreprise/gest
 import { NewEntrepriseComponent } from './components/new-entreprise/new-entreprise.component';
 import { SignupComponent } from './components/signup/signup.component';
 
+import { DetailsComponent } from './views/details/details.component';
+import { MatIconModule } from '@angular/material/icon';
 @NgModule({
 
   declarations: [
@@ -56,6 +58,7 @@ import { SignupComponent } from './components/signup/signup.component';
     NewAssistantComponent,
     GestionEntrepriseComponent,
     NewEntrepriseComponent,
+    DetailsComponent,
 
   ],
   imports: [
@@ -71,6 +74,7 @@ import { SignupComponent } from './components/signup/signup.component';
     AgrupaMaterialModule,
     HomeRoutingModule,
     FullCalendarModule,
+    MatIconModule,
 
   ],
   providers: [

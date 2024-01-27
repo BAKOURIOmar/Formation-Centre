@@ -21,8 +21,8 @@ import jakarta.persistence.Transient;
 @AllArgsConstructor 
 @NoArgsConstructor
 public class Formation {
-	@Id 
-	@GeneratedValue(strategy = GenerationType.IDENTITY) 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id ;
 	private String name;
 	private Long nombreh;

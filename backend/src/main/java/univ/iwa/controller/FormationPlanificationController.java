@@ -26,13 +26,13 @@ public class FormationPlanificationController {
     }
 
     //recuperer tout les formation planifiee et faire le filtrage des donnes
-    @GetMapping("/getform")
+   /* @GetMapping("/getform")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
     public ResponseEntity<List<Formationplanifierdto>> getallplanification(@RequestParam (required = false) String nom,@RequestParam (required = false)String date ) throws ParseException {
        
       return new ResponseEntity<List<Formationplanifierdto>>(planserv.afficherformation(nom,date),HttpStatus.OK);
 
-    }
+    }*/
 
 
     //update la planification d une formation

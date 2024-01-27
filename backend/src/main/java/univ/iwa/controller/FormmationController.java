@@ -12,9 +12,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import io.jsonwebtoken.io.IOException;
+import java.io.IOException;
 
-import java.io.ByteArrayOutputStream;
 import java.util.*;
 import java.util.zip.Deflater;
 
@@ -27,6 +26,7 @@ import univ.iwa.dto.Formationdto;
 public class FormmationController {
  @Autowired
  FormationService formservice;
+ 
  
  //Ajouter Formation
  @PostMapping("/addformation")
@@ -44,7 +44,6 @@ public class FormmationController {
          return ResponseEntity.ok(formservice.addFormation(picture,name,nombreh,cout,programme,ville,categorie));
    
  }
-
  //Afficher tous les formations
  @GetMapping("/getformation")
     public ResponseEntity<List<Formationdto>> allformation() throws java.io.IOException{
@@ -54,6 +53,7 @@ public class FormmationController {
 // //Modifier formation
  @PutMapping("/updateformation/{id}")
  @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+ public ResponseEntity<Formationdto> updateformation(
  public ResponseEntity<Formationdto> updateformation(
          @PathVariable Long id,
          @RequestPart("picture") MultipartFile picture,
@@ -81,7 +81,16 @@ public class FormmationController {
 @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
  public ResponseEntity<List<Formationdto>> getbyville(@PathVariable String ville){
   return new ResponseEntity<List<Formationdto>>( formservice.getformtionville(ville),HttpStatus.OK);
+ public ResponseEntity<List<Formationdto>> getbyville(@PathVariable String ville){
+  return new ResponseEntity<List<Formationdto>>( formservice.getformtionville(ville),HttpStatus.OK);
 }
-
+*/
+ 
+ //recuperer formation par id 
+ @GetMapping("/getformationbyid/{id}")
+ public ResponseEntity<Formationdto> recuperformaationid(@PathVariable long id){
+	 Formationdto formation = formservice.getformationid(id);
+	  return new ResponseEntity<>(formation, HttpStatus.OK);
+ }
 
 }

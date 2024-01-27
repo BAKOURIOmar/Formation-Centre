@@ -7,4 +7,5 @@ export interface FormationModel {
   programme: String;
   ville: String;
   categorie: String;
+  imagePath:String
 }

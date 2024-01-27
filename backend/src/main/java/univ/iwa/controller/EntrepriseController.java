@@ -37,7 +37,6 @@ public class EntrepriseController {
     @PutMapping("/updateEntreprise/{id}")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
     public ResponseEntity<Entreprisedto> updateentreprise(@PathVariable Long id,@RequestBody Entreprisedto entreprise){
-
         return new ResponseEntity<Entreprisedto>(entreser.updateentreprise(id,entreprise),HttpStatus.OK);
     }
 

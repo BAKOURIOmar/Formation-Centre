@@ -11,6 +11,7 @@ import { PlanificationComponent } from './views/home/planification/planification
 import { AuthGuard } from './shared/guards/auth.guard';
 import { GestionEntrepriseComponent } from './views/home/gestion-entreprise/gestion-entreprise.component';
 
+import { DetailsComponent } from './views/details/details.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent ,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN','ROLE_FORMATEUR']},children:[
@@ -23,8 +24,9 @@ const routes: Routes = [
   ]},
   { path: 'accueille', component: AccueilleComponent},
   { path: 'register', component: RegisterComponent},
-  { path: 'login', component: LoginComponent,},
-  { path: '**', redirectTo: 'accueille'}
+  { path: 'login', component: LoginComponent},
+  { path: 'detail/:id', component: DetailsComponent },
+  { path: '**', redirectTo: 'accueille'},
 ];
 
 @NgModule({

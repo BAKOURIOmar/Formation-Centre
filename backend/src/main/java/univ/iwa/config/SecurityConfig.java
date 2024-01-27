@@ -54,6 +54,8 @@ public class SecurityConfig {
 								.requestMatchers("/auth/updateFormateur/**").authenticated()
 								.requestMatchers("/auth/supprimerUser/**").authenticated()
 								.requestMatchers("/plan/**").authenticated()
+								.requestMatchers("/photos/**").permitAll()
+								.requestMatchers("/form/getformationbyid/**").permitAll()
 
 
 			).csrf(csrf->csrf.disable())
