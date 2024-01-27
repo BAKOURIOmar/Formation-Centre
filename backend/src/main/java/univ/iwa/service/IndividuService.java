@@ -30,8 +30,8 @@ public class IndividuService {
     // Ajouter un individu
     public Inndividualsdto addindividu(Inndividualsdto individudto) {
         Individuals individu = modelMapper.map(individudto, Individuals.class);
-        individurepo.save(individu);
-        return individudto;
+        Individuals createdInndividual =individurepo.save(individu);
+        return modelMapper.map(createdInndividual, Inndividualsdto.class);
     }
 
 

@@ -59,12 +59,17 @@
                     <div class="d-flex col-12 justify-content-center ml-auto mr-auto mt-2">
                         <mat-form-field appearance="outline" class="titulo w-100">
                             <mat-label>Date de naissance</mat-label>
-                            <input matInput [formControlName]="'dateNaissance'" type="date">
+                            <input matInput [matDatepicker]="pickerDateNaissance" [formControlName]="'dateNaissance'"
+                            matDatepickerFormat="dd/MM/yyyy" />
+                          <mat-datepicker-toggle matSuffix [for]="pickerDateNaissance"></mat-datepicker-toggle>
+                          <mat-datepicker #pickerDateNaissance></mat-datepicker>
                             <mat-error *ngIf="myForm.get('dateNaissance')?.hasError('required')">
                                 *Date de naissance obligatoire
                             </mat-error>
                         </mat-form-field>
                     </div>
+
+
                 </mat-card-content>
                 <mat-card-actions class="d-flex col-10 justify-content-center m-auto">
                     <button mat-raised-button class="w-100" color="primary" (click)="onSubmit()">Entrar</button>

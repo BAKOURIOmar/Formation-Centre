@@ -33,6 +33,7 @@ import { NewAssistantComponent } from './components/new-assistant/new-assistant.
 import { GestionEntrepriseComponent } from './views/home/gestion-entreprise/gestion-entreprise.component';
 import { NewEntrepriseComponent } from './components/new-entreprise/new-entreprise.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { CommonModule, DatePipe } from '@angular/common';
 
 @NgModule({
 
@@ -60,6 +61,7 @@ import { SignupComponent } from './components/signup/signup.component';
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     MatToolbarModule,
     MatButtonModule,
@@ -73,7 +75,7 @@ import { SignupComponent } from './components/signup/signup.component';
     FullCalendarModule,
 
   ],
-  providers: [
+  providers: [DatePipe ,
     AuthGuard,
     {
     provide:HTTP_INTERCEPTORS,
