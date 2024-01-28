@@ -1,5 +1,5 @@
 
-<h2 mat-dialog-title> {{ estatForm }} une nouvelle formation </h2>
+<h2 mat-dialog-title> {{ estatForm }} un nouveau formateur </h2>
 <mat-dialog-content>
 
     <form [formGroup]="formateurForm">
@@ -7,22 +7,37 @@
 
             <mat-form-field>
                 <input matInput placeholder="Nom" formControlName="name" required/>
+                <mat-error *ngIf="formateurForm.get('name')?.hasError('required')">
+                    * Nom est obligatoire
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field>
                 <input matInput  placeholder="Email" formControlName="email" required />
+                <mat-error *ngIf="formateurForm.get('name')?.hasError('required')">
+                    * Email est obligatoire
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field>
-                <input matInput placeholder="Comptences" formControlName="motcles" required />
+                <input matInput placeholder="Compétences" formControlName="motcles" required />
+                <mat-error *ngIf="formateurForm.get('name')?.hasError('required')">
+                    * Compétences sont obligatoire
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field>
               <input matInput  placeholder="Remarque" formControlName="remarque" required />
+            <mat-error *ngIf="formateurForm.get('name')?.hasError('required')">
+                * Remarque est obligatoire
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <input matInput  placeholder="Mot de pass" formControlName="password" required />
+            <input matInput  placeholder="Mot de passe" formControlName="password" required />
+            <mat-error *ngIf="formateurForm.get('name')?.hasError('required')">
+                * Mot de passe est obligatoire
+            </mat-error>
         </mat-form-field>
 
         <!-- <mat-form-field>
@@ -43,7 +58,7 @@
 <mat-dialog-actions>
 
     <button mat-button color="primary" (click)="onSave()" [disabled]="formateurForm.invalid">
-        <mat-icon>save</mat-icon> Sauvgarder
+        <mat-icon>save</mat-icon> Enregistrer
     </button>
 
     <button mat-button color="primary" (click)="onCancel()">

@@ -1,6 +1,7 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
 import { UserAuthService } from '../../shared/services/user-auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
@@ -9,20 +10,21 @@ import { UserAuthService } from '../../shared/services/user-auth.service';
 })
 export class SidenavComponent {
 logOut() {
-throw new Error('Method not implemented.');
+  this.userAuthService.clear();
+  this.router.navigate(['/login']);
 }
 
   mobileQuery: MediaQueryList;
 
   menuNav = [
-    {name: "planification", route: "planification", icon: "home"},
+    {name: "Planification", route: "planification", icon: "home"},
     {name: "Formations", route: "formations", icon: "category"},
     {name: "Formateurs", route: "formateurs", icon: "production_quantity_limits"},
     {name: "Assistants", route: "assistants", icon: "production_quantity_limits"},
     {name: "Entreprises", route: "entreprises", icon: "production_quantity_limits"}
   ]
 
-  constructor(media: MediaMatcher ,private userAuthService: UserAuthService) {
+  constructor(media: MediaMatcher, private userAuthService: UserAuthService, private router: Router) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
   }
   public isAddmin(){

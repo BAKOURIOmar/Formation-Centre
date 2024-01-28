@@ -7,32 +7,51 @@
 
             <mat-form-field>
                 <input matInput placeholder="Nom" formControlName="name" required/>
+                <mat-error *ngIf="formationForm.get('name')?.hasError('required')">
+                   * Nom est obligatoire
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field>
                 <input matInput type="number" placeholder="Durration" formControlName="nombreh" required />
+                <mat-error *ngIf="formationForm.get('name')?.hasError('required')">
+                    * Durration est obligatoire
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field>
                 <input matInput type="number" placeholder="Cout" formControlName="cout" required />
+                <mat-error *ngIf="formationForm.get('name')?.hasError('required')">
+                    * Cout est obligatoire
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field>
               <input matInput  placeholder="Programme" formControlName="programme" required />
+            <mat-error *ngIf="formationForm.get('name')?.hasError('required')">
+                * Programme est obligatoire
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field>
             <input matInput  placeholder="Ville" formControlName="ville" required />
+            <mat-error *ngIf="formationForm.get('name')?.hasError('required')">
+                * Ville est obligatoire
+            </mat-error>
+        
         </mat-form-field>
 
         <mat-form-field>
           <input matInput  placeholder="Categorie" formControlName="categorie" required />
+        <mat-error *ngIf="formationForm.get('name')?.hasError('required')">
+            * Categorie est obligatoire
+        </mat-error>
       </mat-form-field>
 
 
 
             <div>
-                <mat-label> Foto: </mat-label>
+                <mat-label> Photo: </mat-label>
                 <label for="file-upload" class="subir">
                   télécharger  image
                 </label>
@@ -58,11 +77,11 @@
 <mat-dialog-actions>
 
     <button mat-button color="primary" (click)="onSave()" [disabled]="formationForm.invalid">
-        <mat-icon>save</mat-icon> Guardar
+        <mat-icon>save</mat-icon> Enregistrer
     </button>
 
     <button mat-button color="primary" (click)="onCancel()">
-        <mat-icon>cancel</mat-icon> Cancelar
+        <mat-icon>cancel</mat-icon> Annuler
     </button>
 
 </mat-dialog-actions>

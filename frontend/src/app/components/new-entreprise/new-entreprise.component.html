@@ -1,5 +1,5 @@
 
-<h2 mat-dialog-title> {{ estatForm }} une nouvelle formation </h2>
+<h2 mat-dialog-title> {{ estatForm }} une nouvelle entreprise </h2>
 <mat-dialog-content>
 
     <form [formGroup]="entrepriseForm">
@@ -7,22 +7,37 @@
 
             <mat-form-field>
                 <input matInput placeholder="Nom" formControlName="name" required/>
+                <mat-error *ngIf="entrepriseForm.get('name')?.hasError('required')">
+                    * Nom est obligatoire
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field>
                 <input matInput  placeholder="Adresse" formControlName="adresse" required />
+                <mat-error *ngIf="entrepriseForm.get('name')?.hasError('required')">
+                    * Adresse est obligatoire
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field>
-                <input matInput type="number" placeholder="Telephone" formControlName="tel" required />
+                <input matInput type="number" placeholder="Téléphone" formControlName="tel" required />
+                <mat-error *ngIf="entrepriseForm.get('name')?.hasError('required')">
+                    * Téléphone est obligatoire
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field>
               <input matInput  placeholder="Url" formControlName="url" required />
+            <mat-error *ngIf="entrepriseForm.get('name')?.hasError('required')">
+                * Url est obligatoire
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field>
             <input matInput  placeholder="Email" formControlName="email" required />
+            <mat-error *ngIf="entrepriseForm.get('name')?.hasError('required')">
+                * Email est obligatoire
+            </mat-error>
         </mat-form-field>
 
         <!-- <mat-form-field>
@@ -43,7 +58,7 @@
 <mat-dialog-actions>
 
     <button mat-button color="primary" (click)="onSave()" [disabled]="entrepriseForm.invalid">
-        <mat-icon>save</mat-icon> Sauvgarder
+        <mat-icon>save</mat-icon> Enregistrer
     </button>
 
     <button mat-button color="primary" (click)="onCancel()">

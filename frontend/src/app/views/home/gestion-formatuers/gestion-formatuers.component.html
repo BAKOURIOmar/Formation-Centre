@@ -1,12 +1,12 @@
 <mat-card>
 
-  <h2 class="alinear">Liste de Formateurs</h2>
+  <h2 class="alinear">Liste des Formateurs</h2>
   <mat-card-header>
 
       <div>
-          <mat-form-field hintLabel="Cherche nom" appearance="fill">
+          <mat-form-field hintLabel="Recherche formateur" appearance="fill">
 
-              <mat-label>Cherche nom</mat-label>
+              <mat-label>Recherche</mat-label>
               <input matInput #input (keyup)="buscar(input.value)">
           </mat-form-field>
       </div>
@@ -67,7 +67,7 @@
       </ng-container>
 
           <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef> Acciones </th>
+              <th mat-header-cell *matHeaderCellDef> Actions </th>
               <td mat-cell *matCellDef="let element; let i=index;">
 
                   <button mat-icon-button color="accent" (click)="edit(element.id,element.name , element.motcles, element.email, element.remarque)">
