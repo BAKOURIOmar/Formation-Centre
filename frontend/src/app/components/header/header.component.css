@@ -1,51 +1,53 @@
 .dashboard-container {
   display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-h1.app-name {
-  margin-left: 8px;
-  margin-top: 15px;
+  justify-content: space-between;
+  /* Pour aligner les éléments horizontalement */
+  align-items: center;
+  /* Pour aligner les éléments verticalement */
 }
 
-
-
-ul li {
- list-style: none;
+.dashboard-toolbar {
+  background-color: #1976d2;
+  /* Couleur de fond de la barre d'outils */
+  color: white;
+  /* Couleur du texte */
+  padding: 0 20px;
+  /* Espacement intérieur */
 }
 
-
-.header{
-  margin-top: 20px;
+.app-name {
+  margin-left: 10px;
+  /* Marge à gauche */
+  margin-right: 20px;
 }
 
-.icono{
-  margin-right: 10px;
-}
-
-div ul {
- display: flex;
- align-items: center;
-}
-
-.right{
-  margin-left: auto;
-}
-
-.name {
-  margin-bottom: 1px;
-}
 .search-bar {
-  margin-left: 6px;
-  max-width: 1000px;
-}
-.search-field {
   margin-left: auto;
-  max-width: 1000px;
-  width: 900px; /* Establece el ancho máximo deseado */
-  flex-grow: 5; /* Permite que el campo de búsqueda crezca flexiblemente */
+  /* Alignement à droite */
+  margin-right: 100px;
+  /* Marge à droite */
+}
+
+.search-field {
+  width: 400px;
+  /* Ajustez la largeur selon vos préférences */
+}
+
+.right ul {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.right li {
+  margin-left: 20px;
+  /* Marge entre les éléments */
+}
+
+
+.mat-icon {
+  color: white;
+  /* Couleur des icônes */
 }

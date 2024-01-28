@@ -3,7 +3,7 @@
   <!-- empieza toolbar-->
   <mat-toolbar color="primary" class="dashboard-toolbar">
     <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-    <h1 class="app-name">Formationes Gonzales</h1>
+    <h1 class="app-name">Bienvenue, Administrateur</h1>
 
     <div class="right">
       <ul>
@@ -13,13 +13,11 @@
           </button>
         </li>
         <li>
-          <button mat-button [matMenuTriggerFor]="menu">
-            <mat-icon>person_outline</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu" (click)="logOut()">
-            <mat-icon>exit_to_app</mat-icon>
-            Cerrar Sesión
-          </mat-menu>
+          
+            <button mat-button (click)="logOut()">
+              <mat-icon>exit_to_app</mat-icon>Déconnexion
+            </button>
+
         </li>
       </ul>
     </div>
@@ -35,8 +33,8 @@
         <!--profile-->
         <div class="profile-card">
           <div class="header">
-            <h2>Alfredo Leal</h2>
-            <h4>alfredo.leal.pinogmail.com</h4>
+            <h2>Admin</h2>
+            <h4>admin.admin.gmail.com</h4>
           </div>
         </div>
 

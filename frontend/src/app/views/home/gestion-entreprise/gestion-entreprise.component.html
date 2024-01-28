@@ -4,9 +4,9 @@
   <mat-card-header>
 
     <div>
-      <mat-form-field hintLabel="Cherche nom" appearance="fill">
+      <mat-form-field hintLabel="Recherche entreprise" appearance="fill">
 
-        <mat-label>Cherche nom</mat-label>
+        <mat-label>Recherche</mat-label>
         <input matInput #input (keyup)="buscar(input.value)">
       </mat-form-field>
     </div>
@@ -50,7 +50,7 @@
 
 
       <ng-container matColumnDef="tel">
-        <th mat-header-cell *matHeaderCellDef> Telephone </th>
+        <th mat-header-cell *matHeaderCellDef> Téléphone </th>
         <td mat-cell *matCellDef="let element"> {{ element.tel}}</td>
       </ng-container>
 
@@ -65,7 +65,7 @@
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef> Accions </th>
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let element; let i=index;">
 
           <button mat-icon-button color="accent" (click)="edit(element.id,element.name , element.adresse, element.tel, element.url, element.email)">

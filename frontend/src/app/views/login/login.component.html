@@ -5,41 +5,42 @@
                   <img src="../../../assets/img/hamburguesa-sin-abrir.png">
           </mat-card-header>
 
+        <h2>Bienvenue de retour</h2>
           <form [formGroup]="myForm" class="d-flex flex-column">
               <div class="mb-3">
                   <div *ngIf="errorLogin" class="text-danger text-center">
-                      Usuario y/o contraseña incorrectos.
+                    Nom d'utilisateur et/ou mot de passe incorrects.
                   </div>
                   <div *ngIf="errorPermiso" class="text-danger text-center">
-                      El usuario introducido no tiene permisos.
+                    L'utilisateur saisi n'a pas les permissions nécessaires.
                   </div>
                   <div *ngIf="errorDetalle" class="text-danger text-center">
-                      Error al devolver el detalle del usuario.
+                    Erreur lors de la récupération des détails de l'utilisateur.
                   </div>
               </div>
               <mat-card-content>
                   <div class="d-flex col-12 justify-content-center ml-auto mr-auto mt-2">
                       <mat-form-field appearance="outline" class="titulo w-100">
-                          <mat-label>Usuario</mat-label>
+                          <mat-label>Utilisateur</mat-label>
                           <input matInput [formControlName]="'username'">
                           <mat-error *ngIf="myForm.get('username')?.hasError('required')">
-                              *Usuario obligatorio
+                              *Nom d'utilisateur obligatoire
                           </mat-error>
                       </mat-form-field>
                   </div>
                   <div class="d-flex col-12 justify-content-center ml-auto mr-auto mt-2">
                       <mat-form-field appearance="outline" class="titulo w-100">
-                          <mat-label>Contraseña</mat-label>
+                          <mat-label>Mot de passe</mat-label>
                           <input matInput [type]="hide ? 'password' : 'text'" [formControlName]="'password'">
                           <mat-error *ngIf="myForm.get('password')?.hasError('required')">
-                              *Contraseña obligatoria
+                              *Mot de passe obligatoire
                           </mat-error>
                           <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                       </mat-form-field>
                   </div>
               </mat-card-content>
               <mat-card-actions class="d-flex col-10 justify-content-center m-auto">
-                  <button mat-raised-button class="w-100" color="primary" (click)="onSubmit()">Entrar</button>
+                  <button mat-raised-button class="w-100" color="primary" (click)="onSubmit()">Entrer</button>
               </mat-card-actions>
           </form>
         </mat-card>
