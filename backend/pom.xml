@@ -107,6 +107,15 @@
 		    <version>5.3.10</version> <!-- ou la version correspondant à votre configuration -->
 		    <scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>javax.mail-api</artifactId>
+			<version>1.6.2</version>
+		</dependency>
 </dependencies> 
 
 	<build>

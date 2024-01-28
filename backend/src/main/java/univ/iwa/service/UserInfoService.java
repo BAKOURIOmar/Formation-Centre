@@ -33,6 +33,13 @@ public class UserInfoService implements UserDetailsService {
 	private PasswordEncoder encoder; 
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	EmailService emailService ;
+	
+	String subject="Identifiants de connexion";
+	String body;
+	
 	@Override
 	public UserDetails  loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<UserInfo> userDetail = repository.findByName(username);
@@ -43,6 +50,17 @@ public class UserInfoService implements UserDetailsService {
 	
 
 	public Userdto addAssistant(Userdto userdto) {
+		
+		body = "Cher "+userdto.getName()+",\\n\\n"
+				+ "Voici vos identifiants de connexion pour accéder au système du centre de formation Gonzales :\n\n"
+				+ "Utilisateur : " + userdto.getName() + "\n\n"
+				+ "Mot de passe : " + userdto.getPassword()+ "\n\n"
+				+ "Cordialement,\n\n"
+				+ "Centre de formation Gonzales";
+		
+		emailService.sendSimpleEmail(userdto.getEmail(),subject,body);
+		
+		
 		UserInfo user=modelMapper.map(userdto,UserInfo.class);
 			user.setRoles("ROLE_ASSISTANT");
 		 user.setPassword(encoder.encode(userdto.getPassword()));
@@ -50,6 +68,17 @@ public class UserInfoService implements UserDetailsService {
 		return modelMapper.map(createdUser,Userdto.class);
 	} 
 	public Userdto addFormateur(Userdto userdto) {
+		body = "Cher "+userdto.getName()+",\n\n"
+				+ "Voici vos identifiants de connexion pour accéder au système du centre de formation Gonzales :\n\n"
+				+ "Utilisateur : " + userdto.getName() + "\n"
+				+ "Mot de passe : " + userdto.getPassword()+ "\n\n"
+				+ "Cordialement,\n"
+				+ "Centre de formation Gonzales";
+		
+		emailService.sendSimpleEmail(userdto.getEmail(),subject,body);
+		
+		
+		
 		UserInfo user = modelMapper.map(userdto, UserInfo.class);
 			user.setRoles("ROLE_FORMATEUR");
 			user.setPassword(encoder.encode(userdto.getPassword()));
