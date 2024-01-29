@@ -57,9 +57,9 @@ public class SecurityConfig {
 								.requestMatchers("/photos/**").permitAll()
 								.requestMatchers("/form/getformationbyid/**").permitAll()
 								.requestMatchers("/form/getformationfiltre").permitAll()
+								.requestMatchers("/auth/registerFormateurExterne").permitAll())
 
-
-			).csrf(csrf->csrf.disable())
+			.csrf(csrf->csrf.disable())
 			.authenticationProvider(authenticationProvider()) 
 			.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class) ;	
 		return http.build();

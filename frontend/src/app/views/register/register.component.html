@@ -1,1 +1,56 @@
-<p>register works!</p>
+<h2 mat-dialog-title> Bienvenue Formateur </h2>
+<mat-dialog-content>
+
+    <form [formGroup]="formateurForm">
+        <div class="product-container">
+
+            <mat-form-field>
+                <input matInput placeholder="Nom" formControlName="name" required />
+                <mat-error *ngIf="formateurForm.get('name')?.hasError('required')">
+                    * Nom est obligatoire
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Email" formControlName="email" required />
+                <mat-error *ngIf="formateurForm.get('name')?.hasError('required')">
+                    * Email est obligatoire
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Compétences" formControlName="motcles" required />
+                <mat-error *ngIf="formateurForm.get('name')?.hasError('required')">
+                    * Compétences sont obligatoire
+                </mat-error>
+            </mat-form-field>
+
+        <!-- <mat-form-field>
+                <input matInput placeholder="Remarque" formControlName="remarque" required />
+                <mat-error *ngIf="formateurForm.get('name')?.hasError('required')">
+                    * Remarque est obligatoire
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Mot de passe" formControlName="password" required />
+                <mat-error *ngIf="formateurForm.get('name')?.hasError('required')">
+                    * Mot de passe est obligatoire
+                </mat-error>
+            </mat-form-field>-->
+
+            <!-- <mat-form-field>
+          <input matInput  placeholder="type" formControlName="type" required />
+      </mat-form-field> -->
+
+        </div>
+
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="dialog-buttons">
+    <button mat-raised-button color="primary" (click)="onSave()">Enregistrer</button>
+    <button mat-raised-button color="warn" (click)="onCancel()">Annuler</button>
+</mat-dialog-actions>
+
+
