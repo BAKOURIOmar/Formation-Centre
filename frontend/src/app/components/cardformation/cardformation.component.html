@@ -1,13 +1,14 @@
 <!-- <div class="card-container">
   <div *ngFor="let formation of FormationData">
     <mat-card class="example-card">
-      <img mat-card-image [src]="formation.imagePath" alt="{{ formation.name }} Image">
-      <mat-card-title>{{formation.name}}</mat-card-title>
-        <mat-card-subtitle>{{formation.categorie}}</mat-card-subtitle>
-        <mat-card-subtitle>{{formation.ville}}</mat-card-subtitle>
+      <img mat-card-image [src]="formation.picture" alt="{{ formation.name }} Image">
+      <mat-card-title class="formation-name">{{formation.name}}</mat-card-title>
+        <mat-card-subtitle class="subtitle">{{formation.categorie}}</mat-card-subtitle>
+        <mat-card-subtitle class="subtitle">{{formation.ville}}</mat-card-subtitle>
+        <mat-card-subtitle class="subtitle">{{formation.cout}}</mat-card-subtitle>
         <mat-card-actions>
-        <button mat-button >S'inscrire</button>
-        <button mat-button  (click)="exploreDetails(formation.id)">Explorer</button>
+        <button  mat-raised-button   (click)="inscrireFormation(formation.id)" >S'inscrire</button>
+        <button  mat-raised-button class="button-spacing" (click)="exploreDetails(formation.id)">Explorer</button>
       </mat-card-actions>
     </mat-card>
     </div> -->

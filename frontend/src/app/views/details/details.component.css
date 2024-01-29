@@ -1,8 +1,8 @@
 .details-container {
   width: 100%;
   margin-top: 70px;
- background-color: rgb(7, 7, 8);
-  color: rgb(255, 247, 247);
+ /*background-color: rgb(7, 7, 8);*/
+  color: rgb(13, 13, 13);
   height: 400px;
   justify-content: space-between; /* Pour espacer les éléments à l'intérieur horizontalement */
 }
@@ -22,7 +22,7 @@
   width: 100%;
   margin-top: 70px;
 
-  color: rgb(255, 254, 254);
+  color: rgb(0, 0, 0);
   height: 400px;
   justify-content: space-between; /* Pour espacer les éléments à l'intérieur horizontalement */
 }
@@ -34,10 +34,7 @@
   flex-direction: column;
   background-color: rgb(160, 160, 207);
 }
-.bloc-intern button{
-margin-top: 150px;
-padding-top: 20px;
-}
+
 .bloc-image {
   padding-top: 40px;
   border: 2px,solid,#171616;
@@ -83,4 +80,11 @@ padding-top: 20px;
   padding-top: 35px;
   font-size: 20px;
 }
-
+.programme{
+  width: 600px;
+  height: 300px;
+  margin-right: 100px;
+  padding-right: 50px;
+  border: 2px,solid,#171616;
+  border-radius: 8px;
+}

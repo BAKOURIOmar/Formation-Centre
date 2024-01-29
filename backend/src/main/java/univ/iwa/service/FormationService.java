@@ -108,7 +108,7 @@ public class FormationService {
 	}
 
 ////Afficher les formations par catégoeies
-	public List<Formationdto> getformationcategorie(String categorie) {
+	public List<Formationdto> getformationCategorie(String categorie) {
 		List<Formation> list = new ArrayList();
 		try {
 			List<Formation> formations = formrepo.findByCategorie(categorie);
@@ -161,5 +161,37 @@ public class FormationService {
             .map(f -> modelMapper.map(f, Formationdto.class))
             .collect(Collectors.toList());
 	}
+	
+	//recuperer les image by id
+ public Formationdto getFormationByid(long id) {
+	 Optional<Formation> formationOptional = formrepo.findById(id);
 
+	    if (formationOptional.isPresent()) {
+	        Formation formation = formationOptional.get();
+	        byte[] imageDescompressed = Util.decompressZLib(formation.getPicture());
+	        formation.setPicture(imageDescompressed);
+	        
+	        return modelMapper.map(formation, Formationdto.class);
+	    } else {
+	        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no formation with this id: " + id);
+	    }
+ }
+
+ public List<Formationdto> getFormationByName(String Name) {
+		List<Formation> formations=formrepo.findByName(Name);
+		ArrayList<Formation>list=new ArrayList<>();
+		if(formations.size()>0) {
+			formations.stream().forEach( (f) -> {
+				byte[] imageDescompressed = Util.decompressZLib(f.getPicture());
+				f.setPicture(imageDescompressed);
+				list.add(f);
+			});
+		}else{
+			 throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("there is no Formations"));
+			
+		}
+	  return list.stream()
+            .map(f -> modelMapper.map(f, Formationdto.class))
+            .collect(Collectors.toList());
+ }
 }

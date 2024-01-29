@@ -46,5 +46,11 @@ updateFormation(id: number, picture: File,formationUpdated:any):Observable<Forma
     const url = `${this.apiurl}/deleteform/${id}`;
     return this.httpClient.delete<Boolean>(url);
   }
+  getFormationByid(id:number):Observable<Formation>{
+   const url=`${this.apiurl}/getformationbyid/${id}`;
+   return this.httpClient.get<Formation>(url);
+
+  }
+
 }
 
