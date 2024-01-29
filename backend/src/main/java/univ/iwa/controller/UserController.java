@@ -98,4 +98,9 @@ public class UserController {
             throw new UsernameNotFoundException("invalid user request !");
         }
     }
+    @PostMapping("/registerFormateurExterne")
+    public ResponseEntity<Userdto> registerFormateurExterne(@RequestBody Userdto userdto) {
+        return new ResponseEntity<Userdto>(service.registerFormateurExterne(userdto), HttpStatus.OK);
+    }
+
 } 

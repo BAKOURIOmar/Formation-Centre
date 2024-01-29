@@ -59,7 +59,7 @@ export class GestionFormatuersComponent {
     dialogRef.afterClosed().subscribe((result:any) => {
 
       if( result == 1){
-        this.openSnackBar("Formateur Ajouter", "Exitosa");
+        this.openSnackBar("Formateur Ajouter", "Succès");
         this.getFormateurs();
       } else if (result == 2) {
         this.openSnackBar("un erreur se produit a l'heur d'ajoter le formateur ", "Error");
