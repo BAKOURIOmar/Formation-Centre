@@ -8,18 +8,18 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+/*import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;*/
 
 import java.io.IOException;
 
 import java.util.*;
-import java.util.zip.Deflater;
+//import java.util.zip.Deflater;
 
-import univ.iwa.model.Formation;
+//import univ.iwa.model.Formation;
 import univ.iwa.service.FormationService;
-import univ.iwa.util.Util;
+//import univ.iwa.util.Util;
 import univ.iwa.dto.Formationdto;
 @RestController
 @RequestMapping("/form")
@@ -70,23 +70,52 @@ public class FormmationController {
  }
 //
 // //Récupere Formation par categorie
- @GetMapping("/getformationcat/{categorie}")
+ /*@GetMapping("/getformationcat/{categorie}")
  @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
  public ResponseEntity<List<Formationdto>> getformatiocate(@PathVariable String categorie){
   return  new ResponseEntity<List<Formationdto>>( formservice.getformationcategorie(categorie),HttpStatus.OK);
- }
+ }*/
+ 
 // //Récupere Formation par ville
-@GetMapping("/getbyville/{ville}")
+/*@GetMapping("/getbyville/{ville}")
 @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
  public ResponseEntity<List<Formationdto>> getbyville(@PathVariable String ville){
   return new ResponseEntity<List<Formationdto>>( formservice.getformtionville(ville),HttpStatus.OK);
+
+
+ public ResponseEntity<List<Formationdto>> getbyville(@PathVariable String ville){
+  return new ResponseEntity<List<Formationdto>>( formservice.getformtionville(ville),HttpStatus.OK);
 }
+*/
+
+ 
+ //recuperer les formations par name,ville,catagorie
+ @GetMapping("/getformationfiltre")
+ public ResponseEntity<List<Formationdto>> getFormations(@RequestParam(required = false)String Ville ,@RequestBody (required = false)String categorie ,@RequestParam (required = false)String name) throws IOException{
+	 List<Formationdto> formations=null;
+	 if(Ville!=null) {
+		 formations=formservice.getformtionville(Ville);
+	 }else if(categorie !=null){
+		 formations=formservice.getformationCategorie(categorie);
+		 
+	 }else if(name!=null) {
+		 formations=formservice.getFormationByName(name);
+	 }else {
+		 formations=formservice.getAllFormations();
+	 }
+	 if (formations != null && !formations.isEmpty()) {
+	        return ResponseEntity.ok(formations);
+	    } else {
+	        return ResponseEntity.notFound().build();
+	    }
+ }
  
  //recuperer formation par id 
-// @GetMapping("/getformationbyid/{id}")
-// public ResponseEntity<Formationdto> recuperformaationid(@PathVariable long id){
-//	 Formationdto formation = formservice.getformationid(id);
-//	  return new ResponseEntity<>(formation, HttpStatus.OK);
-// }
+ @GetMapping("/getformationbyid/{id}")
+ public ResponseEntity<Formationdto> recuperformaationid(@PathVariable long id){
+	 Formationdto formation = formservice.getFormationByid(id);
+	  return new ResponseEntity<>(formation, HttpStatus.OK);
 
+
+}
 }

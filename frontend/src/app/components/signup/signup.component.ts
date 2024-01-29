@@ -56,7 +56,9 @@ export class SignupComponent implements OnInit {
         next: (response) => {
           console.log("added");
           console.log(response);
-          //this.router.navigateByUrl('/login');
+
+          this.router.navigateByUrl('/login');
+          this.router.navigate(['/accueille']);
         },
         error: (message) => {
 

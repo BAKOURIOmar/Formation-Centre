@@ -12,6 +12,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { GestionEntrepriseComponent } from './views/home/gestion-entreprise/gestion-entreprise.component';
 
 import { DetailsComponent } from './views/details/details.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent ,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN','ROLE_FORMATEUR']},children:[
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent},
   { path: 'login', component: LoginComponent},
   { path: 'detail/:id', component: DetailsComponent },
+  {path:'inscrire/:id',component:SignupComponent},
   { path: '**', redirectTo: 'accueille'},
 ];
 

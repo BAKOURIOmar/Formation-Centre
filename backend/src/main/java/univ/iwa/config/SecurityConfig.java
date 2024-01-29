@@ -56,6 +56,7 @@ public class SecurityConfig {
 								.requestMatchers("/plan/**").authenticated()
 								.requestMatchers("/photos/**").permitAll()
 								.requestMatchers("/form/getformationbyid/**").permitAll()
+								.requestMatchers("/form/getformationfiltre").permitAll()
 
 
 			).csrf(csrf->csrf.disable())

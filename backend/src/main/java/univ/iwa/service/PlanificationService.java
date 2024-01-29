@@ -45,7 +45,7 @@ public class PlanificationService {
      return formplani;
     }
   //recuper les planification d une formation
-/*public List<Formationplanifierdto> afficherformation( String nom, String date) throws ParseException {
+public List<Formationplanifierdto> afficherformation( String nom, String date) throws ParseException {
        System.out.println("recus");
         List<Formationplanifierdto>formationdto= new ArrayList<>();
         if( date== null && nom==null){
@@ -74,7 +74,7 @@ public class PlanificationService {
 
         }
     return formationdto;
-}*/
+}
 
 
     //supprimer une formation
