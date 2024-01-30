@@ -12,7 +12,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SignupService } from '../../shared/services/signup.service';
-import { parseISO } from 'date-fns';
 import { DatePipe } from '@angular/common';
 
 type LocalDate = Date | null; // Changer le type de LocalDate à Date

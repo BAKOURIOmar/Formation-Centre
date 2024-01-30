@@ -7,9 +7,11 @@
 }
 
 .dashboard-toolbar {
-  background-color: #1976d2;
+  height: 90px;
+  width: 100%;
+  background-color: rgb(204, 94, 221);
   /* Couleur de fond de la barre d'outils */
-  color: white;
+  color: rgb(0, 0, 0);
   /* Couleur du texte */
   padding: 0 20px;
   /* Espacement intérieur */
@@ -48,6 +50,6 @@
 
 
 .mat-icon {
-  color: white;
+  color: rgb(0, 0, 0);
   /* Couleur des icônes */
 }

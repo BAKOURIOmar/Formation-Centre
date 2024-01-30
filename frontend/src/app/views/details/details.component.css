@@ -1,6 +1,17 @@
+@media screen and (max-width: 600px) {
+  .card{
+    width: 80%;
+  }
+}
+.card{
+  margin-top: 20px;
+}
+.bigcontainer{
+  margin-top: 0px;
+}
 .details-container {
   width: 100%;
-  margin-top: 70px;
+  margin-top: 60px;
  /*background-color: rgb(7, 7, 8);*/
   color: rgb(13, 13, 13);
   height: 400px;
@@ -15,24 +26,25 @@
 }
 .bloc-image {
   padding-top: 0px;
-  border: 2px,solid,#171616;
-  border-radius: 8px;
+  /*border: 2px,solid,#171616;
+  border-radius: 8px;*/
 }
 .details-container {
   width: 100%;
   margin-top: 70px;
-
-  color: rgb(0, 0, 0);
+background-color: #171616;
+  color: rgb(255, 240, 240);
   height: 400px;
   justify-content: space-between; /* Pour espacer les éléments à l'intérieur horizontalement */
 }
 .bloc-intern{
+  margin-top: 0px;
   margin-right: 80px;
   float: right;
   height: 700px;
   display: flex;
   flex-direction: column;
-  background-color: rgb(160, 160, 207);
+  background-color: rgb(254, 249, 255);
 }
 
 .bloc-image {
@@ -41,7 +53,7 @@
   border-radius: 8px;
 }
 .bloc-image img {
-  width: 300px; /* Définissez la largeur souhaitée */
+  width: 400px; /* Définissez la largeur souhaitée */
   height: 200px; /* Définissez la hauteur souhaitée */
   display: block; /* Pour s'assurer que les dimensions sont appliquées correctement */
   margin: 0 auto; /* Pour centrer l'image horizontalement */
@@ -71,20 +83,37 @@
  justify-content: center;
 
 }
+.inscription{
+ margin-bottom: 40px;
+}
 
 .bloc-formation{
   padding-left: 20px;
-
 }
 .list-item{
   padding-top: 35px;
   font-size: 20px;
+  list-style-type: none;
+  margin-left: 0;
 }
 .programme{
-  width: 600px;
-  height: 300px;
+  width: 850px;
+  color: white;
+  height: 200px;
   margin-right: 100px;
   padding-right: 50px;
   border: 2px,solid,#171616;
   border-radius: 8px;
+  margin-top: 70px;
+  background-color: rgb(13, 13, 13);
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrer horizontalement */
+  justify-content: center; /* Centrer verticalement */
+
 }
+.icon{
+  width: 20px;
+
+}
+
