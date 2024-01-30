@@ -38,6 +38,11 @@ export class UserService {
     return this.httpClient.get(this.API_BASE_URL + '/assistant/assistantProfile', { responseType: "text" });
   }
 
+  // Méthode pour enregistrer un formateur externe
+  public registerExternalFormateur(formateur: any): Observable<any> {
+    return this.httpClient.post<any>(`${this.API_BASE_URL}/registerFormateurExterne`, formateur);
+  }
+
   public roleMatch(allowedRoles: string[]): boolean {
     const userRoles: string = this.userAuthService.getRoles();
 

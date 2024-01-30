@@ -29,7 +29,9 @@
               </mat-menu>
           </li> -->
         <li>
-          <button mat-button>Inscription Formateur</button>
+          <button mat-button (click)="openRegisterDialog()">Inscription Formateur</button>
+
+          <!--<button mat-button color="primary" (click)="openFormateurDialog()">Inscription Formateur</button>-->
         </li>
         <li>
           <button mat-button routerLink="/login">Connexion</button>

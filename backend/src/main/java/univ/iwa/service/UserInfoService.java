@@ -148,6 +148,16 @@ public class UserInfoService implements UserDetailsService {
 		admin.setPassword(encoder.encode("adminadmin"));
 		repository.save(admin);
 	}
+	
+	public Userdto registerFormateurExterne(Userdto userdto) {
+	    UserInfo user = modelMapper.map(userdto, UserInfo.class);
+	    user.setRoles("ROLE_FORMATEUR");
+	    //user.setPassword(encoder.encode(userdto.getPassword()));
+	    user.setType("EXTERNE");
+	    UserInfo createdUser = repository.save(user);
+	    return modelMapper.map(createdUser, Userdto.class);
+	}
+
 
 
 
