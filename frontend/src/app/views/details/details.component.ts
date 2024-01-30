@@ -56,4 +56,10 @@ inscrireFormation(formationId:number){
   this.router.navigate(['/inscrire',formationId]);
   console.log("after")
 }
+
+//retourner a la page d acceuille
+retourner(){
+  this.router.navigate(['/accueille']);
 }
+}
+

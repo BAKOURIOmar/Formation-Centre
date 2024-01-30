@@ -1,28 +1,39 @@
-
-
 <app-header></app-header>
-<div class="bigcontainer" *ngIf="formation">
-  <div class="details-container">
-  <h2 class="formation-name">{{formation.name }}</h2>
-  <div class="bloc-formation">
-    <div class="bloc-intern">
-    <div class="bloc-image">
-      <img [src]="formation.picture" width="50" height="50">
+
+<mat-card class="card">
+  <mat-card-content >
+    <div class="bigcontainer" *ngIf="formation">
+      <div class="details-container">
+      <h2 class="formation-name">{{formation.name }}</h2>
+      <div class="bloc-formation">
+        <div class="bloc-intern">
+        <div class="bloc-image">
+          <img [src]="formation.picture" width="50" height="50">
+          </div>
+          <br/>
+          <br/>
+            <p style="color: black; text-align:center;">voici le contenu de notreformation</p>
+            <br/>
+           <h3 style="padding-left: 20px; color: rgb(0, 0, 0);"><img class="icon"  src="assets/img/video-icon-6.png"/> desponibilite des vedio</h3>
+           <h3 style="padding-left: 20px;color: rgb(0, 0, 0);"><img class="icon"  src="assets/img/file.png"/> desponibile des exercices </h3>
+           <h3 style="padding-left: 20px; color: rgb(0, 0, 0);"><img class="icon" src="assets/img/folder.png"/> Des ressources varies</h3>
+           <button mat-raised-button style="  background-color: rgb(237, 117, 225);" class="w-100" class="inscription" (click)="inscrireFormation(formation.id)">S'inscrire</button>
+           <button mat-raised-button style="background-color: rgb(237, 117, 225);" class="w-100"  (click)="retourner()">Retouner</button>
+          </div>
+        <ul>
+          <li class="list-item"><img class="icon" src="assets/img/gold.png"/> Catégorie: {{ formation.categorie }}</li>
+          <li  class="list-item"><img class="icon" src="assets/img/gold.png"/> Durée: {{ formation.nombreh }}</li>
+          <li  class="list-item"><img class="icon" src="assets/img/gold.png"/> Prix: {{ formation.cout }}</li>
+          <li  class="list-item"><img class="icon" src="assets/img/gold.png"/> Ville:{{formation.ville}}</li>
+        </ul>
       </div>
-     <button mat-raised-button class="w-100" class="inscription" (click)="inscrireFormation(formation.id)">S'inscrire</button>
-     <p>voici le contenu de notreformation</p>
-     <h6><mat-icon>vedio</mat-icon> desponibilite des vedio</h6>
     </div>
-    <ul>
-      <li class="list-item">Catégorie: {{ formation.categorie }}</li>
-      <li  class="list-item">Durée: {{ formation.nombreh }}</li>
-      <li  class="list-item">Prix: {{ formation.cout }}</li>
-      <li  class="list-item"> Ville:{{formation.ville}}</li>
-    </ul>
-  </div>
-  <div class="programme">
-    {{formation.programme }}
-  </div>
-</div>
-</div>
+    <div class="programme">
+      {{formation.programme }}
+    </div>
+    </div>
+
+  </mat-card-content>
+</mat-card>
+
 

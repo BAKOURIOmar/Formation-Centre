@@ -1,15 +1,16 @@
-<!-- <div class="card-container">
-  <div *ngFor="let formation of FormationData">
+ <div class="card-container">
+  <div *ngFor="let formation of formations">
     <mat-card class="example-card">
       <img mat-card-image [src]="formation.picture" alt="{{ formation.name }} Image">
+      <hr style="background-color: rgb(108, 3, 124); width: 280px; height: 4px;"/>
       <mat-card-title class="formation-name">{{formation.name}}</mat-card-title>
+      <hr style="background-color:rgb(108, 3, 124); width: 280px; height: 4px;"/>
         <mat-card-subtitle class="subtitle">{{formation.categorie}}</mat-card-subtitle>
-        <mat-card-subtitle class="subtitle">{{formation.ville}}</mat-card-subtitle>
         <mat-card-subtitle class="subtitle">{{formation.cout}}</mat-card-subtitle>
         <mat-card-actions>
-        <button  mat-raised-button   (click)="inscrireFormation(formation.id)" >S'inscrire</button>
-        <button  mat-raised-button class="button-spacing" (click)="exploreDetails(formation.id)">Explorer</button>
+        <button  mat-raised-button style="background-color: rgb(204, 94, 221); color: rgb(9, 9, 9);"  class="button-spacingdroite"  (click)="inscrireFormation(formation.id)" >S'inscrire</button>
+        <button  mat-raised-button style="background-color: rgb(204, 94, 221); color: rgb(9, 9, 9);"  class="button-spacinggauche" (click)="exploreDetails(formation.id)">Explorer</button>
       </mat-card-actions>
     </mat-card>
-    </div> -->
+    </div>
 

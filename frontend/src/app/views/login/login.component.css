@@ -4,6 +4,19 @@
   background-color: #f0f0f0;
   font-family: 'Arial', sans-serif;
 } */
+
+.container {
+  width: 100vw; /* Utilise toute la largeur de la fenêtre du navigateur */
+  height: 100vh; /* Utilise toute la hauteur de la fenêtre du navigateur */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centre les éléments verticalement */
+  align-items: center; /* Centre les éléments horizontalement */
+  background-image: url('/assets/img/background.jpg');
+  background-size: cover; /* Pour que l'image couvre tout le conteneur */
+  background-position: center; /* Pour centrer l'image */
+}
+
 h2 {
     color: rgb(31, 31, 31);
       font-family: OpenSans;
@@ -14,6 +27,7 @@ h2 {
 }
 
 .example-card {
+  background-color: rgb(199, 153, 243);
   max-width: 400px; /* Ancho máximo de la tarjeta */
   margin: auto; /* Centrar la tarjeta en la pantalla */
   text-align: center; /* Alinear el contenido al centro */
