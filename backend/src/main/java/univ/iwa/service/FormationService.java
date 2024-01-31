@@ -1,29 +1,27 @@
 package univ.iwa.service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import io.jsonwebtoken.io.IOException;
-
-import java.io.ByteArrayInputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.*;
-import java.util.stream.Collectors;
-import org.modelmapper.ModelMapper;
-import java.util.*;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import org.modelmapper.ModelMapper;
-import univ.iwa.dto.Userdto;
+import univ.iwa.dto.Formationdto;
+import univ.iwa.dto.filtredto;
 import univ.iwa.model.Formation;
 import univ.iwa.repository.FormationReposetory;
 import univ.iwa.util.Util;
-import univ.iwa.dto.Formationdto;
-import java.nio.file.StandardCopyOption;
 
 @Service
 public class FormationService {
@@ -165,7 +163,7 @@ public class FormationService {
 	//recuperer les image by id
  public Formationdto getFormationByid(long id) {
 	 Optional<Formation> formationOptional = formrepo.findById(id);
-
+	
 	    if (formationOptional.isPresent()) {
 	        Formation formation = formationOptional.get();
 	        byte[] imageDescompressed = Util.decompressZLib(formation.getPicture());
@@ -176,6 +174,48 @@ public class FormationService {
 	        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no formation with this id: " + id);
 	    }
  }
+
+ public Page<Formationdto> filtreSearch(filtredto filters, Pageable pageable) {
+	    Page<Formationdto> pageResult = Page.empty();
+
+	    try {
+	        Specification<Formation> specVille = (root, query, criteriaBuilder) -> {
+	            if (filters.getVille() != null && filters.getVille().isPresent() && !filters.getVille().get().isEmpty()) {
+	                return criteriaBuilder.like(root.get("ville"), "%" + filters.getVille().get() + "%");
+	            } else {
+	                return criteriaBuilder.isTrue(criteriaBuilder.literal(true));
+	            }
+	        };
+
+	        Specification<Formation> specCategorie = (root, query, criteriaBuilder) -> {
+	            if (filters.getCategorie() != null && filters.getCategorie().isPresent() && !filters.getCategorie().get().isEmpty()) {
+	                return criteriaBuilder.like(root.get("categorie"), "%" + filters.getCategorie().get() + "%");
+	            } else {
+	                return criteriaBuilder.isTrue(criteriaBuilder.literal(true));
+	            }
+	        };
+
+	        Specification<Formation> specDate = (root, query, criteriaBuilder) -> {
+	            if (filters.getDate() != null && filters.getDate().isPresent()) {
+	                LocalDate date = filters.getDate().get();
+	                return criteriaBuilder.equal(root.get("date"), date);
+	            } else {
+	                return criteriaBuilder.isTrue(criteriaBuilder.literal(true));
+	            }
+	        };
+
+	        Specification<Formation> combinedSpec = Specification.where(specVille).and(specCategorie).and(specDate);
+
+	        Page<Formation> formationsPage = formrepo.findAll(combinedSpec, pageable);
+	        pageResult = formationsPage.map(formation -> modelMapper.map(formation, Formationdto.class));
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        pageResult = Page.empty();
+	    }
+
+	    return pageResult;
+	}
 
  public List<Formationdto> getFormationByName(String Name) {
 		List<Formation> formations=formrepo.findByName(Name);

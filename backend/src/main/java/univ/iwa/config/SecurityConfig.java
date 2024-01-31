@@ -43,6 +43,7 @@ public class SecurityConfig {
 								.requestMatchers("/form/deleteform/{id}").authenticated()
 								.requestMatchers("form/getbyville/{ville}").authenticated()
 								.requestMatchers("/form/getformationcat/**").authenticated()
+								.requestMatchers("/form/filtreSearch").authenticated()
 								.requestMatchers("/entreprise/**").authenticated()
 								.requestMatchers("/indiv/addindividu").permitAll()
 								.requestMatchers("/indiv/getallindividus").authenticated()

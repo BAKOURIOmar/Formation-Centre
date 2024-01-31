@@ -15,12 +15,12 @@ import { DetailsComponent } from './views/details/details.component';
 import { SignupComponent } from './components/signup/signup.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent ,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN','ROLE_FORMATEUR']},children:[
-    {path: 'planification', component: PlanificationComponent ,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN','ROLE_FORMATEUR']}},
-    {path: 'formateurs', component: GestionFormatuersComponent,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN','ROLE_FORMATEUR']}},
-    {path: 'formations', component: GestionFormationsComponent,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN','ROLE_FORMATEUR']}},
-    {path: 'assistants', component: GestionAssistantsComponent,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN','ROLE_FORMATEUR']}},
-    {path: 'entreprises', component: GestionEntrepriseComponent,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN','ROLE_FORMATEUR']}},
+  { path: 'home', component: HomeComponent ,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN','ROLE_FORMATEUR','ROLE_ASSISTANT']},children:[
+    {path: 'planification', component: PlanificationComponent ,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN','ROLE_FORMATEUR','ROLE_ASSISTANT']}},
+    {path: 'formateurs', component: GestionFormatuersComponent,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN','ROLE_FORMATEUR','ROLE_ASSISTANT']}},
+    {path: 'formations', component: GestionFormationsComponent,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN','ROLE_FORMATEUR','ROLE_ASSISTANT']}},
+    {path: 'assistants', component: GestionAssistantsComponent,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN','ROLE_FORMATEUR','ROLE_ASSISTANT']}},
+    {path: 'entreprises', component: GestionEntrepriseComponent,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN','ROLE_FORMATEUR','ROLE_ASSISTANT']}},
     { path: '', pathMatch: 'full', redirectTo: 'planification' },
   ]},
   { path: 'accueille', component: AccueilleComponent},
