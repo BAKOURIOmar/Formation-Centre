@@ -1,6 +1,7 @@
 package univ.iwa.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 import univ.iwa.dto.Formationdto;
 
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface FormationReposetory extends JpaRepository<Formation, Long>{
+public interface FormationReposetory extends JpaRepository<Formation, Long> ,JpaSpecificationExecutor<Formation>{
 	List<Formation> findAll();
 	List<Formation> findByCategorie(String categorie);
    List<Formation> findByVille(String ville);

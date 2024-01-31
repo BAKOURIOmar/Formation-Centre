@@ -38,48 +38,53 @@ public class UserController {
     public String welcome() {return "Welcome this endpoint is not secure";}
     
     @PostMapping("/addAssistant") 
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT','ROLE_FORMATEUR')")
     public ResponseEntity<Userdto> addAssistant(@RequestBody Userdto userdto) {
         return new ResponseEntity<Userdto>(service.addAssistant(userdto),HttpStatus.OK);
     }
     
-    @PutMapping("/updateAssistant/{id}") 
+    @PutMapping("/updateAssistant/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT','ROLE_FORMATEUR')")
     public ResponseEntity<Userdto> updateAssistant(@RequestBody Userdto userdto,@PathVariable Integer id) {
         return new ResponseEntity<Userdto>(service.updateAssistant(userdto, id),HttpStatus.OK);
     }
     
     @PostMapping("/addFormateur") 
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT','ROLE_FORMATEUR')")
     public ResponseEntity<Userdto> addFormateur(@RequestBody Userdto userdto) {
         return new ResponseEntity<Userdto>(service.addFormateur(userdto),HttpStatus.OK); 
     }
     
-    @PutMapping("/updateFormateur/{id}") 
+    @PutMapping("/updateFormateur/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT','ROLE_FORMATEUR')")
     public ResponseEntity<Userdto> updateFormateur(@RequestBody Userdto userdto,@PathVariable Integer id) {
         return new ResponseEntity<Userdto>(service.updateFormateur(userdto, id),HttpStatus.OK);
     }
     
     @DeleteMapping("/supprimerUser/{id}") 
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT','ROLE_FORMATEUR')")
     public ResponseEntity<Boolean> deleteUserByid(@PathVariable Integer id) {
         return new ResponseEntity<Boolean>(service.deleteUserByid(id),HttpStatus.OK);
     }
     
     @GetMapping("/users")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT','ROLE_FORMATEUR')")
     public ResponseEntity<List<Userdto>> getUsersByRole(@RequestParam(name = "role" ,required = true) String role) {
     	System.out.println(role);
     	return new ResponseEntity<List<Userdto>>(service.getUsersByRole(role),HttpStatus.OK); 
     }
     
     @GetMapping("/user/userProfile") 
-    @PreAuthorize("hasAuthority('ROLE_USER')") 
+    @PreAuthorize("hasAnyAuthority('ROLE_USER')") 
     public String userProfile() { return "Welcome to User Profile"; } 
     
     @GetMapping("/admin/adminProfile") 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')") 
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')") 
     public String adminProfile() { return "Welcome to Admin Profile"; } 
   
     
     @GetMapping("/user/assistant")
-    @PreAuthorize("hasAuthority('ROLE_ASSISTANT')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ASSISTANT')")
     public String assistantuser() {
     	return "Welcome to assistant Profile";
     }

@@ -41,7 +41,7 @@ export class UserAuthService {
   }
 
   public isFormat(): boolean {
-    return this.hasRole('ROLE_FORMAT');
+    return this.hasRole('ROLE_FORMATEUR');
   }
 
   public isAssistant(): boolean {

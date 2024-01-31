@@ -1,6 +1,8 @@
 package univ.iwa.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +23,7 @@ import java.util.*;
 import univ.iwa.service.FormationService;
 //import univ.iwa.util.Util;
 import univ.iwa.dto.Formationdto;
+import univ.iwa.dto.filtredto;
 @RestController
 @RequestMapping("/form")
 public class FormmationController {
@@ -116,6 +119,19 @@ public class FormmationController {
 	 Formationdto formation = formservice.getFormationByid(id);
 	  return new ResponseEntity<>(formation, HttpStatus.OK);
 
+
+@PostMapping("/filtreSearch")
+@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
+public ResponseEntity<Page<Formationdto>> filtreSearch(filtredto filters ,
+		@RequestParam(name = "page", required = false) Integer page,
+		@RequestParam(name = "size", required = false) Integer size) throws java.io.IOException {
+ 
+	int pageNumber = (page != null) ? page : 0;
+	int pageSize = (size != null) ? size : Integer.MAX_VALUE;
+        
+      return ResponseEntity.ok(formservice.filtreSearch(filters, PageRequest.of(pageNumber, pageSize)));
+  
+}
 
 }
 }
