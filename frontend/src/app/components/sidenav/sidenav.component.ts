@@ -30,4 +30,10 @@ logOut() {
   public isAddmin(){
     return this.userAuthService.isAdmin();
   }
+  public isAssistant(){
+    return this.userAuthService.isAssistant();
+  }
+  public isFormateur(){
+    return this.userAuthService.isFormat();
+  }
 }
