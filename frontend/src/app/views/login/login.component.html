@@ -1,48 +1,28 @@
-<div class="container">
-  <div class="d-flex align-items-center justify-content-center flex-column min-vh-100">
-      <mat-card class="example-card">
-          <mat-card-header class="header-image mt-3">
-                  <img src="../../../assets/img/hamburguesa-sin-abrir.png">
-          </mat-card-header>
-
-        <h2>Bienvenue de retour</h2>
-          <form [formGroup]="myForm" class="d-flex flex-column">
-              <div class="mb-3">
-                  <div *ngIf="errorLogin" class="text-danger text-center">
-                    Nom d'utilisateur et/ou mot de passe incorrects.
-                  </div>
-                  <div *ngIf="errorPermiso" class="text-danger text-center">
-                    L'utilisateur saisi n'a pas les permissions nécessaires.
-                  </div>
-                  <div *ngIf="errorDetalle" class="text-danger text-center">
-                    Erreur lors de la récupération des détails de l'utilisateur.
-                  </div>
+ <body>
+ <div class="screen">
+      <div class="screen__content">
+          <form class="login" [formGroup]="myForm" (ngSubmit)="onSubmit()">
+              <div class="login__field">
+                  <i class="login__icon fas fa-user"></i>
+                  <input type="text" class="login__input" placeholder="User name / Email" formControlName="username">
+                  <mat-error *ngIf="myForm.get('username')?.hasError('required')">*Nom d'utilisateur obligatoire</mat-error>
               </div>
-              <mat-card-content>
-                  <div class="d-flex col-12 justify-content-center ml-auto mr-auto mt-2">
-                      <mat-form-field appearance="outline" class="titulo w-100">
-                          <mat-label>Utilisateur</mat-label>
-                          <input matInput [formControlName]="'username'">
-                          <mat-error *ngIf="myForm.get('username')?.hasError('required')">
-                              *Nom d'utilisateur obligatoire
-                          </mat-error>
-                      </mat-form-field>
-                  </div>
-                  <div class="d-flex col-12 justify-content-center ml-auto mr-auto mt-2">
-                      <mat-form-field appearance="outline" class="titulo w-100">
-                          <mat-label>Mot de passe</mat-label>
-                          <input matInput [type]="hide ? 'password' : 'text'" [formControlName]="'password'">
-                          <mat-error *ngIf="myForm.get('password')?.hasError('required')">
-                              *Mot de passe obligatoire
-                          </mat-error>
-                          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                      </mat-form-field>
-                  </div>
-              </mat-card-content>
-              <mat-card-actions class="d-flex col-10 justify-content-center m-auto">
-                  <button mat-raised-button style="background-color: rgb(228, 76, 213);" class="w-100" color="primary" (click)="onSubmit()">Entrer</button>
-              </mat-card-actions>
+              <div class="login__field">
+                  <i class="login__icon fas fa-lock"></i>
+                  <input type="password" class="login__input" placeholder="Password" formControlName="password">
+                  <mat-error *ngIf="myForm.get('password')?.hasError('required')">*Mot de passe obligatoire</mat-error>
+              </div>
+              <button type="submit" class="button login__submit">
+                  <span class="button__text">Log In Now</span>
+                  <i class="button__icon fas fa-chevron-right"></i>
+              </button>
           </form>
-        </mat-card>
+      </div>
+      <div class="screen__background">
+          <span class="screen__background__shape screen__background__shape4"></span>
+          <span class="screen__background__shape screen__background__shape3"></span>
+          <span class="screen__background__shape screen__background__shape2"></span>
+          <span class="screen__background__shape screen__background__shape1"></span>
+      </div>
   </div>
-</div>
+</body>

@@ -40,11 +40,12 @@ public class FormmationController {
 		 @RequestParam("cout") double cout,
 		 @RequestParam("programme") String programme,
 		 @RequestParam("ville") String ville,
-		 @RequestParam("categorie") String categorie) throws java.io.IOException {
+		 @RequestParam("categorie") String categorie,
+		 @RequestParam ("date")String date ) throws java.io.IOException {
   
          
          
-         return ResponseEntity.ok(formservice.addFormation(picture,name,nombreh,cout,programme,ville,categorie));
+         return ResponseEntity.ok(formservice.addFormation(picture,name,nombreh,cout,programme,ville,categorie,date));
    
  }
  //Afficher tous les formations
@@ -147,4 +148,11 @@ public ResponseEntity<Page<Formationdto>> filtreSearch(filtredto filters ,
 
 
 }
+ 
+ //recuperer les formatiion filter par ville categorie nam
+//@GetMapping("/getformations")
+// public ResponseEntity<List<Formationdto>> filterforamtion(@RequestParam String searchkey){
+//List<Formationdto> formations= formservice.getforamtions(searchkey) ;
+//	return new ResponseEntity<List<Formationdto>>(formations,HttpStatus.OK);
+// }
 }

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { HttpClient,HttpHeaders} from '@angular/common/http';
+import { HttpClient,HttpHeaders, HttpParams} from '@angular/common/http';
 
 import { Formation } from '../interfaces/formation.interface';
 import { PageResponse } from '../interfaces/pageResponse.interface';
@@ -9,9 +9,6 @@ import { PageResponse } from '../interfaces/pageResponse.interface';
 })
 export class FormationService {
   private apiurl = "http://localhost:8080/form";
-
-
-
 
   constructor(private httpClient: HttpClient) { }
 
@@ -52,6 +49,14 @@ updateFormation(id: number, picture: File,formationUpdated:any):Observable<Forma
    return this.httpClient.get<Formation>(url);
 
   }
-
+// recuperer les formation filtre
+getformationfiltre(searchKey:string):Observable<Formation[]>{
+  const url=`${this.apiurl}/getformations`
+  let params = new HttpParams();
+    params = params.append('searchkey', searchKey);
+  console.log("le parametre de cherche ",searchKey);
+  return this.httpClient.get<Formation[]>(url, { params: params });
 }
 
+
+}

@@ -29,7 +29,7 @@ getformationdetails(formationId: number){
     (formationData: Formation) => {
       console.log("les donnes recus")
        this.formation = formationData;
-       console.log(this.formation);
+       console.log("formation",this.formation);
        this.processFormationResponse(this.formation);
     },
     (error) => {

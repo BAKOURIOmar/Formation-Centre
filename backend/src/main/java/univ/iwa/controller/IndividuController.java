@@ -25,11 +25,12 @@ public class IndividuController {
 	@Autowired
 	IndividuService individuservice;
 	
-	 //Ajouter un individu
-    @PostMapping("/addindividu")
-    public ResponseEntity<Inndividualsdto> addindividu(@RequestBody Inndividualsdto indiv){
-        return new ResponseEntity<Inndividualsdto>(individuservice.addindividu(indiv),HttpStatus.OK);
-    }
+//	 //Ajouter un individu
+//    @PostMapping("/inscriptionIndividu/{formationid}")
+//    public ResponseEntity<Inndividualsdto> addindividu(@RequestBody Inndividualsdto indiv,@PathVariable long idformation){
+//    	
+//        return new ResponseEntity<Inndividualsdto>(individuservice.addindividu(indiv),HttpStatus.OK);
+//    }
     //Récuperer un individu
     @GetMapping ("/getallindividus")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSITANT')")

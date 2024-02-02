@@ -1,6 +1,6 @@
 @media screen and (max-width: 600px) {
   .card{
-    width: 80%;
+    width: 70%;
   }
 }
 .card{
@@ -14,13 +14,13 @@
   margin-top: 60px;
  /*background-color: rgb(7, 7, 8);*/
   color: rgb(13, 13, 13);
-  height: 400px;
+  height: 3dvh;
   justify-content: space-between; /* Pour espacer les éléments à l'intérieur horizontalement */
 }
 .bloc-intern{
   margin-right: 50px;
   float: right;
-  height: 700px;
+  height: 500px;
   display: flex;
   flex-direction: column;
 }
@@ -31,7 +31,7 @@
 }
 .details-container {
   width: 100%;
-  margin-top: 70px;
+  margin-top: 50px;
 background-color: #171616;
   color: rgb(255, 240, 240);
   height: 400px;

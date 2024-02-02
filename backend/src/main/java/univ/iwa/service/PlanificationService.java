@@ -10,6 +10,7 @@ import univ.iwa.dto.Formationdto;
 import univ.iwa.repository.FormationReposetory;
 import univ.iwa.repository.PlanificationReposertory;
 import univ.iwa.dto.Formationplanifierdto;
+import univ.iwa.dto.Inndividualsdto;
 import univ.iwa.model.Formationplanifier;
 import univ.iwa.model.*;
 import univ.iwa.repository.*;
@@ -18,8 +19,6 @@ import org.modelmapper.ModelMapper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.*;
 @Service
@@ -32,15 +31,20 @@ public class PlanificationService {
    ModelMapper modelMapper;
    @Autowired
    UserInfoRepository userrepo;
-    //ajpiter une formation a la planification
+   @Autowired
+   EmailService emailService;
+    //ajouter une formation a la planification
     public Formationplanifierdto addplanification(Formationplanifierdto formplani) throws ParseException {
-        System.out.println("date is : "+formplani.getDate());
+        System.out.println("date debut is : "+formplani.getDatedebut()+"date fin"+formplani.getDatefin());
         Formationplanifier formation=new Formationplanifier();
       formation= modelMapper.map(formplani,Formationplanifier.class);
-        System.out.println("date is : "+formation.getDate());
-        LocalDate parsedDate = formplani.getDate();
-        System.out.println("date is : "+parsedDate);
-        formation.setDate(parsedDate);
+        System.out.println("date debut is : "+formation.getDatedebut()+"date fin"+formation.getDatefin());
+        LocalDate parsedDatedebut = formplani.getDatedebut();
+        LocalDate parsedDatefin=formplani.getDatefin();
+        System.out.println("date debut is : "+parsedDatedebut);
+        System.out.println("date fin is : "+parsedDatefin);
+        formation.setDatedebut(parsedDatedebut);
+        formation.setDatefin(parsedDatefin);
       planirepo.save(formation);
      return formplani;
     }
@@ -60,8 +64,10 @@ public List<Formationplanifierdto> afficherformation( String nom, String date) t
             // je vaie faire le filltrage par le nom
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date parsedDate = dateFormat.parse(date);
-            List<Formationplanifier> formations=planirepo.findByDate(parsedDate);
-
+            List<Formationplanifier> formations=planirepo.findByDatedebut(parsedDate);
+           if(formations==null) {
+        	   formations=planirepo.findByDatefin(parsedDate);
+           }
            formationdto=formations.stream()
                     .map(formation->modelMapper.map(formation,Formationplanifierdto.class))
                     .collect(Collectors.toList());
@@ -92,12 +98,12 @@ public List<Formationplanifierdto> afficherformation( String nom, String date) t
 
         if(formation.isPresent()){
             Formationplanifier  form=formation.get();
-            form.setDate(formationplan.getDate());
+            form.setDatedebut(formationplan.getDatedebut());
+            form.setDatefin(formationplan.getDatefin());
             form.setFormation(modelMapper.map(formationplan.getFormation(), Formation.class));
             form.setFormateur(modelMapper.map(formationplan.getFormateur(), UserInfo.class));
             form.setEntreprise(modelMapper.map(formationplan.getEntreprise(), Entreprise.class));
-//            TODO groupe
-            
+            form.setGroupe(modelMapper.map(formationplan.getGroupe(), Groupe.class));
             planirepo.save(form);
             return modelMapper.map(planirepo.save(form),Formationplanifierdto.class);
         } else {
@@ -113,4 +119,24 @@ public List<Formationplanifierdto> afficherformation( String nom, String date) t
         planirepo.deleteById(id);
         return true;
     }
+    
+    
+    // recuperer les formations planifier qui ont terminer 
+//    public void  EnvoyerEvaluationFormamulair(){
+//    	LocalDate currentdate=LocalDate.now();
+//    	List<Formationplanifier> formationsTermine=planirepo.findByDatefinAfter(currentdate);
+//    	 for (Formationplanifier formation : formationsTermine) {
+//             List<Individuals> participants = formation.getGroupe();
+//             String formLink = "https://docs.google.com/forms/d/e/1FAIpQLScHWlS8V71oEiMK1DL4QrQpihnESp8uYcTkqY6Lnh0TtsL0_g/viewform?usp=pp_url&entry.1737993738=bien";
+//             for (Individuals participant : participants) {
+//                 String participantEmail = participant.getEmail();
+//                 String subject = "Évaluation de la formation terminée";
+//                 String emailContent = "Cher participant,\n\nNous vous remercions d'avoir participé à notre formation. Pour nous aider à améliorer nos services, veuillez remplir notre formulaire d'évaluation en ligne : " + formLink + "\n\nCordialement,\nL'équipe de formation";
+//                 emailService.sendSimpleEmail(participantEmail, subject, emailContent);
+//             }
+//    	 
+//    	 }
+
+    	
+   // }
 }

@@ -37,6 +37,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { DetailsComponent } from './views/details/details.component';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule, DatePipe } from '@angular/common';
+import { AboutUsComponent } from './views/about-us/about-us.component';
 @NgModule({
 
   declarations: [
@@ -60,6 +61,7 @@ import { CommonModule, DatePipe } from '@angular/common';
     GestionEntrepriseComponent,
     NewEntrepriseComponent,
     DetailsComponent,
+    AboutUsComponent,
 
   ],
   imports: [

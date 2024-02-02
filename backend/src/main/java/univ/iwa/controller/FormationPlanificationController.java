@@ -24,7 +24,6 @@ public class FormationPlanificationController {
     public ResponseEntity<Formationplanifierdto> addplanification(@RequestBody Formationplanifierdto formpla) throws ParseException {   
         return new ResponseEntity<Formationplanifierdto>(planserv.addplanification(formpla),HttpStatus.OK);
     }
-
     //recuperer tout les formation planifiee et faire le filtrage des donnes
     @GetMapping("/getform")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")

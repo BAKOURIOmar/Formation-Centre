@@ -1,10 +1,12 @@
 package univ.iwa.model;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.persistence.Basic;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,6 +17,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Transient; 
 @Entity
 @Data 
@@ -27,17 +30,20 @@ public class Formation {
 	private String name;
 	private Long nombreh;
 	private  double cout;
+	private long seuil;
 	private String programme;
 	private String ville;
+	private String date;
 	private String categorie;
-	//@Transient
-    //private MultipartFile image;
-	/*@Lob
-    private byte[] image;
-	private String imagePath;*/
-//	private String imagePath;
+	
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	@Column( name ="picture", columnDefinition = "longblob")
 	private byte[] picture;
+	
+	 @OneToMany(mappedBy = "formation", cascade = {CascadeType.REMOVE, CascadeType.MERGE})
+	    private List<Individuals> inscrits;
+
+	    @OneToMany(mappedBy = "formation", cascade = {CascadeType.REMOVE, CascadeType.MERGE})
+	    private List<Groupe> groupes;
 }

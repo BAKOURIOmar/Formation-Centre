@@ -1,5 +1,6 @@
 package univ.iwa.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -10,7 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import univ.iwa.dto.Formationdto;
 import univ.iwa.dto.Inndividualsdto;
+import univ.iwa.model.Formation;
+import univ.iwa.model.Groupe;
 import univ.iwa.model.Individuals;
 import univ.iwa.repository.IndividuRepository;
 
@@ -23,16 +27,22 @@ public class IndividuService {
     private ModelMapper modelMapper;
 
     @Autowired
-    public IndividuService(ModelMapper modelMapper) {
-        this.modelMapper = modelMapper;
-    }
+    private FormationService formationservice;
 
-    // Ajouter un individu
-    public Inndividualsdto addindividu(Inndividualsdto individudto) {
-        Individuals individu = modelMapper.map(individudto, Individuals.class);
-        Individuals createdInndividual =individurepo.save(individu);
-        return modelMapper.map(createdInndividual, Inndividualsdto.class);
-    }
+    // inscription d un indevidu dans un eformation
+//    public Inndividualsdto addindividu(Inndividualsdto individudto ,Long id) {
+//    	//chercher la formation ou l individus veux s inscrire
+//    Formationdto formationdto= formationservice.getFormationByid(id);
+//     //recuperer les groupe de cette formation
+//         if(formationdto.getGroupes().size()==0) {
+//        	 List<Groupe> nouveaugroupes=new ArrayList<Groupe>(new Groupe());
+//        	 nouveaugroupe.setGroupe(nouveaugroupe);
+//        	 
+//         }
+//        Individuals individu = modelMapper.map(individudto, Individuals.class);
+//        Individuals createdInndividual =individurepo.save(individu);
+//        return modelMapper.map(createdInndividual, Inndividualsdto.class);
+//    }
 
 
     // Récupérer tous les individus en utilisant ModelMapper

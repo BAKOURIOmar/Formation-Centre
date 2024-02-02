@@ -1,4 +1,3 @@
-<app-header></app-header>
+<app-header (envoyerSearchTerm)="getFormationsFiltre($event)"></app-header>
 
-<div class="accueille-cards-container"> <app-cardformation></app-cardformation>
-</div>
+<app-cardformation [recevoirformations]="envoyerFormations" (getAllFormations)="getFormationsFiltre($event)" ></app-cardformation>

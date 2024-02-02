@@ -4,6 +4,7 @@
   /* Pour aligner les éléments horizontalement */
   align-items: center;
   /* Pour aligner les éléments verticalement */
+  width: 100%;
 }
 
 .dashboard-toolbar {

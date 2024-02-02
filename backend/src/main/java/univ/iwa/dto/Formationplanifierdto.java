@@ -7,6 +7,8 @@ import univ.iwa.dto.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
+
 import univ.iwa.dto.*;
 @Data
 @AllArgsConstructor
@@ -14,10 +16,11 @@ import univ.iwa.dto.*;
 public class Formationplanifierdto {
 
     private long id;
-    private LocalDate date;
+    private LocalDate datedebut;
+    private LocalDate datefin;
     private Formationdto formation;
     private Userdto formateur;
     private Entreprisedto entreprise;
-    private Inndividualsdto groupe;
+    private Groupedto groupe;
 
 }
