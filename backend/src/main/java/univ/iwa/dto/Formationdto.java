@@ -1,6 +1,8 @@
 package univ.iwa.dto;
 
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
@@ -19,12 +21,14 @@ public class Formationdto {
     private Long nombreh;
     private  double cout;
     private String programme;
+    private String date;
     private String ville;
     private String categorie;
-//    private MultipartFile image;
-   // private String imagePath;
     private byte[] picture;
-    
+  private List<Groupedto> groupes;
+  
+  
+  
     
 
 }

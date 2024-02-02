@@ -5,12 +5,10 @@
     <h1 class="app-name">Plateforme de Formation</h1>
 
     <div class="search-bar mt-4">
-      <mat-form-field appearance="fill" class="search-field ">
-        <mat-icon matPrefix>Recherche</mat-icon>
-        <input matInput placeholder="Recherche">
+      <mat-form-field appearance="fill" class="search-field">
+        <input matInput placeholder="Recherche" (keyup)="filterFormations($event)">
       </mat-form-field>
     </div>
-
 
     <div class="right mt-3">
       <ul>
@@ -37,8 +35,15 @@
           <button mat-button routerLink="/login">Connexion</button>
 
         </li>
+        <li>
+          <button mat-button routerLink="/aboutUs">Sur-Nous</button>
+
+        </li>
       </ul>
     </div>
 
   </mat-toolbar>
+
 </div>
+
+

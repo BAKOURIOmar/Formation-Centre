@@ -2,8 +2,8 @@
 
   <!-- empieza toolbar-->
   <mat-toolbar style=" display: flex;justify-content: space-between;align-items: center;background-color: rgb(204, 94, 221);hieght:100px" class="dashboard-toolbar">
-    <button mat-icon-button (click)="snav.toggle()"><mat-icon style="margin-buttom:20px;">menu</mat-icon></button>
-    <h1 class="app-name" style=" display: flex;justify-content: space-between;align-items: center; margin-buttom:30px;">Bienvenue, Administrateur</h1>
+    <button mat-icon-button (click)="snav.toggle()"><mat-icon >menu</mat-icon></button>
+    <h1 class="app-name" style=" display: flex;justify-content: space-between;align-items: center;">Bienvenue, Administrateur</h1>
 
     <div class="right">
       <ul>
@@ -41,31 +41,31 @@
         <mat-divider></mat-divider>
 
         <a mat-list-item [routerLink]="menuNav[0].route"*ngIf="isAddmin() || isAssistant() || isFormateur()">
-          <mat-icon class="icono"> {{ menuNav[0].icon }}</mat-icon>
+          <img class="icono" src="{{ menuNav[0].icon }}" alt="Icon">
           <span class="name">{{menuNav[0].name}}</span>
 
         </a>
 
         <a mat-list-item [routerLink]="menuNav[1].route" *ngIf="isAddmin()">
-          <mat-icon class="icono"> {{ menuNav[1].icon }}</mat-icon>
+          <img class="icono" src="{{ menuNav[1].icon }}" alt="Icon">
           <span class="name">{{menuNav[1].name}}</span>
 
         </a>
 
         <a mat-list-item [routerLink]="menuNav[2].route" *ngIf="isAddmin()">
-          <mat-icon class="icono"> {{ menuNav[2].icon }}</mat-icon>
+          <img class="icono" src="{{ menuNav[2].icon }}" alt="Icon">
           <span class="name">{{menuNav[2].name}}</span>
 
         </a>
 
-        <a mat-list-item [routerLink]="menuNav[3].route"*ngIf="isAddmin()">
-          <mat-icon class="icono"> {{ menuNav[3].icon }}</mat-icon>
+        <a mat-list-item [routerLink]="menuNav[3].route" *ngIf="isAddmin()">
+          <img class="icono" src="{{ menuNav[3].icon }}" alt="Icon">
           <span class="name">{{menuNav[3].name}}</span>
 
         </a>
 
         <a mat-list-item [routerLink]="menuNav[4].route"*ngIf="isAddmin() || isAssistant()">
-          <mat-icon class="icono"> {{ menuNav[4].icon }}</mat-icon>
+          <img class="icono" src="{{ menuNav[4].icon }}" alt="Icon">
           <span class="name">{{menuNav[4].name}}</span>
 
         </a>

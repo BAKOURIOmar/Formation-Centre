@@ -1,5 +1,5 @@
-<app-header></app-header>
 
+<app-header></app-header>
 <mat-card class="card">
   <mat-card-content >
     <div class="bigcontainer" *ngIf="formation">
@@ -25,6 +25,7 @@
           <li  class="list-item"><img class="icon" src="assets/img/gold.png"/> Durée: {{ formation.nombreh }}</li>
           <li  class="list-item"><img class="icon" src="assets/img/gold.png"/> Prix: {{ formation.cout }}</li>
           <li  class="list-item"><img class="icon" src="assets/img/gold.png"/> Ville:{{formation.ville}}</li>
+          <li  class="list-item"><img class="icon" src="assets/img/gold.png"/> Date de lancement de formation :{{formation.date}}</li>
         </ul>
       </div>
     </div>

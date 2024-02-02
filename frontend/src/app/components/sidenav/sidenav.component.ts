@@ -17,11 +17,11 @@ logOut() {
   mobileQuery: MediaQueryList;
 
   menuNav = [
-    {name: "Planification", route: "planification", icon: "home"},
-    {name: "Formations", route: "formations", icon: "category"},
-    {name: "Formateurs", route: "formateurs", icon: "production_quantity_limits"},
-    {name: "Assistants", route: "assistants", icon: "production_quantity_limits"},
-    {name: "Entreprises", route: "entreprises", icon: "production_quantity_limits"}
+    {name: "Planification", route: "planification", icon: "assets/img/planification.png"},
+    {name: "Formations", route: "formations", icon: "assets/img/formation.png"},
+    {name: "Formateurs", route: "formateurs", icon: "assets/img/formateur.png"},
+    {name: "Assistants", route: "assistants", icon: "assets/img/assistant.png"},
+    {name: "Entreprises", route: "entreprises", icon: "assets/img/entreprise.png"}
   ]
 
   constructor(media: MediaMatcher, private userAuthService: UserAuthService, private router: Router) {

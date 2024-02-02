@@ -1,120 +1,209 @@
-/* Agrega estos estilos a tu archivo CSS o SCSS */
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
 
-/* .login {
-  background-color: #f0f0f0;
-  font-family: 'Arial', sans-serif;
-} */
-
-.container {
-  width: 100vw; /* Utilise toute la largeur de la fenêtre du navigateur */
-  height: 100vh; /* Utilise toute la hauteur de la fenêtre du navigateur */
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* Centre les éléments verticalement */
-  align-items: center; /* Centre les éléments horizontalement */
-  background-image: url('/assets/img/background.jpg');
-  background-size: cover; /* Pour que l'image couvre tout le conteneur */
-  background-position: center; /* Pour centrer l'image */
-}
-
-h2 {
-    color: rgb(31, 31, 31);
-      font-family: OpenSans;
-      font-size: 1.5rem;
-      line-height: 2rem;
-      text-align: center;
-  /* Gras */
-}
-
-.example-card {
-  background-color: rgb(199, 153, 243);
-  max-width: 400px; /* Ancho máximo de la tarjeta */
-  margin: auto; /* Centrar la tarjeta en la pantalla */
-  text-align: center; /* Alinear el contenido al centro */
-  border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-}
-
-.header-image {
-  padding: 0; /* Eliminar el relleno del encabezado */
-}
-
-.titulo {
-  width: 100%; /* Ancho completo del formulario */
-}
-
-.mat-form-field {
-  margin-bottom: 15px; /* Espacio entre campos de formulario */
-}
-
-.mat-card-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.mat-icon {
-  cursor: pointer; /* Cursor de apuntador sobre el icono de visibilidad */
-}
-
-.mat-card-actions {
-  margin-top: 20px; /* Espacio superior para los botones */
-}
-
-/* Estilo para el mensaje de error */
-.text-danger {
-  color: #dc3545; /* Color rojo */
-  font-size: 14px;
-  margin-top: 5px;
-}
-
-/* Estilos para los botones */
-button {
-  white-space: nowrap; /* Evitar el salto de línea en el botón */
-}
-body {
-  overflow: hidden;
-}
-.container-fluid {
+/*.screen {
+  background: linear-gradient(90deg, #d58cc9, #dc8de0);
   position: relative;
-  top: 0px;
+  height: 100vh;  Modifiez la hauteur pour qu'elle prenne 100% de la hauteur de la fenêtre 
+  width: 100%;
+  box-shadow: 0px 0px 24px #b7b4b6;
+}*/
+.screen {
+  background-color:  #dc8de0;
+  position: relative;
+  height: 200vh;
+  width: 100%;
+  box-shadow: 0px 0px 24px #b7b4b6;
+}
+/*.screen {
+  background: transparent;
+  background: linear-gradient(90deg, #C7C5F4, #ca93e1);
+}*/
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: Raleway, sans-serif;
+}
+
+/*body {
+  background: linear-gradient(90deg, #C7C5F4, #ca93e1);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}*/
+body {
+  background: linear-gradient(90deg, #C7C5F4, #ca93e1);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+/*body {
+	background: linear-gradient(90deg, #C7C5F4, #ca93e1);
+  height: 100vh;
+}*/
+
+
+
+.screen {
+  background-color: linear-gradient(90deg, #d58cc9, #dc8de0);
+  margin-top: 80px;
+  margin-left: 50px;
+	background: linear-gradient(90deg, #d58cc9, #dc8de0);
+	position: relative;
+	height: 600px;
+	width: 360px;
+	box-shadow: 0px 0px 24px #b7b4b6;
+}
+
+.screen__content {
+
+	z-index: 1;
+	position: relative;
+	height: 100%;
+}
+
+.screen__background {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 0;
+	-webkit-clip-path: inset(0 0 0 0);
+	clip-path: inset(0 0 0 0);
+}
+
+.screen__background__shape {
+	transform: rotate(45deg);
+	position: absolute;
+}
+
+.screen__background__shape1 {
+	height: 520px;
+	width: 520px;
+	background: #FFF;
+	top: -50px;
+	right: 120px;
+	border-radius: 0 72px 0 0;
+}
+
+.screen__background__shape2 {
+	height: 220px;
+	width: 220px;
+	background: #d77ad7;
+	top: -172px;
+	right: 0;
+	border-radius: 32px;
+}
+
+.screen__background__shape3 {
+	height: 540px;
+	width: 190px;
+	background: linear-gradient(270deg, #5D54A4, #6A679E);
+	top: -24px;
+	right: 0;
+	border-radius: 32px;
+}
+
+.screen__background__shape4 {
+	height: 400px;
+	width: 200px;
+	background: #7E7BB9;
+	top: 420px;
+	right: 50px;
+	border-radius: 60px;
 }
 
 .login {
-  width: 100%;
-  font-family: "Titillium Web", sans-serif;
-  background-image: url(../../../assets/img/hamburguesa-sin-abrir.png);
-  background-repeat: no-repeat;
-  background-size: cover;
+	width: 320px;
+	padding: 30px;
+	padding-top: 156px;
 }
 
-.btn-signin {
-  /* width: 340px; */
-  cursor: pointer;
-  text-decoration: none;
-  color: #fff;
-  background: #009ee3;
-  text-transform: uppercase;
-  border: 0;
-  font-family: "Titillium Web", sans-serif;
-  font-size: 1em;
+.login__field {
+	padding: 20px 0px;
+	position: relative;
 }
 
-mat-icon {
-  cursor: pointer;
+.login__icon {
+	position: absolute;
+	top: 30px;
+	color: #7875B5;
 }
 
-.example-card {
-  max-width: 400px;
-  border-radius: 12px;
+.login__input {
+	border: none;
+	border-bottom: 2px solid #D1D1D4;
+	background: none;
+	padding: 10px;
+	padding-left: 24px;
+	font-weight: 700;
+	width: 75%;
+	transition: .2s;
 }
 
-.header-image {
-  width: 96px;
-  height: 96px;
-  margin: 30px auto 30px;
-  display: block;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
+.login__input:active,
+.login__input:focus,
+.login__input:hover {
+	outline: none;
+	border-bottom-color: #6A679E;
+}
+
+.login__submit {
+	background: #fff;
+	font-size: 14px;
+	margin-top: 30px;
+	padding: 16px 20px;
+	border-radius: 26px;
+	border: 1px solid #D4D3E8;
+	text-transform: uppercase;
+	font-weight: 700;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	color: #4C489D;
+	box-shadow: 0px 2px 2px #5C5696;
+	cursor: pointer;
+	transition: .2s;
+}
+
+.login__submit:active,
+.login__submit:focus,
+.login__submit:hover {
+	border-color: #6A679E;
+	outline: none;
+}
+
+.button__icon {
+	font-size: 24px;
+	margin-left: auto;
+	color: #7875B5;
+}
+
+.social-login {
+	position: absolute;
+	height: 140px;
+	width: 160px;
+	text-align: center;
+	bottom: 0px;
+	right: 0px;
+	color: #fff;
+}
+
+.social-icons {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.social-login__icon {
+	padding: 20px 10px;
+	color: #fff;
+	text-decoration: none;
+	text-shadow: 0px 0px 8px #7875B5;
+}
+
+.social-login__icon:hover {
+	transform: scale(1.5);
 }

@@ -1,7 +1,5 @@
 package univ.iwa.model;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,23 +19,19 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Individuals {
-	@Id 
-	@GeneratedValue(strategy = GenerationType.IDENTITY) 
+public class Groupe {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	long id;
-	String nom;
-	String prenom;
-	String ville;
-	String email;
-	String tel;
-	LocalDate dateDeNaissance;
-	 @ManyToOne
-	    @JoinColumn(name = "groupe_id")
-	    private Groupe groupe;
+	 @OneToMany(mappedBy = "groupe")
+	List<Individuals> groupe;
 
-	    @JsonIgnore
+	 
 	    @ManyToOne
 	    @JoinColumn(name = "formation_id")
 	    private Formation formation;
 
+	    @ManyToOne
+	    @JoinColumn(name = "user_info_id")
+	    private UserInfo formateur;
 }

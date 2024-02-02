@@ -58,7 +58,10 @@ public class SecurityConfig {
 								.requestMatchers("/photos/**").permitAll()
 								.requestMatchers("/form/getformationbyid/**").permitAll()
 								.requestMatchers("/form/getformationfiltre").permitAll()
-								.requestMatchers("/auth/registerFormateurExterne").permitAll())
+								.requestMatchers("/auth/registerFormateurExterne").permitAll()
+								.requestMatchers("/form/getformations").permitAll()
+								)
+		
 
 			.csrf(csrf->csrf.disable())
 			.authenticationProvider(authenticationProvider()) 

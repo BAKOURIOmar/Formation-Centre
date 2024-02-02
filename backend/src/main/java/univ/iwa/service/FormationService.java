@@ -34,7 +34,7 @@ public class FormationService {
 
 //Ajouter Formation
 	public Formationdto addFormation(MultipartFile picture, String name, Long nombreh, double cout, String programme,
-			String ville, String categorie) throws IOException, java.io.IOException {
+			String ville, String categorie,String date) throws IOException, java.io.IOException {
 		Formationdto formationdto = new Formationdto();
 		formationdto.setName(name);
 		formationdto.setNombreh(nombreh);
@@ -44,7 +44,7 @@ public class FormationService {
 		formationdto.setVille(ville);
 		formationdto.setCategorie(categorie);
 		formationdto.setPicture(Util.compressZLib(picture.getBytes()));
-
+        formationdto.setDate(date);
 		Formation formation = modelMapper.map(formationdto, Formation.class);
 		return modelMapper.map(formrepo.save(formation), Formationdto.class);
 	}
@@ -114,6 +114,7 @@ public class FormationService {
 			formation.setProgramme(formationdto.getProgramme());
 			formation.setVille(formationdto.getVille());
 			formation.setCategorie(formationdto.getCategorie());
+			formation.setDate(formationdto.getDate());
 			formation.setPicture(Util.compressZLib(picture.getBytes()));
 			return modelMapper.map(formrepo.save(formation), Formationdto.class);
 		} else {

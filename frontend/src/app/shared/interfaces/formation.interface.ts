@@ -9,4 +9,5 @@ export interface Formation {
   ville:     string;
   categorie: string;
   picture:   string;
+  date:string;
 }

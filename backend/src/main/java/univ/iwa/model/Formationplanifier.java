@@ -12,25 +12,28 @@ import univ.iwa.model.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Formationplanifier {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private LocalDate date;
+    private LocalDate datedebut;
+    private LocalDate datefin;
     
-    @ManyToOne
-    @JoinColumn(name="formation_id")
-    private Formation formation;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "formation_id", nullable = false)
+    Formation formation;
 
-    @ManyToOne
-    @JoinColumn(name = "formateur_id")
-    private UserInfo formateur;
-    @ManyToOne
-    @JoinColumn(name = "Entreprise_id")
-    private Entreprise entreprise;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "formateur_id", nullable = false)
+    UserInfo formateur;
 
-    @OneToMany
-    @JoinColumn(name = "groupe_id")
-    private List<Individuals> groupe;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "entreprise_id", nullable = false)
+    Entreprise entreprise;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "groupe_id", nullable = false)
+    Groupe groupe;
 
 
 }
