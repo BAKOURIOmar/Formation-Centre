@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import {FormationService} from 'src/app/shared/services/formation.service';
 import {Formation} from 'src/app/shared/interfaces/formation.interface';
 import { Router } from '@angular/router';
+import { PageResponse } from 'src/app/shared/interfaces/pageResponse.interface';
 
 
 
@@ -25,8 +26,8 @@ this.showformation();
 
 
    this.formationservice.getFormations().subscribe(
-    (formations:any) => {
-      this.formations = formations; // Assurez-vous que formations est de type Formation[]
+    (formations:PageResponse<Formation>) => {
+      this.formations = formations.content; // Assurez-vous que formations est de type Formation[]
       console.log("data",this.formations);
     this.processFormationResponse(this.formations);
     },

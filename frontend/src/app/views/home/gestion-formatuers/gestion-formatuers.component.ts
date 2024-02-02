@@ -8,6 +8,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { ConfirmationComponent } from 'src/app/components/confirmation/confirmation.component';
 import { NewFormateurComponent } from 'src/app/components/new-formateur/new-formateur.component';
+import { PageResponse } from 'src/app/shared/interfaces/pageResponse.interface';
 import { User } from 'src/app/shared/interfaces/user.interface';
 import { FormateurService } from 'src/app/shared/services/formateur.service';
 @Component({
@@ -34,9 +35,9 @@ export class GestionFormatuersComponent {
   getFormateurs(): void {
    console.log("hshshshsh")
     this.formateurService.getUsersByRole('ROLE_FORMATEUR')
-      .subscribe( (data:any) => {
+      .subscribe( (data:PageResponse<User>) => {
 
-        this.processCategoriesResponse(data);
+        this.processCategoriesResponse(data.content);
 
       }, (error: any) => {
         console.log("error: ", error);

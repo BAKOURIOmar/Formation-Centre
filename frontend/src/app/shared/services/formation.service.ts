@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders} from '@angular/common/http';
 
 import { Formation } from '../interfaces/formation.interface';
+import { PageResponse } from '../interfaces/pageResponse.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,9 +15,9 @@ export class FormationService {
 
   constructor(private httpClient: HttpClient) { }
 
-getFormations(){
+getFormations(): Observable<PageResponse<Formation>>{
   const url = `${this.apiurl}/getformation`;
-    return this.httpClient.get(url);
+    return this.httpClient.get<PageResponse<Formation>>(url);
 }
 addFormation(formation: any,picture: File):Observable<Formation>{
   const formData = new FormData();

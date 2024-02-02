@@ -9,6 +9,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { ConfirmationComponent } from 'src/app/components/confirmation/confirmation.component';
 import { NewAssistantComponent } from 'src/app/components/new-assistant/new-assistant.component';
 import { NewFormateurComponent } from 'src/app/components/new-formateur/new-formateur.component';
+import { PageResponse } from 'src/app/shared/interfaces/pageResponse.interface';
 import { User } from 'src/app/shared/interfaces/user.interface';
 import { FormateurService } from 'src/app/shared/services/formateur.service';
 
@@ -36,9 +37,9 @@ export class GestionAssistantsComponent {
   getAssistants(): void {
    console.log("hshshshsh")
     this.formateurService.getUsersByRole('ROLE_ASSISTANT')
-      .subscribe( (data:any) => {
+      .subscribe( (data:PageResponse<User>) => {
 
-        this.processAssistantResponse(data);
+        this.processAssistantResponse(data.content);
 
       }, (error: any) => {
         console.log("error: ", error);

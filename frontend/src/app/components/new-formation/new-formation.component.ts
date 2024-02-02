@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Formation } from 'src/app/shared/interfaces/formation.interface';
+import { PageResponse } from 'src/app/shared/interfaces/pageResponse.interface';
 import { FormationService } from 'src/app/shared/services/formation.service';
 
 @Component({
@@ -85,8 +86,8 @@ export class NewFormationComponent {
 
   getFormations(){
     this.formationService.getFormations()
-        .subscribe( (data: any) =>{
-          this.formations = data;
+        .subscribe( (data: PageResponse<Formation>) =>{
+          this.formations = data.content;
         }, (error: any) =>{
           console.log("error pou consulter les formation");
         })

@@ -7,6 +7,7 @@ import { ConfirmationComponent } from 'src/app/components/confirmation/confirmat
 import { NewFormateurComponent } from 'src/app/components/new-formateur/new-formateur.component';
 import { NewFormationComponent } from 'src/app/components/new-formation/new-formation.component';
 import { Formation } from 'src/app/shared/interfaces/formation.interface';
+import { PageResponse } from 'src/app/shared/interfaces/pageResponse.interface';
 import { FormationService } from 'src/app/shared/services/formation.service';
 
 @Component({
@@ -32,9 +33,9 @@ export class GestionFormationsComponent {
 
   getFormations() {
     this.formationService.getFormations()
-      .subscribe((data: any) => {
+      .subscribe((data: PageResponse<Formation>) => {
         console.log("respuesta de productos: ", data);
-        this.processFormationResponse(data);
+        this.processFormationResponse(data.content);
       }, (error: any) => {
         console.log("error en productos: ", error);
       })

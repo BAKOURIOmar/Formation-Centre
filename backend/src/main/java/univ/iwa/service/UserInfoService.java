@@ -1,6 +1,8 @@
 package univ.iwa.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails; 
 import org.springframework.security.core.userdetails.UserDetailsService; 
@@ -8,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder; 
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.data.domain.PageImpl;
 
 
 import org.modelmapper.ModelMapper;
@@ -130,12 +133,22 @@ public class UserInfoService implements UserDetailsService {
 	
 	
 	
-	public List<Userdto> getUsersByRole(String role){
-		List<UserInfo> formateurs =repository.findByRoles(role);
-		return formateurs.stream().map(formateur -> 
-			modelMapper.map(formateur, Userdto.class)
-			).collect(Collectors.toList());
-		
+	public Page<Userdto> getUsersByRole(String role, Pageable pageable) {
+	    try {
+	        Page<UserInfo> userInfoPage = repository.findByRoles(role, pageable);
+
+	        if (userInfoPage.isEmpty()) {
+	            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No users found for role: " + role);
+	        }
+
+	        List<Userdto> userDtoList = userInfoPage.getContent().stream()
+	            .map(userInfo -> modelMapper.map(userInfo, Userdto.class))
+	            .collect(Collectors.toList());
+
+	        return new PageImpl<>(userDtoList, pageable, userInfoPage.getTotalElements());
+	    } catch (Exception e) {
+	        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred", e);
+	    }
 	}
 	
 	

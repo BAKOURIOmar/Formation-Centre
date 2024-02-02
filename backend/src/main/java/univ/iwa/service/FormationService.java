@@ -10,11 +10,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+
 
 import io.jsonwebtoken.io.IOException;
 import univ.iwa.dto.Formationdto;
@@ -48,30 +50,57 @@ public class FormationService {
 	}
 
 	// Lister tous les formations
-	public List<Formationdto> getAllFormations() throws java.io.IOException {
-		List<Formation> list = new ArrayList();
-		try {
-			List<Formation> formations = formrepo.findAll();
+//	public List<Formationdto> getAllFormations( Pageable pageable) throws java.io.IOException {
+//		List<Formation> list = new ArrayList();
+//		try {
+//			List<Formation> formations = formrepo.findAll();
+//
+//			if (formations.size() > 0) {
+//
+//				formations.stream().forEach((f) -> {
+//					byte[] imageDescompressed = Util.decompressZLib(f.getPicture());
+//					f.setPicture(imageDescompressed);
+//					list.add(f);
+//				});
+//
+//			} else {
+//				throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("there is no Formations"));
+//			}
+//		} catch (Exception e) {
+//			e.getStackTrace();
+//			throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Error catch"));
+//
+//		}
+//
+//		return list.stream().map(f -> modelMapper.map(f, Formationdto.class)).collect(Collectors.toList());
+//	}
+	public Page<Formationdto> getAllFormations(Pageable pageable) throws java.io.IOException {
+	    try {
+	        Page<Formation> formationsPage = formrepo.findAll(pageable);
+	        
+	        if (formationsPage.isEmpty()) {
+	            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There are no formations");
+	        }
+	        
+	        List<Formationdto> formationdtoList = formationsPage.getContent().stream()
+	            .map(f -> {
+	                try {
+	                    byte[] imageDescompressed = Util.decompressZLib(f.getPicture());
+	                    f.setPicture(imageDescompressed);
+	                    return modelMapper.map(f, Formationdto.class);
+	                } catch (IOException e) {
+	                    // Handle IOException if necessary
+	                    return null; // Or throw an exception
+	                }
+	            })
+	            .collect(Collectors.toList());
 
-			if (formations.size() > 0) {
-
-				formations.stream().forEach((f) -> {
-					byte[] imageDescompressed = Util.decompressZLib(f.getPicture());
-					f.setPicture(imageDescompressed);
-					list.add(f);
-				});
-
-			} else {
-				throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("there is no Formations"));
-			}
-		} catch (Exception e) {
-			e.getStackTrace();
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Error catch"));
-
-		}
-
-		return list.stream().map(f -> modelMapper.map(f, Formationdto.class)).collect(Collectors.toList());
+	        return new PageImpl<>(formationdtoList, pageable, formationsPage.getTotalElements());
+	    } catch (Exception e) {
+	        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred", e);
+	    }
 	}
+
 
 // Modifier Formation
 	public Formationdto updateformation(Long id, Formationdto formationdto, MultipartFile picture)
@@ -106,60 +135,88 @@ public class FormationService {
 	}
 
 ////Afficher les formations par catégoeies
-	public List<Formationdto> getformationCategorie(String categorie) {
-		List<Formation> list = new ArrayList();
-		try {
-			List<Formation> formations = formrepo.findByCategorie(categorie);
-
-			if (formations.size() > 0) {
-
-				formations.stream().forEach((f) -> {
-					byte[] imageDescompressed = Util.decompressZLib(f.getPicture());
-					f.setPicture(imageDescompressed);
-					list.add(f);
-				});
-
-			} else {
-				throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("there is no Formations"));
-			}
-		} catch (Exception e) {
-			e.getStackTrace();
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Error catch"));
-
-		}
-
-		return list.stream().map(f -> modelMapper.map(f, Formationdto.class)).collect(Collectors.toList());
-	}
+//	public List<Formationdto> getformationCategorie(String categorie,Pageable pageable) {
+//		List<Formation> list = new ArrayList();
+//		try {
+//			List<Formation> formations = formrepo.findByCategorie(categorie);
 //
-////Afficher les formations par les villes
-	public List<Formationdto> getformtionville(String ville) {
-		List<Formation> list = new ArrayList();
-	try {
-		List<Formation> formations = formrepo.findByVille(ville);
-	    
-	    
-		if( formations.size() > 0) {
-			
-			formations.stream().forEach( (f) -> {
-				byte[] imageDescompressed = Util.decompressZLib(f.getPicture());
-				f.setPicture(imageDescompressed);
-				list.add(f);
-			});
-			
-		} else {
-			 throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("there is no Formations"));
-		}
-	} catch (Exception e) {
-		e.getStackTrace();
-		throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Error catch"));
+//			if (formations.size() > 0) {
+//
+//				formations.stream().forEach((f) -> {
+//					byte[] imageDescompressed = Util.decompressZLib(f.getPicture());
+//					f.setPicture(imageDescompressed);
+//					list.add(f);
+//				});
+//
+//			} else {
+//				throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("there is no Formations"));
+//			}
+//		} catch (Exception e) {
+//			e.getStackTrace();
+//			throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Error catch"));
+//
+//		}
+//
+//		return list.stream().map(f -> modelMapper.map(f, Formationdto.class)).collect(Collectors.toList());
+//	}
+	public Page<Formationdto> getformationCategorie(String categorie, Pageable pageable) {
+	    try {
+	        Page<Formation> formationsPage = formrepo.findByCategorie(categorie, pageable);
+	        
+	        if (formationsPage.isEmpty()) {
+	            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There are no formations for the category: " + categorie);
+	        }
+	        
+	        List<Formationdto> formationdtoList = formationsPage.getContent().stream()
+	            .map(f -> {
+	                try {
+	                    byte[] imageDescompressed = Util.decompressZLib(f.getPicture());
+	                    f.setPicture(imageDescompressed);
+	                    return modelMapper.map(f, Formationdto.class);
+	                } catch (IOException e) {
+	                    // Handle IOException if necessary
+	                    return null; // Or throw an exception
+	                }
+	            })
+	            .collect(Collectors.toList());
 
-	} 
-
-    return list.stream()
-            .map(f -> modelMapper.map(f, Formationdto.class))
-            .collect(Collectors.toList());
+	        return new PageImpl<>(formationdtoList, pageable, formationsPage.getTotalElements());
+	    } catch (Exception e) {
+	        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred", e);
+	    }
 	}
 	
+	
+	
+//
+////Afficher les formations par les villes
+	public Page<Formationdto> getformtionville(String ville,Pageable pageable ) {
+	try {
+		 Page<Formation> formationsPage = formrepo.findByVille(ville,pageable);
+		  
+	        if (formationsPage.isEmpty()) {
+	            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There are no formations for the City: " + ville);
+	        }
+	        
+	        List<Formationdto> formationdtoList = formationsPage.getContent().stream()
+	            .map(f -> {
+	                try {
+	                    byte[] imageDescompressed = Util.decompressZLib(f.getPicture());
+	                    f.setPicture(imageDescompressed);
+	                    return modelMapper.map(f, Formationdto.class);
+	                } catch (IOException e) {
+	                    // Handle IOException if necessary
+	                    return null; // Or throw an exception
+	                }
+	            })
+	            .collect(Collectors.toList());
+
+	     
+	        return new PageImpl<>(formationdtoList, pageable, formationsPage.getTotalElements());
+	} catch (Exception e) {
+        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred", e);
+    }
+}
 	//recuperer les image by id
  public Formationdto getFormationByid(long id) {
 	 Optional<Formation> formationOptional = formrepo.findById(id);
@@ -217,21 +274,30 @@ public class FormationService {
 	    return pageResult;
 	}
 
- public List<Formationdto> getFormationByName(String Name) {
-		List<Formation> formations=formrepo.findByName(Name);
-		ArrayList<Formation>list=new ArrayList<>();
-		if(formations.size()>0) {
-			formations.stream().forEach( (f) -> {
-				byte[] imageDescompressed = Util.decompressZLib(f.getPicture());
-				f.setPicture(imageDescompressed);
-				list.add(f);
-			});
-		}else{
-			 throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("there is no Formations"));
-			
-		}
-	  return list.stream()
-            .map(f -> modelMapper.map(f, Formationdto.class))
-            .collect(Collectors.toList());
- }
+ public Page<Formationdto> getFormationByName(String name, Pageable pageable) {
+	    try {
+	        Page<Formation> formationsPage = formrepo.findByName(name, pageable);
+	        
+	        if (formationsPage.isEmpty()) {
+	            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There are no formations with the name: " + name);
+	        }
+	        
+	        List<Formationdto> formationdtoList = formationsPage.getContent().stream()
+	            .map(f -> {
+	                try {
+	                    byte[] imageDescompressed = Util.decompressZLib(f.getPicture());
+	                    f.setPicture(imageDescompressed);
+	                    return modelMapper.map(f, Formationdto.class);
+	                } catch (IOException e) {
+	                    // Handle IOException if necessary
+	                    return null; // Or throw an exception
+	                }
+	            })
+	            .collect(Collectors.toList());
+
+	        return new PageImpl<>(formationdtoList, pageable, formationsPage.getTotalElements());
+	    } catch (Exception e) {
+	        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred", e);
+	    }
+	}
 }

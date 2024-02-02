@@ -1,6 +1,8 @@
 package univ.iwa.controller;
 import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,8 +25,12 @@ public class EntrepriseController {
     //recuperer la liste des entreprises
     @GetMapping ("/getEntreprise")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
-    public ResponseEntity<List<Entreprisedto>> getallentreprise(){
-       return new ResponseEntity<List<Entreprisedto>>(entreser.getallentreprise(),HttpStatus.OK);
+    public ResponseEntity<Page<Entreprisedto>> getallentreprise(
+    		@RequestParam(name = "page", required = false) Integer page,
+    		@RequestParam(name = "size", required = false) Integer size){
+    	int pageNumber = (page != null) ? page : 0;
+    	int pageSize = (size != null) ? size : Integer.MAX_VALUE;
+       return new ResponseEntity<Page<Entreprisedto>>(entreser.getallentreprise(PageRequest.of(pageNumber, pageSize)),HttpStatus.OK);
     }
     //suprimer une entreprise
     @DeleteMapping("/deleteEntreprise/{id}")

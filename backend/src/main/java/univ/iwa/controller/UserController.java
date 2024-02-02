@@ -3,6 +3,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -69,9 +71,13 @@ public class UserController {
     
     @GetMapping("/users")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT','ROLE_FORMATEUR')")
-    public ResponseEntity<List<Userdto>> getUsersByRole(@RequestParam(name = "role" ,required = true) String role) {
+    public ResponseEntity<Page<Userdto>> getUsersByRole(@RequestParam(name = "role" ,required = true) String role,
+    		@RequestParam(name = "page", required = false) Integer page,
+    		@RequestParam(name = "size", required = false) Integer size) {
     	System.out.println(role);
-    	return new ResponseEntity<List<Userdto>>(service.getUsersByRole(role),HttpStatus.OK); 
+    	int pageNumber = (page != null) ? page : 0;
+    	int pageSize = (size != null) ? size : Integer.MAX_VALUE;
+    	return new ResponseEntity<Page<Userdto>>(service.getUsersByRole(role,PageRequest.of(pageNumber, pageSize)),HttpStatus.OK); 
     }
     
     @GetMapping("/user/userProfile") 

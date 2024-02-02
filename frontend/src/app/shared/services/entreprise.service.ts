@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Entreprise } from '../interfaces/entreprise.interface';
+import { PageResponse } from '../interfaces/pageResponse.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,9 @@ export class EntrepriseService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getEntreprises(){
+  getEntreprises():Observable<PageResponse<Entreprise>>{
     const url = `${this.apiurl}/getEntreprise`;
-    return this.httpClient.get(url);
+    return this.httpClient.get<PageResponse<Entreprise>>(url);
   }
 
   addEntreprise(entreprise:any):Observable<Entreprise>{

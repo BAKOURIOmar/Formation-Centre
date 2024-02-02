@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../interfaces/user.interface';
+import { PageResponse } from '../interfaces/pageResponse.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +15,9 @@ export class FormateurService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getUsersByRole(role: string){
+  getUsersByRole(role: string):Observable<PageResponse<User>>{
     const url = `${this.apiurl}/users?role=${role}`;
-    return this.httpClient.get(url);
+    return this.httpClient.get<PageResponse<User>>(url);
   }
 
   addFormateur(formateur:any):Observable<User>{
