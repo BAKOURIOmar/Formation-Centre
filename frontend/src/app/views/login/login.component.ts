@@ -49,10 +49,7 @@ export class LoginComponent implements OnInit {
 
           this.router.navigateByUrl('/home')} ,
         error: (message) => {
-          console.log('tamo aquiii  ')
-          console.log(message)
-          console.log(message.error.text)
-          //Swal.fire('Error', message, 'error' )
+          Swal.fire("Le nom d'utilisateur ou le mot de passe sont incorrects. Veuillez réessayer", message, 'error' )
           this.myForm.markAllAsTouched();
         }
       })
