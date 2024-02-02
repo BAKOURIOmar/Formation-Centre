@@ -49,8 +49,13 @@ public class FormmationController {
  }
  //Afficher tous les formations
  @GetMapping("/getformation")
-    public ResponseEntity<List<Formationdto>> allformation() throws java.io.IOException{
-     return new ResponseEntity<List<Formationdto>>(formservice.getAllFormations(),HttpStatus.OK);     
+    public ResponseEntity<Page<Formationdto>> allformation(
+    		@RequestParam(name = "page", required = false) Integer page,
+    		@RequestParam(name = "size", required = false) Integer size) throws java.io.IOException{
+		int pageNumber = (page != null) ? page : 0;
+		int pageSize = (size != null) ? size : Integer.MAX_VALUE;
+		
+     return new ResponseEntity<Page<Formationdto>>(formservice.getAllFormations(PageRequest.of(pageNumber, pageSize)),HttpStatus.OK);     
  }
 
 // //Modifier formation
@@ -93,25 +98,33 @@ public class FormmationController {
 
  
  //recuperer les formations par name,ville,catagorie
- @GetMapping("/getformationfiltre")
- public ResponseEntity<List<Formationdto>> getFormations(@RequestParam(required = false)String Ville ,@RequestBody (required = false)String categorie ,@RequestParam (required = false)String name) throws IOException{
-	 List<Formationdto> formations=null;
-	 if(Ville!=null) {
-		 formations=formservice.getformtionville(Ville);
-	 }else if(categorie !=null){
-		 formations=formservice.getformationCategorie(categorie);
-		 
-	 }else if(name!=null) {
-		 formations=formservice.getFormationByName(name);
-	 }else {
-		 formations=formservice.getAllFormations();
-	 }
-	 if (formations != null && !formations.isEmpty()) {
-	        return ResponseEntity.ok(formations);
-	    } else {
-	        return ResponseEntity.notFound().build();
-	    }
- }
+// @GetMapping("/getformationfiltre")
+// public ResponseEntity<Page<Formationdto>> getFormations(@RequestParam(required = false)String Ville 
+//		 ,@RequestBody (required = false)String categorie 
+//		 ,@RequestParam (required = false)String name
+//		 ,@RequestParam(name = "page", required = false) Integer page,
+// 		@RequestParam(name = "size", required = false) Integer size) throws IOException{
+//	 
+//		int pageNumber = (page != null) ? page : 0;
+//		int pageSize = (size != null) ? size : Integer.MAX_VALUE;
+//	 
+//		Page<Formationdto> formations=null;
+//	 if(Ville!=null) {
+//		 formations=formservice.getformtionville(Ville,PageRequest.of(pageNumber, pageSize));
+//	 }else if(categorie !=null){
+//		 formations=formservice.getformationCategorie(categorie,PageRequest.of(pageNumber, pageSize));
+//		 
+//	 }else if(name!=null) {
+//		 formations=formservice.getFormationByName(name,PageRequest.of(pageNumber, pageSize));
+//	 }else {
+//		 formations=formservice.getAllFormations(PageRequest.of(pageNumber, pageSize));
+//	 }
+//	 if (formations != null && !formations.isEmpty()) {
+//	        return ResponseEntity.ok(formations);
+//	    } else {
+//	        return ResponseEntity.notFound().build();
+//	    }
+// }
  
  //recuperer formation par id 
  @GetMapping("/getformationbyid/{id}")
@@ -119,7 +132,7 @@ public class FormmationController {
 	 Formationdto formation = formservice.getFormationByid(id);
 	  return new ResponseEntity<>(formation, HttpStatus.OK);
 
-
+ }
 @PostMapping("/filtreSearch")
 @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
 public ResponseEntity<Page<Formationdto>> filtreSearch(filtredto filters ,
@@ -131,7 +144,7 @@ public ResponseEntity<Page<Formationdto>> filtreSearch(filtredto filters ,
         
       return ResponseEntity.ok(formservice.filtreSearch(filters, PageRequest.of(pageNumber, pageSize)));
   
-}
+
 
 }
 }

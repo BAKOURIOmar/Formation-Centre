@@ -6,6 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationComponent } from 'src/app/components/confirmation/confirmation.component';
 import { NewAssistantComponent } from 'src/app/components/new-assistant/new-assistant.component';
 import { NewEntrepriseComponent } from 'src/app/components/new-entreprise/new-entreprise.component';
+import { Entreprise } from 'src/app/shared/interfaces/entreprise.interface';
+import { PageResponse } from 'src/app/shared/interfaces/pageResponse.interface';
 import { User } from 'src/app/shared/interfaces/user.interface';
 import { EntrepriseService } from 'src/app/shared/services/entreprise.service';
 
@@ -32,9 +34,9 @@ export class GestionEntrepriseComponent {
   getAssistants(): void {
    console.log("hshshshsh")
     this.entrepriseService.getEntreprises()
-      .subscribe( (data:any) => {
+      .subscribe( (data: PageResponse<Entreprise>) => {
 
-        this.processEntrepriseResponse(data);
+        this.processEntrepriseResponse(data.content);
 
       }, (error: any) => {
         console.log("error: ", error);

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Entreprise } from 'src/app/shared/interfaces/entreprise.interface';
+import { PageResponse } from 'src/app/shared/interfaces/pageResponse.interface';
 import { User } from 'src/app/shared/interfaces/user.interface';
 import { EntrepriseService } from 'src/app/shared/services/entreprise.service';
 
@@ -79,8 +80,8 @@ export class NewEntrepriseComponent {
 
   getEntreprises(){
     this.entrepriseService.getEntreprises()
-        .subscribe( (data: any) =>{
-          this.entreprises = data;
+        .subscribe( (data: PageResponse<Entreprise>) =>{
+          this.entreprises = data.content;
         }, (error: any) =>{
           console.log("error pou consulter les formateurs");
         })

@@ -1,5 +1,7 @@
 package univ.iwa.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
@@ -14,7 +16,7 @@ import java.util.Optional;
 @Repository
 public interface FormationReposetory extends JpaRepository<Formation, Long> ,JpaSpecificationExecutor<Formation>{
 	List<Formation> findAll();
-	List<Formation> findByCategorie(String categorie);
-   List<Formation> findByVille(String ville);
-   List<Formation> findByName(String name);
+	Page<Formation> findByCategorie(String categorie,Pageable pageable);
+	Page<Formation> findByVille(String ville,Pageable pageable);
+	Page<Formation> findByName(String name,Pageable pageable);
 }

@@ -78,13 +78,13 @@ public List<Formationplanifierdto> afficherformation( String nom, String date) t
 
 
     //supprimer une formation
-    public boolean  delete(long id ){
-    	if (!planirepo.existsById(id)) {
-  	      return false; // Devuelve false si el usuario no existe
-  	    }
-        planirepo.deleteById(id);
-        return true;
-    }
+//    public boolean  delete(long id ){
+//    	if (!planirepo.existsById(id)) {
+//  	      return false; // Devuelve false si el usuario no existe
+//  	    }
+//        planirepo.deleteById(id);
+//        return true;
+//    }
 
     //update une planification
     public Formationplanifierdto updateplanification(long id ,Formationplanifierdto formationplan){

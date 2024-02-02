@@ -40,7 +40,7 @@
 
         <mat-divider></mat-divider>
 
-        <a mat-list-item [routerLink]="menuNav[0].route">
+        <a mat-list-item [routerLink]="menuNav[0].route"*ngIf="isAddmin() || isAssistant() || isFormateur()">
           <mat-icon class="icono"> {{ menuNav[0].icon }}</mat-icon>
           <span class="name">{{menuNav[0].name}}</span>
 
@@ -52,19 +52,19 @@
 
         </a>
 
-        <a mat-list-item [routerLink]="menuNav[2].route">
+        <a mat-list-item [routerLink]="menuNav[2].route" *ngIf="isAddmin()">
           <mat-icon class="icono"> {{ menuNav[2].icon }}</mat-icon>
           <span class="name">{{menuNav[2].name}}</span>
 
         </a>
 
-        <a mat-list-item [routerLink]="menuNav[3].route">
+        <a mat-list-item [routerLink]="menuNav[3].route"*ngIf="isAddmin()">
           <mat-icon class="icono"> {{ menuNav[3].icon }}</mat-icon>
           <span class="name">{{menuNav[3].name}}</span>
 
         </a>
 
-        <a mat-list-item [routerLink]="menuNav[4].route">
+        <a mat-list-item [routerLink]="menuNav[4].route"*ngIf="isAddmin() || isAssistant()">
           <mat-icon class="icono"> {{ menuNav[4].icon }}</mat-icon>
           <span class="name">{{menuNav[4].name}}</span>
 

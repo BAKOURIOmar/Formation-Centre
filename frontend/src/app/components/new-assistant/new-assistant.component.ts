@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { PageResponse } from 'src/app/shared/interfaces/pageResponse.interface';
 import { User } from 'src/app/shared/interfaces/user.interface';
 import { FormateurService } from 'src/app/shared/services/formateur.service';
 
@@ -20,12 +21,12 @@ export class NewAssistantComponent {
   public AssistantForm!: FormGroup;
 
   estatForm: string = "";
-  formateurs: User[]=[];
+  assistants: User[]=[];
 
 
   ngOnInit(): void {
 
-    this.getFormations();
+    this.getAssistants();
 
     this.estatForm = "Ajouter";
     this.AssistantForm = this.fb.group( {
@@ -75,10 +76,10 @@ export class NewAssistantComponent {
     this.dialogRef.close(3);
   }
 
-  getFormations(){
+  getAssistants(){
     this.formateurService.getUsersByRole('ROLE_ASSISTANT')
-        .subscribe( (data: any) =>{
-          this.formateurs = data;
+        .subscribe( (data: PageResponse<User>) =>{
+          this.assistants = data.content;
         }, (error: any) =>{
           console.log("error pou consulter les formateurs");
         })

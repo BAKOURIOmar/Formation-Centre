@@ -1,5 +1,8 @@
 package univ.iwa.service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,12 +29,12 @@ ModelMapper modelMapper;
         return modelMapper.map(entrorepo.save(entreprise),Entreprisedto.class);
     }
      //recuperer la listes des entreprises
-    public List<Entreprisedto> getallentreprise(){
-        List<Entreprise> entreprises=entrorepo.findAll();
-        List<Entreprisedto> entrepriseDtos = entreprises.stream()
-                .map(entreprise -> modelMapper.map(entreprise, Entreprisedto.class))
-                .collect(Collectors.toList());
-        return entrepriseDtos;
+    public Page<Entreprisedto> getallentreprise(Pageable pageable) {
+            Page<Entreprise> entreprisePage = entrorepo.findAll(pageable);
+            List<Entreprisedto> entrepriseDtos = entreprisePage.getContent().stream()
+                    .map(entreprise -> modelMapper.map(entreprise, Entreprisedto.class))
+                    .collect(Collectors.toList());
+            return new PageImpl<>(entrepriseDtos, pageable, entreprisePage.getTotalElements());
     }
     //suprimer une entreprise
         public boolean deleteEntreprise(long id) {
