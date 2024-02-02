@@ -10,19 +10,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import jakarta.persistence.EntityNotFoundException;
 import univ.iwa.dto.Inndividualsdto;
+import univ.iwa.model.Formation;
 import univ.iwa.model.Individuals;
+import univ.iwa.repository.FormationReposetory;
 import univ.iwa.repository.IndividuRepository;
 
 @Service
 public class IndividuService {
+	
+	@Autowired
+    private FormationReposetory formationRepository;
 
     @Autowired
     private IndividuRepository individurepo;
 
     private ModelMapper modelMapper;
 
-    @Autowired
+   
     public IndividuService(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
@@ -32,6 +38,37 @@ public class IndividuService {
         Individuals individu = modelMapper.map(individudto, Individuals.class);
         Individuals createdInndividual =individurepo.save(individu);
         return modelMapper.map(createdInndividual, Inndividualsdto.class);
+    }
+// Ajouter un individu à une formation
+    public Inndividualsdto addIndividuToFormation(Long individuId, Long formationId) {
+        Optional<Individuals> individuOptional = individurepo.findById(individuId);
+        Optional<Formation> formationOptional = formationRepository.findById(formationId);
+
+        if (individuOptional.isPresent() && formationOptional.isPresent()) {
+            Individuals individu = individuOptional.get();
+            Formation formation = formationOptional.get();
+
+            individu.setFormation(formation);
+            individurepo.save(individu);
+
+            return modelMapper.map(individu, Inndividualsdto.class);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Individu or Formation not found");
+        }
+    }
+ // Supprimer un individu
+    public boolean deleteIndividu(Long id) {
+        Optional<Individuals> individuOptional = individurepo.findById(id);
+        if (individuOptional.isPresent()) {
+            Individuals individu = individuOptional.get();
+            if (individu.getFormation() != null) {
+                individu.setFormation(null); // Retirer l'individu de la formation
+            }
+            individurepo.deleteById(id);
+            return true;
+        } else {
+            return false; // Individu non trouvé
+        }
     }
 
 

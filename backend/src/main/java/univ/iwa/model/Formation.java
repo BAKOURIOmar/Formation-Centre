@@ -1,6 +1,7 @@
 package univ.iwa.model;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,7 +16,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
-import jakarta.persistence.Transient; 
+import jakarta.persistence.OneToMany;
 @Entity
 @Data 
 @AllArgsConstructor 
@@ -40,4 +41,7 @@ public class Formation {
 	@Basic(fetch = FetchType.LAZY)
 	@Column( name ="picture", columnDefinition = "longblob")
 	private byte[] picture;
+	@OneToMany(mappedBy = "formation")
+	private List<Individuals> individus;
+
 }

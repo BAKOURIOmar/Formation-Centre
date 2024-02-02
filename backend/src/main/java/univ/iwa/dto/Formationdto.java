@@ -1,11 +1,14 @@
 package univ.iwa.dto;
 
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import univ.iwa.model.Individuals;
 
 @Data
 @AllArgsConstructor
@@ -24,7 +27,6 @@ public class Formationdto {
 //    private MultipartFile image;
    // private String imagePath;
     private byte[] picture;
-    
-    
+    private List<Individuals> individus;
 
 }

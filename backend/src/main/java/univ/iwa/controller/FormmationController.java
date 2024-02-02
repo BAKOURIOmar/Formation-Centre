@@ -8,6 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 /*import com.fasterxml.jackson.core.JsonProcessingException;
@@ -117,21 +121,44 @@ public class FormmationController {
  @GetMapping("/getformationbyid/{id}")
  public ResponseEntity<Formationdto> recuperformaationid(@PathVariable long id){
 	 Formationdto formation = formservice.getFormationByid(id);
-	  return new ResponseEntity<>(formation, HttpStatus.OK);
+	  return new ResponseEntity<>(formation, HttpStatus.OK);}
 
 
 @PostMapping("/filtreSearch")
 @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
-public ResponseEntity<Page<Formationdto>> filtreSearch(filtredto filters ,
-		@RequestParam(name = "page", required = false) Integer page,
-		@RequestParam(name = "size", required = false) Integer size) throws java.io.IOException {
+public ResponseEntity<Page<Formationdto>> filtreSearch(@RequestBody filtredto filters,
+	                                                          @RequestParam(name = "page", required = false) Integer page,
+	                                                          @RequestParam(name = "size", required = false) Integer size) throws IOException {
  
 	int pageNumber = (page != null) ? page : 0;
 	int pageSize = (size != null) ? size : Integer.MAX_VALUE;
         
       return ResponseEntity.ok(formservice.filtreSearch(filters, PageRequest.of(pageNumber, pageSize)));
   
-}
 
 }
+
+//Ajouter un individu à une formation
+@PostMapping("/addIndividuToFormation")
+@PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+public ResponseEntity<Void> addIndividuToFormation(@RequestParam Long individuId, @RequestParam Long formationId) {
+    formservice.addIndividuToFormation(individuId, formationId);
+    return ResponseEntity.ok().build();
+}
+
+// Compter le nombre d'individus inscrits dans une formation
+@GetMapping("/countIndividusInFormation/{formationId}")
+public ResponseEntity<Integer> countIndividusInFormation(@PathVariable Long formationId) {
+    int count = formservice.countIndividusInFormation(formationId);
+    return ResponseEntity.ok(count);
+}
+
+// Créer les groupes si nécessaire pour une formation
+@PostMapping("/createGroupsIfNeeded/{formationId}/{seuil}")
+public ResponseEntity<Void> createGroupsIfNeeded(@PathVariable Long formationId, @PathVariable int seuil) {
+    formservice.createGroupsIfNeeded(formationId, seuil);
+    return ResponseEntity.ok().build();
+}
+
+
 }

@@ -17,10 +17,15 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import io.jsonwebtoken.io.IOException;
+import jakarta.persistence.EntityNotFoundException;
 import univ.iwa.dto.Formationdto;
 import univ.iwa.dto.filtredto;
 import univ.iwa.model.Formation;
+import univ.iwa.model.Groupe;
+import univ.iwa.model.Individuals;
 import univ.iwa.repository.FormationReposetory;
+import univ.iwa.repository.GroupeRepository;
+import univ.iwa.repository.IndividuRepository;
 import univ.iwa.util.Util;
 
 @Service
@@ -29,6 +34,10 @@ public class FormationService {
 	ModelMapper modelMapper;
 	@Autowired
 	FormationReposetory formrepo;
+	@Autowired
+    private IndividuRepository individuRepository;
+	@Autowired
+    private GroupeRepository groupeRepository;
 
 //Ajouter Formation
 	public Formationdto addFormation(MultipartFile picture, String name, Long nombreh, double cout, String programme,
@@ -234,4 +243,70 @@ public class FormationService {
             .map(f -> modelMapper.map(f, Formationdto.class))
             .collect(Collectors.toList());
  }
+ 
+ public List<Individuals> getIndividusInFormation(Long formationId) {
+	 System.out.println("get individus");
+     return individuRepository.findByFormationId(formationId);
+ }
+ 
+//Ajouter un individu à une formation
+ public void addIndividuToFormation(Long individuId, Long formationId) {
+     Optional<Formation> formationOptional = formrepo.findById(formationId);
+     if (formationOptional.isPresent()) {
+         Formation formation = formationOptional.get();
+         Individuals individu = new Individuals();
+         individu.setId(individuId); // Supposons que vous avez un moyen de récupérer l'individu par son ID
+         individu.setFormation(formation);
+         formation.getIndividus().add(individu);
+         formrepo.save(formation);
+     } else {
+         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Formation not found");
+     }
+ }
+
+ // Suivi du nombre d'individus inscrits
+ public int countIndividusInFormation(Long formationId) {
+     Optional<Formation> formationOptional = formrepo.findById(formationId);
+     if (formationOptional.isPresent()) {
+         Formation formation = formationOptional.get();
+         return formation.getIndividus().size();
+     } else {
+         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Formation not found");
+     }
+ }
+//Créer le groupe 
+ public void createGroupsIfNeeded(Long formationId, int seuil) {
+     int nbIndividus = countIndividusInFormation(formationId);
+     if (nbIndividus >= seuil) {
+         List<Individuals> individus = getIndividusInFormation(formationId);
+         int nbGroupes = nbIndividus / seuil;
+         int individusParGroupe = nbIndividus / nbGroupes;
+
+         // Logique de création de groupes
+         List<List<Individuals>> groupes = new ArrayList<>();
+         for (int i = 0; i < nbGroupes; i++) {
+             List<Individuals> groupe = new ArrayList<>();
+             for (int j = 0; j < individusParGroupe; j++) {
+                 if (!individus.isEmpty()) {
+                     groupe.add(individus.remove(0)); // Retire le premier individu de la liste et l'ajoute au groupe
+                 }
+             }
+             groupes.add(groupe);
+         }
+
+         // Si des individus restent, les ajouter au dernier groupe
+         if (!individus.isEmpty()) {
+             groupes.get(nbGroupes - 1).addAll(individus);
+         }
+
+         // Sauvegarde des groupes dans la base de données
+         for (List<Individuals> groupeIndividus : groupes) {
+             Groupe groupeEntity = new Groupe();
+             groupeEntity.setFormation(formrepo.findById(formationId).orElseThrow(EntityNotFoundException::new));
+             groupeEntity.setIndividuals(groupeIndividus);
+             groupeRepository.save(groupeEntity); // Sauvegarde du groupe dans la base de données
+         }
+     }
+ }
+ 
 }

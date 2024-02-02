@@ -17,11 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import univ.iwa.dto.Inndividualsdto;
 import univ.iwa.dto.Userdto;
+import univ.iwa.model.Individuals;
+import univ.iwa.service.FormationService;
 import univ.iwa.service.IndividuService;
 
 @RestController
 @RequestMapping("/indiv")
 public class IndividuController {
+	@Autowired
+    FormationService formationService;
 	@Autowired
 	IndividuService individuservice;
 	
@@ -49,4 +53,23 @@ public class IndividuController {
         return new ResponseEntity<Inndividualsdto>(individuservice.updateIndividu(id,individu),HttpStatus.OK);
 
 }
+ // Ajouter un individu à une formation
+    @PostMapping("/addIndividuToFormation/{individuId}/{formationId}")
+    public ResponseEntity<Inndividualsdto> addIndividuToFormation(@PathVariable Long individuId, @PathVariable Long formationId) {
+        Inndividualsdto result = individuservice.addIndividuToFormation(individuId, formationId);
+        return ResponseEntity.ok(result);
+    }
+
+    // Supprimer un individu
+    @DeleteMapping("/deleteIndividu/{id}")
+    public ResponseEntity<Boolean> deleteIndividu(@PathVariable Long id) {
+        boolean deleted = individuservice.deleteIndividu(id);
+        return ResponseEntity.ok(deleted);
+    }
+    
+    @GetMapping("/api/formation/{formationId}/individus")
+    public List<Individuals> getIndividusInFormation(@PathVariable Long formationId) {
+        return formationService.getIndividusInFormation(formationId);
+    }
+    
 }

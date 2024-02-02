@@ -7,6 +7,8 @@ import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import univ.iwa.model.Formation;
+import univ.iwa.model.Groupe;
 
 @Data
 @AllArgsConstructor
@@ -20,4 +22,6 @@ public class Inndividualsdto {
     String email;
     String tel;
     LocalDate dateDeNaissance;
+    Formation formation;
+    Groupe groupe;
 }

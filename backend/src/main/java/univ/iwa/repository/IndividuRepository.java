@@ -11,4 +11,5 @@ public interface IndividuRepository extends JpaRepository<Individuals, Long> {
 	
 	public void deleteById(int id);
 	List<Individuals> findAll();
+	 List<Individuals> findByFormationId(Long formationId);
 }
