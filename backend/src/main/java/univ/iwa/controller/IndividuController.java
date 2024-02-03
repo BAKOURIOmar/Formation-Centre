@@ -1,6 +1,7 @@
 package univ.iwa.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import univ.iwa.dto.Inndividualsdto;
-import univ.iwa.dto.Userdto;
+import univ.iwa.model.Formation;
+import univ.iwa.service.EmailService;
+import univ.iwa.service.FormationService;
 import univ.iwa.service.IndividuService;
 
 @RestController
@@ -24,14 +27,27 @@ import univ.iwa.service.IndividuService;
 public class IndividuController {
 	@Autowired
 	IndividuService individuservice;
+	@Autowired
+	FormationService formationService;
+	@Autowired
+	EmailService emailService ;
+	
+	String subject;
+	String body;
 	
 //	 //Ajouter un individu
-//    @PostMapping("/inscriptionIndividu/{formationid}")
-//    public ResponseEntity<Inndividualsdto> addindividu(@RequestBody Inndividualsdto indiv,@PathVariable long idformation){
-//    	
-//        return new ResponseEntity<Inndividualsdto>(individuservice.addindividu(indiv),HttpStatus.OK);
-//    }
-    //Récuperer un individu
+	@PostMapping("/inscription/{formationId}")
+	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSITANT')")
+    public Inndividualsdto inscription(@RequestBody Inndividualsdto individuDto,
+                                    @PathVariable Long formationId) {
+        Inndividualsdto result = individuservice.inscription(individuDto, formationId);
+        Optional<Formation> optionalFormation = formationService.findById(formationId);
+            Formation formation = optionalFormation.get();
+            subject = "Inscription confirmée à " + formation.getName();
+            body = "Bienvenue " + individuDto.getNom() + ",\n\nMerci de vous être inscrit à la formation " + formation.getName() + ". Nous vous contacterons dès que la formation débutera.\n\nCordialement,";
+            emailService.sendSimpleEmail(individuDto.getEmail(),subject,body);
+        return result;
+    }
     @GetMapping ("/getallindividus")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSITANT')")
     public ResponseEntity<List<Inndividualsdto>>  getallindividus(){

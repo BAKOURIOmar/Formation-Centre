@@ -10,7 +10,7 @@ export class SignupComponent {
 }*/
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SignupService } from '../../shared/services/signup.service';
 import { DatePipe } from '@angular/common';
 
@@ -24,6 +24,7 @@ type LocalDate = Date | null; // Changer le type de LocalDate à Date
 export class SignupComponent implements OnInit {
   hide = true;
   errorSignup: boolean = false;
+  idFormation!: number;
 
   public myForm: FormGroup = this.fb.group({
     nom: ['', Validators.required],
@@ -34,9 +35,15 @@ export class SignupComponent implements OnInit {
     dateNaissance: ['', Validators.required]
   });
 
-  constructor(private fb: FormBuilder, private signupService: SignupService, private router: Router,private datePipe: DatePipe) { }
+  constructor(private fb: FormBuilder, private signupService: SignupService,private route: ActivatedRoute, private router: Router,private datePipe: DatePipe) {
 
-  ngOnInit(): void { }
+  }
+
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.idFormation = +params['id']; // 'id' es el nombre del parámetro en la ruta
+    });
+   }
 
 
 
@@ -51,7 +58,7 @@ export class SignupComponent implements OnInit {
 
 
       console.log(signupRequest);
-      this.signupService.signupIndividu(signupRequest).subscribe({
+      this.signupService.signupIndividu(signupRequest,this.idFormation).subscribe({
         next: (response) => {
           console.log("added");
           console.log(response);

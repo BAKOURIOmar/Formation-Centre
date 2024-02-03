@@ -24,7 +24,7 @@ public class Groupe {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	long id;
 	 @OneToMany(mappedBy = "groupe")
-	List<Individuals> groupe;
+	List<Individuals> inscrits;
 
 	 
 	    @ManyToOne

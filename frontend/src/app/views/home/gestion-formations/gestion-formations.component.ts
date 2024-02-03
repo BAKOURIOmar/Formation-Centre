@@ -25,7 +25,7 @@ export class GestionFormationsComponent {
     this.getFormations();
   }
 
-  displayedColumns: string[] = ['id', 'name', 'nombreh', 'cout', 'programme','ville', 'categorie','picture', 'actions'];
+  displayedColumns: string[] = ['id', 'name', 'nombreh','seuil', 'cout', 'programme','ville', 'categorie','date','picture', 'actions'];
   dataSource = new MatTableDataSource<Formation>();
 
   @ViewChild(MatPaginator)
@@ -79,10 +79,10 @@ openSnackBar(message: string, action: string) : MatSnackBarRef < SimpleSnackBar 
 
 }
 
-  edit(id:number, name: string, nombreh: number, cout: number, programme: string, ville: string, categorie: string){
+  edit(id:number, name: string, nombreh: number, seuil:number , cout: number, programme: string, ville: string, categorie: string, date:string){
     const dialogRef = this.dialog.open(NewFormationComponent , {
       width: '450px',
-      data: {id: id, name: name, nombreh: nombreh, cout: cout, programme: programme, ville: ville, categorie: categorie}
+      data: {id: id, name: name, nombreh: nombreh ,seuil :seuil , cout: cout, programme: programme, ville: ville, categorie: categorie , date: date}
     });
 
     dialogRef.afterClosed().subscribe((result:any) => {

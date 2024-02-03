@@ -19,4 +19,7 @@ public interface FormationReposetory extends JpaRepository<Formation, Long> ,Jpa
 	Page<Formation> findByCategorie(String categorie,Pageable pageable);
 	Page<Formation> findByVille(String ville,Pageable pageable);
 	Page<Formation> findByName(String name,Pageable pageable);
+	Page<Formation> findByNameContainingIgnoreCaseOrVilleContainingIgnoreCaseOrCategorieContainingIgnoreCase(
+	          String nom, String ville,String categorie, Pageable pageable
+	    );
 }

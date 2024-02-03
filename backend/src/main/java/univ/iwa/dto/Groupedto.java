@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Groupedto {
+public class GroupeDto {
 	
 	private long id;
 	

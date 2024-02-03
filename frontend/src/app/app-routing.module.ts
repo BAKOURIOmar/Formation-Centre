@@ -24,7 +24,6 @@ const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'planification' },
   ]},
   { path: 'accueille', component: AccueilleComponent},
-  { path: 'register', component: RegisterComponent},
   { path: 'login', component: LoginComponent},
   { path: 'detail/:id', component: DetailsComponent },
   {path: 'aboutUs',component:AboutUsComponent},

@@ -1,5 +1,6 @@
 package univ.iwa.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class Formation {
 	private long seuil;
 	private String programme;
 	private String ville;
-	private String date;
+	private LocalDate date;
 	private String categorie;
 	
 	@Lob

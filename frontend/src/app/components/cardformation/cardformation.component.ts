@@ -42,16 +42,6 @@ export class CardformationComponent implements OnInit {
 
 }*/
 
-processFormationResponse(resp: any) {
-  const dateFormation: Formation[] = [];
-  console.log("avantle fetch")
-     resp.forEach((element: Formation) => {
-       //element.category = element.category.name;
-       element.picture = 'data:image/jpeg;base64,'+element.picture;
-       console.log("image transferer");
-       dateFormation.push(element);
-     });
-    }
 
 
 exploreDetails(formationId: number){
