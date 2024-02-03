@@ -33,7 +33,7 @@ public class SecurityConfig {
 		http
 		.cors(cors->cors.configurationSource(request -> new CorsConfiguration(corsFilter())))
 		.authorizeHttpRequests((auth)->auth
-			.requestMatchers("/auth/welcome",  "/auth/generateToken").permitAll()
+			.requestMatchers("/auth/welcome",  "/auth/generateToken","/feedback/add").permitAll()
 			.requestMatchers("/auth/user/**").authenticated()
 			.requestMatchers("/auth/users").authenticated()
 			.requestMatchers("/auth/admin/**").authenticated()

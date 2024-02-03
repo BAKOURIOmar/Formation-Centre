@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -38,6 +39,10 @@ import { DetailsComponent } from './views/details/details.component';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule, DatePipe } from '@angular/common';
 import { AboutUsComponent } from './views/about-us/about-us.component';
+import { FeedbackComponent } from './views/feedback/feedback.component';
+import { StarRatingComponent } from './components/star-rating/star-rating.component';
+
+
 @NgModule({
 
   declarations: [
@@ -62,6 +67,8 @@ import { AboutUsComponent } from './views/about-us/about-us.component';
     NewEntrepriseComponent,
     DetailsComponent,
     AboutUsComponent,
+    FeedbackComponent,
+    StarRatingComponent,
 
   ],
   imports: [
@@ -83,6 +90,7 @@ import { AboutUsComponent } from './views/about-us/about-us.component';
   ],
   providers: [DatePipe ,
     AuthGuard,
+    
     {
     provide:HTTP_INTERCEPTORS,
     useClass:AuthInterceptor,

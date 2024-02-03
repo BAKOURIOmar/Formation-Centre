@@ -143,6 +143,9 @@ public class UserInfoService implements UserDetailsService {
 
 	        return new PageImpl<>(userDtoList, pageable, userInfoPage.getTotalElements());
 	}
+	public UserInfo getById (Integer id ){
+		return repository.getReferenceById(id);
+	}
 	
 	
 	@PostConstruct
