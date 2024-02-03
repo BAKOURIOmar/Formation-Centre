@@ -1,0 +1,31 @@
+
+<mat-card class="card-feedback">
+  <div class="title">
+    <h2 class="feedback-title">Feedback</h2>
+    <p class="feedback-text">
+      Please provide your feedback here
+    </p>
+  </div>
+  <label> Rating : 
+    <mat-star-rating class="star-color"  [rating]="rating"  [starCount]="starCount"  (ratingUpdated)="onRatingChanged($event)">
+    </mat-star-rating>
+  </label>
+  <br/>
+  <br/>
+  <br/>
+  <form [formGroup]="formateurForm">
+
+  <label class="feedback-label" >  Feed back </label>
+  <!-- <mat-form-field class="form-control"> -->
+    <textarea matInput
+    formControlName="description"
+    placeholder="write your feedabck here"
+    ></textarea>
+  <!-- </mat-form-field> -->
+
+  <button mat-raised-button 
+  class="btn-feedback"
+  (click)="onSubmit()"
+  >Submit Your Feedback</button>
+  </form>
+  </mat-card>

@@ -26,5 +26,7 @@ public class GroupeService {
                 .map(groupe -> modelMapper.map(groupe, GroupeDto.class))
                 .collect(Collectors.toList());
     }
-
+    public Groupe getGroupById(Long id){
+        return  this.repository.findById(id).get();
+    }
 }

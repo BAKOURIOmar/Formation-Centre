@@ -14,6 +14,7 @@ import { GestionEntrepriseComponent } from './views/home/gestion-entreprise/gest
 import { DetailsComponent } from './views/details/details.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { AboutUsComponent } from './views/about-us/about-us.component';
+import { FeedbackComponent } from './views/feedback/feedback.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent ,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN','ROLE_FORMATEUR','ROLE_ASSISTANT']},children:[
     {path: 'planification', component: PlanificationComponent ,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN','ROLE_FORMATEUR','ROLE_ASSISTANT']}},
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'detail/:id', component: DetailsComponent },
   {path: 'aboutUs',component:AboutUsComponent},
   {path:'inscrire/:id',component:SignupComponent},
+  {path:'feedback',component:FeedbackComponent},
   { path: '**', redirectTo: 'accueille'},
 
 ];

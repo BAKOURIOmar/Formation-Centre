@@ -2,13 +2,12 @@ package univ.iwa.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.Entity; 
-import jakarta.persistence.GeneratedValue; 
-import jakarta.persistence.GenerationType; 
-import jakarta.persistence.Id; 
-import lombok.AllArgsConstructor; 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data; 
-import lombok.NoArgsConstructor; 
+import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
@@ -25,5 +24,8 @@ public class UserInfo {
 	private String password; //both
 	private String roles;//both
 	private String type;//formateur
+
+	@OneToMany(mappedBy = "user")
+	private List<Feedback> feedbacks;
 } 
 

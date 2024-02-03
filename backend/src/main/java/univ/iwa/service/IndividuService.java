@@ -103,4 +103,8 @@ public class IndividuService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Inndividu with ID %d does not exist", id));
         }
     }
+
+    public Individuals getById(Long id){
+        return individurepo.getReferenceById(id);
+    }
 }

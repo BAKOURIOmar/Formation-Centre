@@ -3,6 +3,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import univ.iwa.model.Feedback;
+
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,4 +22,5 @@ public class Userdto {
     private String password;
     private String roles;
     private String type;
+    private List<Feedback> feedbacks;
 }
