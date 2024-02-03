@@ -37,7 +37,6 @@ public class IndividuController {
 	
 //	 //Ajouter un individu
 	@PostMapping("/inscription/{formationId}")
-	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSITANT')")
     public Inndividualsdto inscription(@RequestBody Inndividualsdto individuDto,
                                     @PathVariable Long formationId) {
         Inndividualsdto result = individuservice.inscription(individuDto, formationId);
