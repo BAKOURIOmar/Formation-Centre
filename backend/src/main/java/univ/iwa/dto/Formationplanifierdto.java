@@ -21,6 +21,6 @@ public class Formationplanifierdto {
     private Formationdto formation;
     private Userdto formateur;
     private Entreprisedto entreprise;
-    private Groupedto groupe;
+    private GroupeDto groupe;
 
 }

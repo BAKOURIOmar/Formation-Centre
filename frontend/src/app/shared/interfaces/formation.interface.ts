@@ -4,6 +4,7 @@ export interface Formation {
   id:        number;
   name:      string;
   nombreh:   number;
+  seuil:     number;
   cout:      number;
   programme: string;
   ville:     string;

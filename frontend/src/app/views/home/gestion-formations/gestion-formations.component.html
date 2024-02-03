@@ -49,6 +49,11 @@
               <td mat-cell *matCellDef="let element"> {{ element.nombreh}}</td>
           </ng-container>
 
+          <ng-container matColumnDef="seuil">
+            <th mat-header-cell *matHeaderCellDef> Seuil </th>
+            <td mat-cell *matCellDef="let element"> {{ element.seuil}}</td>
+        </ng-container>
+
           <!-- account column-->
           <ng-container matColumnDef="cout">
               <th mat-header-cell *matHeaderCellDef> Cout </th>
@@ -71,6 +76,11 @@
           <td mat-cell *matCellDef="let element"> {{ element.categorie}}</td>
       </ng-container>
 
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef> Date </th>
+        <td mat-cell *matCellDef="let element"> {{ element.date}}</td>
+    </ng-container>
+
           <!-- picture column -->
           <ng-container matColumnDef="picture">
               <th mat-header-cell *matHeaderCellDef> Photo </th>
@@ -82,7 +92,7 @@
               <th mat-header-cell *matHeaderCellDef> Actions </th>
               <td mat-cell *matCellDef="let element; let i=index;">
 
-                  <button mat-icon-button color="accent" (click)="edit(element.id, element.name, element.nombreh, element.cout, element.programme, element.ville, element.categorie)">
+                  <button mat-icon-button color="accent" (click)="edit(element.id, element.name, element.nombreh, element.seuil, element.cout, element.programme, element.ville, element.categorie,element.date)">
                       <mat-icon aria-label="Edit">edit</mat-icon>
                   </button>
 

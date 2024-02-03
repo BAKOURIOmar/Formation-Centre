@@ -45,7 +45,7 @@ public class SecurityConfig {
 								.requestMatchers("/form/getformationcat/**").authenticated()
 								.requestMatchers("/form/filtreSearch").authenticated()
 								.requestMatchers("/entreprise/**").authenticated()
-								.requestMatchers("/indiv/addindividu").permitAll()
+								.requestMatchers("/indiv/inscription/**").permitAll()
 								.requestMatchers("/indiv/getallindividus").authenticated()
 								.requestMatchers("/indiv/deleteindividu/{id}").authenticated()
 								.requestMatchers("/indiv/updateIndividu/{id}").permitAll()

@@ -134,21 +134,14 @@ public class UserInfoService implements UserDetailsService {
 	
 	
 	public Page<Userdto> getUsersByRole(String role, Pageable pageable) {
-	    try {
+	  
 	        Page<UserInfo> userInfoPage = repository.findByRoles(role, pageable);
-
-	        if (userInfoPage.isEmpty()) {
-	            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No users found for role: " + role);
-	        }
 
 	        List<Userdto> userDtoList = userInfoPage.getContent().stream()
 	            .map(userInfo -> modelMapper.map(userInfo, Userdto.class))
 	            .collect(Collectors.toList());
 
 	        return new PageImpl<>(userDtoList, pageable, userInfoPage.getTotalElements());
-	    } catch (Exception e) {
-	        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred", e);
-	    }
 	}
 	
 	

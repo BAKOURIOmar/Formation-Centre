@@ -1,6 +1,5 @@
 package univ.iwa.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -11,11 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import univ.iwa.dto.Formationdto;
 import univ.iwa.dto.Inndividualsdto;
 import univ.iwa.model.Formation;
 import univ.iwa.model.Groupe;
 import univ.iwa.model.Individuals;
+import univ.iwa.repository.GroupeReposetory;
 import univ.iwa.repository.IndividuRepository;
 
 @Service
@@ -23,26 +22,50 @@ public class IndividuService {
 
     @Autowired
     private IndividuRepository individurepo;
+    
+    @Autowired
+    private FormationService formationService;
+    
+    @Autowired
+    private GroupeReposetory groupeReposetory;
 
     private ModelMapper modelMapper;
 
     @Autowired
-    private FormationService formationservice;
+    public IndividuService(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+    }
 
-    // inscription d un indevidu dans un eformation
-//    public Inndividualsdto addindividu(Inndividualsdto individudto ,Long id) {
-//    	//chercher la formation ou l individus veux s inscrire
-//    Formationdto formationdto= formationservice.getFormationByid(id);
-//     //recuperer les groupe de cette formation
-//         if(formationdto.getGroupes().size()==0) {
-//        	 List<Groupe> nouveaugroupes=new ArrayList<Groupe>(new Groupe());
-//        	 nouveaugroupe.setGroupe(nouveaugroupe);
-//        	 
-//         }
-//        Individuals individu = modelMapper.map(individudto, Individuals.class);
-//        Individuals createdInndividual =individurepo.save(individu);
-//        return modelMapper.map(createdInndividual, Inndividualsdto.class);
-//    }
+    // Ajouter un individu
+    public Inndividualsdto inscription(Inndividualsdto individuDto, Long idFormation) {
+        Formation formation = formationService.findById(idFormation)
+                .orElseThrow(() -> new IllegalArgumentException("Formation non trouvée"));
+        Groupe groupe = obtenirOuCreeGroupe(formation);
+        Individuals individus = modelMapper.map(individuDto, Individuals.class);
+        individus.setGroupe(groupe);
+        individus.setFormation(formation);
+        Individuals individuSauvegarde = individurepo.save(individus);
+        return modelMapper.map(individuSauvegarde, Inndividualsdto.class);
+    }
+
+    private Groupe obtenirOuCreeGroupe(Formation formation) {
+        List<Groupe> groupesExistants = formation.getGroupes();
+        if (groupesExistants == null || groupesExistants.isEmpty()) {
+            return creerNouveauGroupe(formation);
+        }
+        Groupe groupeActuel = groupesExistants.get(groupesExistants.size() - 1);
+        if (groupeActuel.getInscrits().size() >= formation.getSeuil()) {
+            return creerNouveauGroupe(formation);
+        }
+        return groupeActuel;
+    }
+
+    private Groupe creerNouveauGroupe(Formation formation) {
+        Groupe nouveauGroupe = new Groupe();
+        nouveauGroupe.setFormation(formation);
+        return groupeReposetory.save(nouveauGroupe);
+    }
+
 
 
     // Récupérer tous les individus en utilisant ModelMapper
