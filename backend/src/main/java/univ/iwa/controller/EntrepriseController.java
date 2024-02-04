@@ -24,7 +24,7 @@ public class EntrepriseController {
 
     //recuperer la liste des entreprises
     @GetMapping ("/getEntreprise")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT','ROLE_FORMATEUR')")
     public ResponseEntity<Page<Entreprisedto>> getallentreprise(
     		@RequestParam(name = "page", required = false) Integer page,
     		@RequestParam(name = "size", required = false) Integer size){

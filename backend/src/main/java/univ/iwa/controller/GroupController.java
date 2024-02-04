@@ -24,7 +24,7 @@ public class GroupController {
 	private GroupeService groupeService;	
 	
 	   @GetMapping("/getAllGroupes")
-	    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+	    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_FORMATEUR')")
 	    public ResponseEntity<List<GroupeDto>> getAllGroupesByFormation(@RequestParam Long formationId){        
 	        return new ResponseEntity<List<GroupeDto>>(groupeService.getAllGroupesByFormation(formationId),HttpStatus.OK);
 	    }

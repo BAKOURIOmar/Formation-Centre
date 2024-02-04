@@ -9,6 +9,7 @@ import { NewPlanificationComponent } from 'src/app/components/new-planification/
 import { SendPlanification } from 'src/app/shared/interfaces/sendPlanification.interface';
 import { PlanificationService } from 'src/app/shared/services/planification.service';
 import frLocale from '@fullcalendar/core/locales/fr';
+import { UserAuthService } from 'src/app/shared/services/user-auth.service';
 
 @Component({
   selector: 'app-planification',
@@ -18,6 +19,7 @@ import frLocale from '@fullcalendar/core/locales/fr';
 export class PlanificationComponent implements OnInit{
   public dialog = inject(MatDialog);
   private datePipe= inject(DatePipe);
+  private userAuthService= inject (UserAuthService);
   public planificationService = inject(PlanificationService);
   events: SendPlanification[]=[];
 
@@ -83,6 +85,24 @@ export class PlanificationComponent implements OnInit{
 
 
   loadEvents(): void {
+   if(this.userAuthService.isFormat()){
+    let id =this.userAuthService.getUserId();
+    this.planificationService.getFormateurPlanifications(parseInt(id)).subscribe(
+      (response: SendPlanification[]) => {
+        this.events = response;
+        this.calendarOptions.events = this.events.map(event => ({
+          title: event.title,
+          start: new Date(event.datedebut),
+          end: new Date(event.datefin),
+          color: !event.formationId || !event.formateurId?'#ff1111':'#2ecc71',
+          extendedProps: { myCustomData: event }
+        }));
+      },
+      error => {
+        console.error('Erreur lors du chargement des événements :', error);
+      }
+    );
+   }else{
     this.planificationService.getallPlanifications().subscribe(
       (response: SendPlanification[]) => {
         this.events = response;
@@ -99,4 +119,5 @@ export class PlanificationComponent implements OnInit{
       }
     );
   }
+}
 }

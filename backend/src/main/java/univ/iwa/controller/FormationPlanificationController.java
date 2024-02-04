@@ -39,6 +39,13 @@ public class FormationPlanificationController {
       return new ResponseEntity<List<Formationplanifierdto>>(planserv.getPlanifications(),HttpStatus.OK);
 
     }
+    
+    @GetMapping("/getFormateurPlanifications/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_FORMATEUR')")
+    public ResponseEntity<List<Formationplanifierdto>> getPlanificationsByFormateurId(@PathVariable Integer id) throws ParseException {
+      return new ResponseEntity<List<Formationplanifierdto>>(planserv.getPlanificationsByFormateurId(id),HttpStatus.OK);
+
+    }
 
 
     //update la planification d une formation

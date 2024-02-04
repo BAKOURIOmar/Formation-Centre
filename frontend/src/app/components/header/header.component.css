@@ -14,7 +14,7 @@
   /* Couleur de fond de la barre d'outils */
   color: rgb(0, 0, 0);
   /* Couleur du texte */
-  padding: 0 20px;
+  /*padding: 0 20px;*/
   /* Espacement intérieur */
 }
 
@@ -40,8 +40,8 @@
   display: flex;
   align-items: center;
   list-style: none;
-  margin: 0;
-  padding: 0;
+ margin-right: 50px;
+  /*padding: 0;*/
 }
 
 .right li {
@@ -53,4 +53,7 @@
 .mat-icon {
   color: rgb(0, 0, 0);
   /* Couleur des icônes */
+}
+.icon{
+ width: 50px;
 }

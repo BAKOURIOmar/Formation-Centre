@@ -21,6 +21,7 @@ h1.app-name {
 
 .sidenav-container{
   flex: 1;
+  background-color: rgb(254, 254, 255);
 }
 
 .is-mobile .sidenav-container {
@@ -39,7 +40,14 @@ ul li {
 .header{
   margin-top: 20px;
 }
-
+.header h2{
+  font-size: 40px;
+  font-family:'Georgia, serif';
+}
+.header h4{
+  font-size: 15px;
+  font-family:'Courier New', Courier, monospace;
+}
 .icono{
   margin-right: 10px;
   width:20px;
@@ -52,6 +60,7 @@ div ul {
 
 .right{
   margin-left: auto;
+  margin-top: 15px;
 }
 
 .right ul {
@@ -60,5 +69,25 @@ div ul {
 }
 
 .name {
+  font-size: 20px;
   margin-bottom: 1px;
+}
+
+.icon{
+  width: 55px;
+}
+
+.sidnav{
+  background-color:rgb(204, 94, 221);
+}
+
+.devider
+{
+  border-top-width: 10px;
+}
+
+.listsider{
+
+  margin-top: 30px;
+ margin-left: 10px;
 }
