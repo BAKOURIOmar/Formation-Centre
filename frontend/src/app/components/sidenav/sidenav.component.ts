@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class SidenavComponent {
 logOut() {
   this.userAuthService.clear();
-  this.router.navigate(['/login']);
+  this.router.navigate(['/accueille']);
 }
 
   mobileQuery: MediaQueryList;

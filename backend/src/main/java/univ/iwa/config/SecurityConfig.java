@@ -60,6 +60,8 @@ public class SecurityConfig {
 								.requestMatchers("/form/getformationfiltre").permitAll()
 								.requestMatchers("/auth/registerFormateurExterne").permitAll()
 								.requestMatchers("/form/getformations").permitAll()
+								.requestMatchers("/group/getAllGroupes").authenticated()
+								.requestMatchers("/plan/getPlanifications").authenticated()
 								)
 		
 

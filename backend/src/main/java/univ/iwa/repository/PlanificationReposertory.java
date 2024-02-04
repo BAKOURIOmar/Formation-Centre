@@ -19,4 +19,5 @@ public interface PlanificationReposertory extends JpaRepository<Formationplanifi
    List<Formationplanifier> findByFormationName(String name);
    
    public List<Formationplanifier> findByDatefinAfter(LocalDate date);
+   public List<Formationplanifier> findByFormation(Formation formation);
 }

@@ -41,8 +41,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { AboutUsComponent } from './views/about-us/about-us.component';
 import { FeedbackComponent } from './views/feedback/feedback.component';
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
-
-
+import { NewPlanificationComponent } from './components/new-planification/new-planification.component';
 @NgModule({
 
   declarations: [
@@ -69,6 +68,7 @@ import { StarRatingComponent } from './components/star-rating/star-rating.compon
     AboutUsComponent,
     FeedbackComponent,
     StarRatingComponent,
+    NewPlanificationComponent,
 
   ],
   imports: [
@@ -90,7 +90,7 @@ import { StarRatingComponent } from './components/star-rating/star-rating.compon
   ],
   providers: [DatePipe ,
     AuthGuard,
-    
+
     {
     provide:HTTP_INTERCEPTORS,
     useClass:AuthInterceptor,

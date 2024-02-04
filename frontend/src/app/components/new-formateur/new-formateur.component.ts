@@ -25,7 +25,7 @@ export class NewFormateurComponent {
 
   ngOnInit(): void {
 
-    this.getFormations();
+    this.getFormateurs();
 
     this.estatForm = "Ajouter";
     this.formateurForm = this.fb.group( {
@@ -78,7 +78,7 @@ export class NewFormateurComponent {
     this.dialogRef.close(3);
   }
 
-  getFormations(){
+  getFormateurs(){
     this.formateurService.getUsersByRole('ROLE_FORMATEUR')
         .subscribe( (data: any) =>{
           this.formateurs = data;

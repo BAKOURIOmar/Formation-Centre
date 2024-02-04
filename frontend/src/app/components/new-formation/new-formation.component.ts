@@ -110,6 +110,7 @@ export class NewFormationComponent {
   }
 
   updateForm(data: any){
+    console.log(data.date);
 
     this.formationForm = this.fb.group( {
       name: [data.name, Validators.required],

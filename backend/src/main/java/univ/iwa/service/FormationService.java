@@ -23,7 +23,9 @@ import io.jsonwebtoken.io.IOException;
 import univ.iwa.dto.Formationdto;
 import univ.iwa.dto.filtredto;
 import univ.iwa.model.Formation;
+import univ.iwa.model.Formationplanifier;
 import univ.iwa.repository.FormationReposetory;
+import univ.iwa.repository.PlanificationReposertory;
 import univ.iwa.util.Util;
 
 @Service
@@ -32,6 +34,8 @@ public class FormationService {
 	ModelMapper modelMapper;
 	@Autowired
 	FormationReposetory formrepo;
+	@Autowired
+	PlanificationReposertory planificationReposertory;
 
 //Ajouter Formation
 	public Formationdto addFormation(MultipartFile picture, String name, Long nombreh,Long seuil, double cout, String programme,
@@ -128,6 +132,15 @@ public class FormationService {
 	public boolean DeleteFormation(Long formationId) {
 		if (!formrepo.existsById(formationId)) {
 			return false; // Devuelve false si el usuario no existe
+		}
+		Formation formation =formrepo.getById(formationId);
+		formation.getGroupes().clear();
+		formation.getInscrits().clear();
+		List<Formationplanifier> lists = planificationReposertory.findByFormation(formation);
+		for (Formationplanifier formationplanifier : lists) {
+			formationplanifier.setFormation(null);
+			planificationReposertory.save(formationplanifier);
+			
 		}
 		formrepo.deleteById(formationId);
 		return true;

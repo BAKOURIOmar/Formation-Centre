@@ -16,6 +16,7 @@ public class Formationplanifier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private String 	title;
     private LocalDate datedebut;
     private LocalDate datefin;
     
@@ -28,11 +29,11 @@ public class Formationplanifier {
     UserInfo formateur;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "entreprise_id", nullable = false)
+    @JoinColumn(name = "entreprise_id", nullable = true)
     Entreprise entreprise;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "groupe_id", nullable = false)
+    @JoinColumn(name = "groupe_id", nullable = true)
     Groupe groupe;
 
 
