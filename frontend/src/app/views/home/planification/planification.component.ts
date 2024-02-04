@@ -60,6 +60,9 @@ export class PlanificationComponent implements OnInit{
         mode: 'add'
       }
     });
+    dialogRef.afterClosed().subscribe(()=>{
+      this.loadEvents()
+    })
   }
   handleEventClick(event:any){
     console.log('Datos personalizados del evento:', event);
@@ -72,7 +75,9 @@ export class PlanificationComponent implements OnInit{
         mode: 'update'
       }
     });
-
+    dialogRef.afterClosed().subscribe(()=>{
+      this.loadEvents()
+    })
   }
 
 
@@ -85,6 +90,7 @@ export class PlanificationComponent implements OnInit{
           title: event.title,
           start: new Date(event.datedebut),
           end: new Date(event.datefin),
+          color: !event.formationId || !event.formateurId?'#ff1111':'#2ecc71',
           extendedProps: { myCustomData: event }
         }));
       },
