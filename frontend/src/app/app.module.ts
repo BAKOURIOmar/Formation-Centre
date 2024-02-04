@@ -89,7 +89,7 @@ import { NewPlanificationComponent } from './components/new-planification/new-pl
     HomeRoutingModule,
     FullCalendarModule,
     MatIconModule,
-
+    
   ],
   providers: [DatePipe ,
     AuthGuard,

@@ -3,21 +3,25 @@
 /*.screen {
   background: linear-gradient(90deg, #d58cc9, #dc8de0);
   position: relative;
-  height: 100vh;  Modifiez la hauteur pour qu'elle prenne 100% de la hauteur de la fenêtre 
+  height: 100vh;  Modifiez la hauteur pour qu'elle prenne 100% de la hauteur de la fenêtre
   width: 100%;
   box-shadow: 0px 0px 24px #b7b4b6;
 }*/
-.screen {
+/*.screen {
   background-color:  #dc8de0;
   position: relative;
-  height: 200vh;
   width: 100%;
   box-shadow: 0px 0px 24px #b7b4b6;
-}
+}*/
 /*.screen {
   background: transparent;
   background: linear-gradient(90deg, #C7C5F4, #ca93e1);
 }*/
+
+body{
+  background-color: linear-gradient(90deg, #d58cc9, #dc8de0);
+  overflow: hidden;
+}
 * {
 	box-sizing: border-box;
 	margin: 0;
@@ -206,4 +210,20 @@ body {
 
 .social-login__icon:hover {
 	transform: scale(1.5);
+}
+
+.icon{
+ width: 30px;
+}
+.acceuille{
+  color: rgb(92, 5, 85);
+
+  margin-left: 30px;
+  margin-top: 100px;
+  text-align: center;
+}
+
+.acceuille label{
+  font-size: 20px;
+  font-weight: bold;
 }

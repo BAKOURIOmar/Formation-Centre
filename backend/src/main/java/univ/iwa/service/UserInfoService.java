@@ -171,6 +171,7 @@ public class UserInfoService implements UserDetailsService {
 		repository.save(admin);
 	}
 	
+	
 	public Userdto registerFormateurExterne(Userdto userdto) {
 	    UserInfo user = modelMapper.map(userdto, UserInfo.class);
 	    user.setRoles("ROLE_FORMATEUR");
