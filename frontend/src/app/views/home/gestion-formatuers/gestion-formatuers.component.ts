@@ -48,7 +48,12 @@ export class GestionFormatuersComponent {
   processCategoriesResponse(resp: any){
 
       this.dataSource.data = resp.map( (e: any) => {
-        e.rating = e.feedbacks.reduce((a: any, b: any) => a + b.rating, 0) / e.feedbacks.length;
+        if(e.feedbacks && e.feedbacks.length>0) {
+          e.rating = e.feedbacks.reduce((a: any, b: any) => a + b.rating, 0) / e.feedbacks.length;
+        }
+        else{
+          e.rating = "0"
+        }
         return e;
       });
       this.dataSource.paginator = this.paginator;

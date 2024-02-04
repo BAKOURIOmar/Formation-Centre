@@ -18,9 +18,10 @@ public class Formationplanifierdto {
     private long id;
     private LocalDate datedebut;
     private LocalDate datefin;
-    private Formationdto formation;
-    private Userdto formateur;
-    private Entreprisedto entreprise;
-    private GroupeDto groupe;
+    private String 	title;
+    private Long formationId;
+    private Integer formateurId;
+    private Long entrepriseId;
+    private Long groupeId;
 
 }
