@@ -62,8 +62,12 @@ public List<Formationplanifierdto> getPlanifications() throws ParseException {
 	List<Formationplanifierdto> formationplanifierdtos = formationplanifiers.stream()
 			.map(planififctaion ->{
 				Formationplanifierdto formationplanifierdto =modelMapper.map(planififctaion, Formationplanifierdto.class);
-				formationplanifierdto.setFormationId(planififctaion.getFormation().getId());
-				formationplanifierdto.setFormateurId(Integer.parseInt(""+planififctaion.getFormateur().getId()) );
+				if(planififctaion.getFormation()!=null) {
+					formationplanifierdto.setFormationId(planififctaion.getFormation().getId());
+				}
+				if(planififctaion.getFormateur()!=null) {
+					formationplanifierdto.setFormateurId(Integer.parseInt(""+planififctaion.getFormateur().getId()) );
+				}
 				if(planififctaion.getEntreprise()!=null) {
 					formationplanifierdto.setEntrepriseId(planififctaion.getEntreprise().getId());	
 				}else {

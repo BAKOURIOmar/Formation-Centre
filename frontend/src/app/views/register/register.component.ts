@@ -1,59 +1,3 @@
-/*import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
-import { FormateurService } from 'src/app/shared/services/formateur.service';
-
-@Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
-})
-export class RegisterComponent implements OnInit {
-
-  public formateurForm!: FormGroup;
-
-  constructor(
-    private fb: FormBuilder,
-    private dialogRef: MatDialogRef<RegisterComponent>,
-    private formateurService: FormateurService
-  ) { }
-
-  ngOnInit(): void {
-    this.initForm();
-  }
-
-  initForm(): void {
-    this.formateurForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      motcles: ['', Validators.required],
-      type: ['EXTERNE'] // Définir le type EXTERNE
-    });
-  }
-
-  onSave(): void {
-    if (this.formateurForm.valid) {
-      const formateurData = this.formateurForm.value;
-      this.formateurService.addFormateur(formateurData)
-        .subscribe(
-          (response) => {
-            console.log('Formateur ajouté avec succès : ', response);
-            this.dialogRef.close(true); // Fermer le dialogue après l'ajout réussi
-          },
-          (error) => {
-            console.error('Erreur lors de l\'ajout du formateur : ', error);
-            // Gérer l'erreur ou afficher un message à l'utilisateur
-          }
-        );
-    } else {
-      console.log('Formulaire invalide, veuillez le remplir correctement.');
-    }
-  }
-
-  onCancel(): void {
-    this.dialogRef.close(false); // Fermer le dialogue sans sauvegarder
-  }
-}*/
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from 'src/app/shared/services/user.service';
@@ -84,7 +28,8 @@ export class RegisterComponent implements OnInit {
     this.formateurForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      motcles: ['', Validators.required]
+      motcles: ['', Validators.required],
+      password: ['', Validators.required] 
     });
   }
 
@@ -109,6 +54,7 @@ export class RegisterComponent implements OnInit {
       console.log('Formulaire invalide, veuillez le remplir correctement.');
     }
   }
+
   onCancel(): void {
     this.dialogRef.close(); // Fermer le dialogue sans sauvegarder
   }

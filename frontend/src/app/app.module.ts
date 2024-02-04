@@ -39,6 +39,8 @@ import { DetailsComponent } from './views/details/details.component';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule, DatePipe } from '@angular/common';
 import { AboutUsComponent } from './views/about-us/about-us.component';
+import { GestionFormateursExterneComponent } from './views/home/gestion-formateurs-externe/gestion-formateurs-externe.component';
+
 import { FeedbackComponent } from './views/feedback/feedback.component';
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
 import { NewPlanificationComponent } from './components/new-planification/new-planification.component';
@@ -66,6 +68,7 @@ import { NewPlanificationComponent } from './components/new-planification/new-pl
     NewEntrepriseComponent,
     DetailsComponent,
     AboutUsComponent,
+    GestionFormateursExterneComponent,
     FeedbackComponent,
     StarRatingComponent,
     NewPlanificationComponent,

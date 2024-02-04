@@ -1,10 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {FormationService} from 'src/app/shared/services/formation.service';
 import {Formation} from 'src/app/shared/interfaces/formation.interface';
 import { Router } from '@angular/router';
 import { PageResponse } from 'src/app/shared/interfaces/pageResponse.interface';
+import { SignupComponent } from '../signup/signup.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 
@@ -15,6 +17,7 @@ import { PageResponse } from 'src/app/shared/interfaces/pageResponse.interface';
 })
 export class CardformationComponent implements OnInit {
    formations: Formation[]=[];
+   public dialog = inject(MatDialog);
    @Input() recevoirformations ?:Observable<Formation[]>;
    @Output() getAllFormations : EventEmitter<string>=new EventEmitter<string>();
  constructor(private formationservice:FormationService, private router: Router){}
@@ -53,10 +56,14 @@ exploreDetails(formationId: number){
 
 //s inscrire button
 inscrireFormation(formationId:number){
-  console.log("recuperer");
-  console.log('id',formationId);
-  this.router.navigate(['/inscrire',formationId]);
 
+
+  const dialogRef = this.dialog.open(SignupComponent, {
+    width: '500px',
+    data: {
+      formationId: formationId,
+    }
+  });
 
 }
 }

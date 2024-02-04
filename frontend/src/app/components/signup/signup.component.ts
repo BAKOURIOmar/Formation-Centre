@@ -14,6 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SignupService } from '../../shared/services/signup.service';
 import { DatePipe } from '@angular/common';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 type LocalDate = Date | null; // Changer le type de LocalDate à Date
 
@@ -27,6 +28,8 @@ export class SignupComponent implements OnInit {
   errorSignup: boolean = false;
   idFormation!: number;
   private snackBar = inject(MatSnackBar);
+  public data = inject(MAT_DIALOG_DATA);
+  private dialogRef= inject(MatDialogRef);
 
   public myForm: FormGroup = this.fb.group({
     nom: ['', Validators.required],
@@ -42,9 +45,9 @@ export class SignupComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.idFormation = +params['id']; // 'id' es el nombre del parámetro en la ruta
-    });
+
+      this.idFormation =this.data.formationId;
+
    }
 
 
@@ -65,7 +68,7 @@ export class SignupComponent implements OnInit {
           console.log("added");
           console.log(response);
           this.openSnackBar('Inscription reussite, verrifier votre email','OK')
-          this.router.navigate(['/accueille']);
+          this.dialogRef.close();
         },
         error: (message) => {
 

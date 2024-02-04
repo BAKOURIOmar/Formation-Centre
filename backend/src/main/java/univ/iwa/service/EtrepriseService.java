@@ -10,8 +10,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import univ.iwa.dto.Userdto;
 import univ.iwa.model.Entreprise;
+import univ.iwa.model.Formationplanifier;
 import univ.iwa.model.UserInfo;
 import univ.iwa.repository.EntrepriseReposetory;
+import univ.iwa.repository.PlanificationReposertory;
 import univ.iwa.dto.Entreprisedto;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -21,8 +23,11 @@ public class EtrepriseService {
 
     @Autowired
     EntrepriseReposetory entrorepo;
-@Autowired
-ModelMapper modelMapper;
+    
+	@Autowired
+	PlanificationReposertory planificationReposertory;
+	@Autowired
+	ModelMapper modelMapper;
     //ajouter une liste d entreprises
     public Entreprisedto addentreprise(Entreprisedto entreprisedto){
         Entreprise entreprise= modelMapper.map(entreprisedto,Entreprise.class);
@@ -41,6 +46,13 @@ ModelMapper modelMapper;
         	if (!entrorepo.existsById(id)) {
         	      return false; // Devuelve false si el usuario no existe
         	    }
+        	Entreprise entreprise = entrorepo.findById(id).get();
+        	List<Formationplanifier> lists = planificationReposertory.findByEntreprise(entreprise);
+    		for (Formationplanifier formationplanifier : lists) {
+    			formationplanifier.setEntreprise(null);
+    			planificationReposertory.save(formationplanifier);
+    			
+    		}
             entrorepo.deleteById(id);
             return true;
         }

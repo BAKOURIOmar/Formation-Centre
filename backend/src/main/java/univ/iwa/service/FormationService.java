@@ -24,7 +24,11 @@ import univ.iwa.dto.Formationdto;
 import univ.iwa.dto.filtredto;
 import univ.iwa.model.Formation;
 import univ.iwa.model.Formationplanifier;
+import univ.iwa.model.Groupe;
+import univ.iwa.model.Individuals;
 import univ.iwa.repository.FormationReposetory;
+import univ.iwa.repository.GroupeReposetory;
+import univ.iwa.repository.IndividuRepository;
 import univ.iwa.repository.PlanificationReposertory;
 import univ.iwa.util.Util;
 
@@ -36,6 +40,10 @@ public class FormationService {
 	FormationReposetory formrepo;
 	@Autowired
 	PlanificationReposertory planificationReposertory;
+	@Autowired
+	IndividuRepository individuRepository;
+	@Autowired
+	GroupeReposetory groupeRepository;
 
 //Ajouter Formation
 	public Formationdto addFormation(MultipartFile picture, String name, Long nombreh,Long seuil, double cout, String programme,
@@ -134,6 +142,23 @@ public class FormationService {
 			return false; // Devuelve false si el usuario no existe
 		}
 		Formation formation =formrepo.getById(formationId);
+		// Limpiar las relaciones con la tabla 'individuals'
+	    for (Individuals individual : formation.getInscrits()) {
+	        individual.setFormation(null);
+	    }
+	    
+	    // Guardar los cambios en los individuos
+	    individuRepository.saveAll(formation.getInscrits());
+	    
+	 // Limpiar las relaciones con la tabla 'grupos'
+	    for (Groupe groupe : formation.getGroupes()) {
+	        groupe.setFormation(null);
+	    }
+	    
+	    // Guardar los cambios en los grupos
+	    groupeRepository.saveAll(formation.getGroupes());
+		
+		
 		formation.getGroupes().clear();
 		formation.getInscrits().clear();
 		List<Formationplanifier> lists = planificationReposertory.findByFormation(formation);

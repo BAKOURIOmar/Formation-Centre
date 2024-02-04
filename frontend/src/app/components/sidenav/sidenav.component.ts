@@ -21,7 +21,8 @@ logOut() {
     {name: "Formations", route: "formations", icon: "assets/img/formation.png"},
     {name: "Formateurs", route: "formateurs", icon: "assets/img/formateur.png"},
     {name: "Assistants", route: "assistants", icon: "assets/img/assistant.png"},
-    {name: "Entreprises", route: "entreprises", icon: "assets/img/entreprise.png"}
+    {name: "Entreprises", route: "entreprises", icon: "assets/img/entreprise.png"},
+    {name: "Formateurs Externes", route: "formateurs externes", icon: "assets/img/formateur.png" },
   ]
 
   constructor(media: MediaMatcher, private userAuthService: UserAuthService, private router: Router) {

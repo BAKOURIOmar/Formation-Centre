@@ -60,11 +60,7 @@ export class NewPlanificationComponent {
       entrepriseId: [''],
       groupeId: ['', Validators.required],
     })
-    this.planificationForm.get('groupOrEnterprise')?.valueChanges.subscribe((groupOrEnterprise)=>{
 
-
-
-});
 
     if (this.data.mode === 'update' ){
       this.updateForm(this.data);
@@ -105,7 +101,6 @@ export class NewPlanificationComponent {
         })
   }
   changeValue(){
-
     console.log(this.planificationForm.get('groupOrEnterprise')?.value);
     this.selected = this.planificationForm.get('groupOrEnterprise')?.value ;
     if(this.selected===1){
@@ -128,7 +123,7 @@ export class NewPlanificationComponent {
       title: this.planificationForm.get('title')?.value,
       formationId: this.planificationForm.get('formationId')?.value,
       formateurId: this.planificationForm.get('formateurId')?.value,
-      entrepriseId: this.planificationForm.get('groupOrEnterprise')?.value,
+      entrepriseId: this.planificationForm.get('entrepriseId')?.value,
       groupeId: this.planificationForm.get('groupeId')?.value,
     }
 
@@ -171,8 +166,9 @@ export class NewPlanificationComponent {
 
   updateForm(data: any){
     console.log("formation id "+data.eventData.formationId);
-
-    this.getGroupes(data.eventData.formationId);
+    if(data.eventData.formationId){
+      this.getGroupes(data.eventData.formationId);
+    }
     this.planificationForm = this.fb.group( {
       datedebut: [data.eventData.datedebut, Validators.required],
       datefin: [data.eventData.datefin, Validators.required],
