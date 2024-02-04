@@ -33,7 +33,7 @@ public class SecurityConfig {
 		http
 		.cors(cors->cors.configurationSource(request -> new CorsConfiguration(corsFilter())))
 		.authorizeHttpRequests((auth)->auth
-			.requestMatchers("/auth/welcome",  "/auth/generateToken").permitAll()
+			.requestMatchers("/auth/welcome",  "/auth/generateToken","/feedback/add").permitAll()
 			.requestMatchers("/auth/user/**").authenticated()
 			.requestMatchers("/auth/users").authenticated()
 			.requestMatchers("/auth/admin/**").authenticated()
@@ -45,7 +45,7 @@ public class SecurityConfig {
 								.requestMatchers("/form/getformationcat/**").authenticated()
 								.requestMatchers("/form/filtreSearch").authenticated()
 								.requestMatchers("/entreprise/**").authenticated()
-								.requestMatchers("/indiv/addindividu").permitAll()
+								.requestMatchers("/indiv/inscription/**").permitAll()
 								.requestMatchers("/indiv/getallindividus").authenticated()
 								.requestMatchers("/indiv/deleteindividu/{id}").authenticated()
 								.requestMatchers("/indiv/updateIndividu/{id}").permitAll()
@@ -60,6 +60,8 @@ public class SecurityConfig {
 								.requestMatchers("/form/getformationfiltre").permitAll()
 								.requestMatchers("/auth/registerFormateurExterne").permitAll()
 								.requestMatchers("/form/getformations").permitAll()
+								.requestMatchers("/group/getAllGroupes").authenticated()
+								.requestMatchers("/plan/getPlanifications").authenticated()
 								)
 		
 

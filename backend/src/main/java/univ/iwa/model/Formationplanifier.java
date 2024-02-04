@@ -16,23 +16,24 @@ public class Formationplanifier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private String 	title;
     private LocalDate datedebut;
     private LocalDate datefin;
     
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "formation_id", nullable = false)
+    @JoinColumn(name = "formation_id", nullable = true)
     Formation formation;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "formateur_id", nullable = false)
+    @JoinColumn(name = "formateur_id", nullable = true)
     UserInfo formateur;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "entreprise_id", nullable = false)
+    @JoinColumn(name = "entreprise_id", nullable = true)
     Entreprise entreprise;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "groupe_id", nullable = false)
+    @JoinColumn(name = "groupe_id", nullable = true)
     Groupe groupe;
 
 

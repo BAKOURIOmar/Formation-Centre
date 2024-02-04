@@ -23,8 +23,8 @@ export class SignupService {
   constructor(private httpClient: HttpClient) { }
 
 
-  signupIndividu(signupData: any): Observable<any> {
-    const url = `${this.apiUrl}/addindividu`;
+  signupIndividu(signupData: any, idFormation : number): Observable<any> {
+    const url = `${this.apiUrl}/inscription/${idFormation}`;
     return this.httpClient.post<Individu>(url,signupData);
 }
 

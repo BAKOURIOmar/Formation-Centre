@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -40,6 +41,9 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { AboutUsComponent } from './views/about-us/about-us.component';
 import { GestionFormateursExterneComponent } from './views/home/gestion-formateurs-externe/gestion-formateurs-externe.component';
 
+import { FeedbackComponent } from './views/feedback/feedback.component';
+import { StarRatingComponent } from './components/star-rating/star-rating.component';
+import { NewPlanificationComponent } from './components/new-planification/new-planification.component';
 @NgModule({
 
   declarations: [
@@ -65,6 +69,9 @@ import { GestionFormateursExterneComponent } from './views/home/gestion-formateu
     DetailsComponent,
     AboutUsComponent,
     GestionFormateursExterneComponent,
+    FeedbackComponent,
+    StarRatingComponent,
+    NewPlanificationComponent,
 
   ],
   imports: [
@@ -86,6 +93,7 @@ import { GestionFormateursExterneComponent } from './views/home/gestion-formateu
   ],
   providers: [DatePipe ,
     AuthGuard,
+
     {
     provide:HTTP_INTERCEPTORS,
     useClass:AuthInterceptor,

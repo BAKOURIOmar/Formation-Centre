@@ -33,53 +33,52 @@ public class PlanificationService {
    UserInfoRepository userrepo;
    @Autowired
    EmailService emailService;
+   
+   @Autowired
+   GroupeReposetory groupeReposetory;
+   
+   @Autowired
+   EntrepriseReposetory entrepriseReposetory;
+   
+   
+   
+   
     //ajouter une formation a la planification
     public Formationplanifierdto addplanification(Formationplanifierdto formplani) throws ParseException {
-        System.out.println("date debut is : "+formplani.getDatedebut()+"date fin"+formplani.getDatefin());
-        Formationplanifier formation=new Formationplanifier();
-      formation= modelMapper.map(formplani,Formationplanifier.class);
-        System.out.println("date debut is : "+formation.getDatedebut()+"date fin"+formation.getDatefin());
-        LocalDate parsedDatedebut = formplani.getDatedebut();
-        LocalDate parsedDatefin=formplani.getDatefin();
-        System.out.println("date debut is : "+parsedDatedebut);
-        System.out.println("date fin is : "+parsedDatefin);
-        formation.setDatedebut(parsedDatedebut);
-        formation.setDatefin(parsedDatefin);
-      planirepo.save(formation);
-     return formplani;
+    	Formationplanifier planification =modelMapper.map(formplani, Formationplanifier.class);
+    	planification.setFormation(formrepo.findById(formplani.getFormationId()).get());
+    	planification.setFormateur(userrepo.findById(formplani.getFormateurId()).get());
+    	if(formplani.getGroupeId()!=null) {
+    		planification.setGroupe(groupeReposetory.findById(formplani.getGroupeId()).get());
+    	}else if(formplani.getEntrepriseId()!=null) {
+    		planification.setEntreprise(entrepriseReposetory.findById(formplani.getEntrepriseId()).get());
+    	}
+    	Formationplanifier CreatedPlanification =planirepo.save(planification);
+    	return modelMapper.map(CreatedPlanification,Formationplanifierdto.class);
     }
   //recuper les planification d une formation
-public List<Formationplanifierdto> afficherformation( String nom, String date) throws ParseException {
-       System.out.println("recus");
-        List<Formationplanifierdto>formationdto= new ArrayList<>();
-        if( date== null && nom==null){
-            System.out.println("n est pas reçus");
-            List<Formationplanifier> formationsplan=planirepo.findAll();
-             formationdto=formationsplan.stream()
-                    .map(formationplan->modelMapper.map(formationplan,Formationplanifierdto.class))
-                    .collect(Collectors.toList());
-
-        } else if ( date!=null) {
-            System.out.println("date recus"+date);
-            // je vaie faire le filltrage par le nom
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date parsedDate = dateFormat.parse(date);
-            List<Formationplanifier> formations=planirepo.findByDatedebut(parsedDate);
-           if(formations==null) {
-        	   formations=planirepo.findByDatefin(parsedDate);
-           }
-           formationdto=formations.stream()
-                    .map(formation->modelMapper.map(formation,Formationplanifierdto.class))
-                    .collect(Collectors.toList());
-
-
-        } else if (nom!=null) {
-            System.out.println("name recus"+nom);
-            List<Formationplanifier> list=planirepo.findByFormationName(nom);
-            formationdto= list.stream().map(form->modelMapper.map(form,Formationplanifierdto.class)).collect(Collectors.toList());
-
-        }
-    return formationdto;
+public List<Formationplanifierdto> getPlanifications() throws ParseException {
+	List<Formationplanifier> formationplanifiers = planirepo.findAll();
+	List<Formationplanifierdto> formationplanifierdtos = formationplanifiers.stream()
+			.map(planififctaion ->{
+				Formationplanifierdto formationplanifierdto =modelMapper.map(planififctaion, Formationplanifierdto.class);
+				if(planififctaion.getFormation()!=null) {
+					formationplanifierdto.setFormationId(planififctaion.getFormation().getId());
+				}
+				if(planififctaion.getFormateur()!=null) {
+					formationplanifierdto.setFormateurId(Integer.parseInt(""+planififctaion.getFormateur().getId()) );
+				}
+				if(planififctaion.getEntreprise()!=null) {
+					formationplanifierdto.setEntrepriseId(planififctaion.getEntreprise().getId());	
+				}else {
+					formationplanifierdto.setGroupeId(planififctaion.getGroupe().getId());
+				}
+				
+				return formationplanifierdto;
+				}
+					
+					).collect(Collectors.toList());
+    return formationplanifierdtos;
 }
 
 
@@ -100,11 +99,14 @@ public List<Formationplanifierdto> afficherformation( String nom, String date) t
             Formationplanifier  form=formation.get();
             form.setDatedebut(formationplan.getDatedebut());
             form.setDatefin(formationplan.getDatefin());
-            form.setFormation(modelMapper.map(formationplan.getFormation(), Formation.class));
-            form.setFormateur(modelMapper.map(formationplan.getFormateur(), UserInfo.class));
-            form.setEntreprise(modelMapper.map(formationplan.getEntreprise(), Entreprise.class));
-            form.setGroupe(modelMapper.map(formationplan.getGroupe(), Groupe.class));
-            planirepo.save(form);
+            form.setTitle(formationplan.getTitle());
+            form.setFormation(modelMapper.map(formrepo.findById(formationplan.getFormationId()).get() , Formation.class));
+            form.setFormateur(modelMapper.map(userrepo.findById(formationplan.getFormateurId()).get() , UserInfo.class));
+            if(formationplan.getGroupeId()!=null) {
+            	form.setGroupe(groupeReposetory.findById(formationplan.getGroupeId()).get());
+        	}else if(formationplan.getEntrepriseId()!=null) {
+        		form.setEntreprise(entrepriseReposetory.findById(formationplan.getEntrepriseId()).get());
+        	}
             return modelMapper.map(planirepo.save(form),Formationplanifierdto.class);
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Formationplanifier with ID %d does not exist", id));

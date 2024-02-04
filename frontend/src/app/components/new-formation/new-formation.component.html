@@ -20,6 +20,13 @@
             </mat-form-field>
 
             <mat-form-field>
+              <input matInput type="number" placeholder="Seuil" formControlName="seuil" required />
+              <mat-error *ngIf="formationForm.get('seuil')?.hasError('required')">
+                  * Seuil est obligatoire
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
                 <input matInput type="number" placeholder="Cout" formControlName="cout" required />
                 <mat-error *ngIf="formationForm.get('name')?.hasError('required')">
                     * Cout est obligatoire
@@ -38,7 +45,7 @@
             <mat-error *ngIf="formationForm.get('name')?.hasError('required')">
                 * Ville est obligatoire
             </mat-error>
-        
+
         </mat-form-field>
 
         <mat-form-field>
@@ -47,6 +54,17 @@
             * Categorie est obligatoire
         </mat-error>
       </mat-form-field>
+
+      <mat-form-field appearance="fill" >
+        <mat-label>Date de Formation</mat-label>
+        <input matInput [matDatepicker]="pickerDate" [formControlName]="'date'"
+        matDatepickerFormat="yyyy/MM/dd" />
+      <mat-datepicker-toggle matSuffix [for]="pickerDate"></mat-datepicker-toggle>
+      <mat-datepicker #pickerDate></mat-datepicker>
+        <mat-error *ngIf="formationForm.get('date')?.hasError('required')">
+            * Date  obligatoire
+        </mat-error>
+    </mat-form-field>
 
 
 

@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;*/
 
 import java.io.IOException;
-
+import java.time.LocalDate;
 import java.util.*;
 //import java.util.zip.Deflater;
 
@@ -37,15 +37,17 @@ public class FormmationController {
  public ResponseEntity<Formationdto> addFormation(@RequestParam("picture") MultipartFile picture,
 		 @RequestParam("name") String name,
 		 @RequestParam("nombreh") Long nombreh,
+		 @RequestParam("seuil") Long  seuil,
 		 @RequestParam("cout") double cout,
 		 @RequestParam("programme") String programme,
 		 @RequestParam("ville") String ville,
 		 @RequestParam("categorie") String categorie,
-		 @RequestParam ("date")String date ) throws java.io.IOException {
+		 @RequestParam("date") LocalDate date
+		 ) throws java.io.IOException {
   
          
          
-         return ResponseEntity.ok(formservice.addFormation(picture,name,nombreh,cout,programme,ville,categorie,date));
+         return ResponseEntity.ok(formservice.addFormation(picture,name,nombreh,seuil,cout,programme,ville,categorie,date));
    
  }
  //Afficher tous les formations
@@ -149,10 +151,14 @@ public ResponseEntity<Page<Formationdto>> filtreSearch(filtredto filters ,
 
 }
  
- //recuperer les formatiion filter par ville categorie nam
-//@GetMapping("/getformations")
-// public ResponseEntity<List<Formationdto>> filterforamtion(@RequestParam String searchkey){
-//List<Formationdto> formations= formservice.getforamtions(searchkey) ;
-//	return new ResponseEntity<List<Formationdto>>(formations,HttpStatus.OK);
-// }
+//recuperer les formatiion filter par ville categorie nam
+@GetMapping("/getformations")
+public ResponseEntity<Page<Formationdto>> filterforamtion(@RequestParam String searchkey,@RequestParam(name = "page", required = false) Integer page,
+		@RequestParam(name = "size", required = false) Integer size) throws java.io.IOException{
+			int pageNumber = (page != null) ? page : 0;
+			int pageSize = (size != null) ? size : Integer.MAX_VALUE;
+return ResponseEntity.ok(formservice.getforamtions(searchkey,PageRequest.of(pageNumber, pageSize))) ;
+
+	
+}
 }

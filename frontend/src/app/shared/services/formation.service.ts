@@ -20,10 +20,12 @@ addFormation(formation: any,picture: File):Observable<Formation>{
   const formData = new FormData();
   formData.append('name', formation.name);
   formData.append('nombreh', formation.nombreh);
+  formData.append('seuil', formation.seuil);
   formData.append('cout', formation.cout);
   formData.append('programme', formation.programme);
   formData.append('ville', formation.ville);
   formData.append('categorie', formation.categorie);
+  formData.append('date', formation.date);
   formData.append('picture', picture);
 
   const url = `${this.apiurl}/addformation`;
@@ -50,12 +52,12 @@ updateFormation(id: number, picture: File,formationUpdated:any):Observable<Forma
 
   }
 // recuperer les formation filtre
-getformationfiltre(searchKey:string):Observable<Formation[]>{
+getformationfiltre(searchKey:string):Observable<PageResponse<Formation>>{
   const url=`${this.apiurl}/getformations`
   let params = new HttpParams();
     params = params.append('searchkey', searchKey);
   console.log("le parametre de cherche ",searchKey);
-  return this.httpClient.get<Formation[]>(url, { params: params });
+  return this.httpClient.get<PageResponse<Formation>>(url, { params: params });
 }
 
 

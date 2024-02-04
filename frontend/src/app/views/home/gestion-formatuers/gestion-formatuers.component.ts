@@ -26,12 +26,12 @@ export class GestionFormatuersComponent {
     this.getFormateurs();
   }
 
-  displayedColumns: string[] = ['id', 'name', 'motcles', 'email','remarque','type','actions'];
+  displayedColumns: string[] = ['id', 'name', 'motcles', 'email','remarque','type','rating','actions'];
   dataSource = new MatTableDataSource<User>();
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
-  
+
   getFormateurs(): void {
     console.log("hshshshsh")
     this.formateurService.getUsersByRole('ROLE_FORMATEUR')
@@ -46,7 +46,15 @@ export class GestionFormatuersComponent {
 
   processCategoriesResponse(resp: any){
 
-      this.dataSource.data = resp;
+      this.dataSource.data = resp.map( (e: any) => {
+        if(e.feedbacks && e.feedbacks.length>0) {
+          e.rating = e.feedbacks.reduce((a: any, b: any) => a + b.rating, 0) / e.feedbacks.length;
+        }
+        else{
+          e.rating = "0"
+        }
+        return e;
+      });
       this.dataSource.paginator = this.paginator;
 
 

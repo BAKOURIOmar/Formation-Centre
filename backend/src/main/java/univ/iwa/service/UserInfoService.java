@@ -15,9 +15,11 @@ import org.springframework.data.domain.PageImpl;
 
 import org.modelmapper.ModelMapper;
 import jakarta.annotation.PostConstruct;
+import univ.iwa.model.Formationplanifier;
 import univ.iwa.model.Individuals;
 import univ.iwa.model.UserInfo;
 import univ.iwa.model.UserInfoDetails;
+import univ.iwa.repository.PlanificationReposertory;
 import univ.iwa.repository.UserInfoRepository;
 import org.modelmapper.ModelMapper;
 
@@ -36,6 +38,9 @@ public class UserInfoService implements UserDetailsService {
 	private PasswordEncoder encoder; 
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	PlanificationReposertory planificationReposertory;
 	
 	@Autowired
 	EmailService emailService ;
@@ -127,6 +132,14 @@ public class UserInfoService implements UserDetailsService {
 		if (!repository.existsById(id)) {
   	      return false; 
   	    }
+		UserInfo userInfo = repository.findById(id).get();
+		
+		List<Formationplanifier> lists = planificationReposertory.findByFormateur(userInfo);
+		for (Formationplanifier formationplanifier : lists) {
+			formationplanifier.setFormateur(null);
+			planificationReposertory.save(formationplanifier);
+			
+		}
 		repository.deleteById(id);
 		return true;
 	}
@@ -134,21 +147,17 @@ public class UserInfoService implements UserDetailsService {
 	
 	
 	public Page<Userdto> getUsersByRole(String role, Pageable pageable) {
-	    try {
+	  
 	        Page<UserInfo> userInfoPage = repository.findByRoles(role, pageable);
-
-	        if (userInfoPage.isEmpty()) {
-	            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No users found for role: " + role);
-	        }
 
 	        List<Userdto> userDtoList = userInfoPage.getContent().stream()
 	            .map(userInfo -> modelMapper.map(userInfo, Userdto.class))
 	            .collect(Collectors.toList());
 
 	        return new PageImpl<>(userDtoList, pageable, userInfoPage.getTotalElements());
-	    } catch (Exception e) {
-	        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred", e);
-	    }
+	}
+	public UserInfo getById (Integer id ){
+		return repository.getReferenceById(id);
 	}
 	
 	

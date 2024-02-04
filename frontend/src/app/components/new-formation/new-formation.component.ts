@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -16,6 +17,7 @@ export class NewFormationComponent {
   private formationService = inject(FormationService);
   private dialogRef= inject(MatDialogRef);
   public data = inject(MAT_DIALOG_DATA);
+  private datePipe= inject(DatePipe);
 
 
   public formationForm!: FormGroup;
@@ -33,11 +35,13 @@ export class NewFormationComponent {
     this.formationForm = this.fb.group( {
       name: ['', Validators.required],
       nombreh: ['', Validators.required],
+      seuil: ['', Validators.required],
       cout: ['', Validators.required],
       programme: ['', Validators.required],
       ville: ['', Validators.required],
       categorie: ['', Validators.required],
-      picture: ['', Validators.required]
+      picture: ['', Validators.required],
+      date: ['', Validators.required]
     })
 
     if (this.data != null ){
@@ -51,9 +55,11 @@ export class NewFormationComponent {
       name: this.formationForm.get('name')?.value,
       nombreh: this.formationForm.get('nombreh')?.value,
       cout: this.formationForm.get('cout')?.value,
+      seuil: this.formationForm.get('seuil')?.value,
       programme: this.formationForm.get('programme')?.value,
       ville: this.formationForm.get('ville')?.value,
       categorie: this.formationForm.get('categorie')?.value,
+      date: this.datePipe.transform(this.formationForm.get('date')?.value,'yyyy-MM-dd'),
     }
 
     // const uploadImageData = new FormData();
@@ -104,15 +110,18 @@ export class NewFormationComponent {
   }
 
   updateForm(data: any){
+    console.log(data.date);
 
     this.formationForm = this.fb.group( {
       name: [data.name, Validators.required],
       nombreh: [data.nombreh, Validators.required],
+      seuil: [data.seuil, Validators.required],
       cout: [data.cout, Validators.required],
       programme: [data.programme, Validators.required],
       ville: [data.ville, Validators.required],
       categorie: [data.categorie, Validators.required],
-      picture: ['', Validators.required]
+      picture: ['', Validators.required],
+      date: [data.date, Validators.required]
     })
   }
 }

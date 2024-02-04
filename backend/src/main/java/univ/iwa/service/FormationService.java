@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageImpl;
@@ -22,7 +23,13 @@ import io.jsonwebtoken.io.IOException;
 import univ.iwa.dto.Formationdto;
 import univ.iwa.dto.filtredto;
 import univ.iwa.model.Formation;
+import univ.iwa.model.Formationplanifier;
+import univ.iwa.model.Groupe;
+import univ.iwa.model.Individuals;
 import univ.iwa.repository.FormationReposetory;
+import univ.iwa.repository.GroupeReposetory;
+import univ.iwa.repository.IndividuRepository;
+import univ.iwa.repository.PlanificationReposertory;
 import univ.iwa.util.Util;
 
 @Service
@@ -31,23 +38,33 @@ public class FormationService {
 	ModelMapper modelMapper;
 	@Autowired
 	FormationReposetory formrepo;
+	@Autowired
+	PlanificationReposertory planificationReposertory;
+	@Autowired
+	IndividuRepository individuRepository;
+	@Autowired
+	GroupeReposetory groupeRepository;
 
 //Ajouter Formation
-	public Formationdto addFormation(MultipartFile picture, String name, Long nombreh, double cout, String programme,
-			String ville, String categorie,String date) throws IOException, java.io.IOException {
+	public Formationdto addFormation(MultipartFile picture, String name, Long nombreh,Long seuil, double cout, String programme,
+			String ville, String categorie, LocalDate date) throws IOException, java.io.IOException {
 		Formationdto formationdto = new Formationdto();
 		formationdto.setName(name);
 		formationdto.setNombreh(nombreh);
-		formationdto.setNombreh(nombreh);
+		formationdto.setSeuil(seuil);
 		formationdto.setCout(cout);
 		formationdto.setProgramme(programme);
 		formationdto.setVille(ville);
 		formationdto.setCategorie(categorie);
+		formationdto.setDate(date);
 		formationdto.setPicture(Util.compressZLib(picture.getBytes()));
-        formationdto.setDate(date);
 		Formation formation = modelMapper.map(formationdto, Formation.class);
 		return modelMapper.map(formrepo.save(formation), Formationdto.class);
 	}
+	
+	public Optional<Formation> findById(Long formationId) {
+        return formrepo.findById(formationId);
+    }
 
 	// Lister tous les formations
 //	public List<Formationdto> getAllFormations( Pageable pageable) throws java.io.IOException {
@@ -75,12 +92,8 @@ public class FormationService {
 //		return list.stream().map(f -> modelMapper.map(f, Formationdto.class)).collect(Collectors.toList());
 //	}
 	public Page<Formationdto> getAllFormations(Pageable pageable) throws java.io.IOException {
-	    try {
+	  
 	        Page<Formation> formationsPage = formrepo.findAll(pageable);
-	        
-	        if (formationsPage.isEmpty()) {
-	            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There are no formations");
-	        }
 	        
 	        List<Formationdto> formationdtoList = formationsPage.getContent().stream()
 	            .map(f -> {
@@ -96,10 +109,8 @@ public class FormationService {
 	            .collect(Collectors.toList());
 
 	        return new PageImpl<>(formationdtoList, pageable, formationsPage.getTotalElements());
-	    } catch (Exception e) {
-	        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred", e);
-	    }
 	}
+
 
 
 // Modifier Formation
@@ -129,6 +140,32 @@ public class FormationService {
 	public boolean DeleteFormation(Long formationId) {
 		if (!formrepo.existsById(formationId)) {
 			return false; // Devuelve false si el usuario no existe
+		}
+		Formation formation =formrepo.getById(formationId);
+		// Limpiar las relaciones con la tabla 'individuals'
+	    for (Individuals individual : formation.getInscrits()) {
+	        individual.setFormation(null);
+	    }
+	    
+	    // Guardar los cambios en los individuos
+	    individuRepository.saveAll(formation.getInscrits());
+	    
+	 // Limpiar las relaciones con la tabla 'grupos'
+	    for (Groupe groupe : formation.getGroupes()) {
+	        groupe.setFormation(null);
+	    }
+	    
+	    // Guardar los cambios en los grupos
+	    groupeRepository.saveAll(formation.getGroupes());
+		
+		
+		formation.getGroupes().clear();
+		formation.getInscrits().clear();
+		List<Formationplanifier> lists = planificationReposertory.findByFormation(formation);
+		for (Formationplanifier formationplanifier : lists) {
+			formationplanifier.setFormation(null);
+			planificationReposertory.save(formationplanifier);
+			
 		}
 		formrepo.deleteById(formationId);
 		return true;
@@ -262,7 +299,7 @@ public class FormationService {
 	            }
 	        };
 
-	        Specification<Formation> combinedSpec = Specification.where(specVille).and(specCategorie).and(specDate);
+	        Specification<Formation> combinedSpec = Specification.where(specVille).and(specCategorie);
 
 	        Page<Formation> formationsPage = formrepo.findAll(combinedSpec, pageable);
 	        pageResult = formationsPage.map(formation -> modelMapper.map(formation, Formationdto.class));
@@ -301,4 +338,22 @@ public class FormationService {
 	        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred", e);
 	    }
 	}
+ 
+ //recuper les foemation 
+ public Page<Formationdto> getforamtions( String searchkey,Pageable pageable){
+ 	Page<Formation> formations= formrepo.findByNameContainingIgnoreCaseOrVilleContainingIgnoreCaseOrCategorieContainingIgnoreCase(searchkey, searchkey, searchkey, pageable);
+ 	List<Formationdto> list= formations.getContent().stream().map(f -> {
+        try {
+            byte[] imageDescompressed = Util.decompressZLib(f.getPicture());
+            f.setPicture(imageDescompressed);
+            return modelMapper.map(f, Formationdto.class);
+        } catch (IOException e) {
+            // Handle IOException if necessary
+            return null; // Or throw an exception
+        }
+    })
+    .collect(Collectors.toList());
+ 	
+ 	return new PageImpl<>(list,pageable,formations.getTotalElements());
+ }
 }

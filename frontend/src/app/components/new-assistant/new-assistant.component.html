@@ -28,7 +28,7 @@
 
 
       <mat-form-field>
-        <input matInput placeholder="Mot de passe" formControlName="password" required />
+        <input matInput type="password" placeholder="Mot de passe" formControlName="password" required />
         <mat-error *ngIf="AssistantForm.get('name')?.hasError('required')">
           * Mot de passe est obligatoire
         </mat-error>

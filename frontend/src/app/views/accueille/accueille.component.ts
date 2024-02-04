@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormationService } from 'src/app/shared/services/formation.service';
 import { Formation } from 'src/app/shared/interfaces/formation.interface';
 import { ConnectableObservable } from 'rxjs';
+import { PageResponse } from 'src/app/shared/interfaces/pageResponse.interface';
 
 @Component({
   selector: 'app-accueille',
@@ -31,8 +32,8 @@ export class AccueilleComponent {
 
   getFormationsFiltre(searchTerm: string) {
     console.log("searchTerm", searchTerm);
-    this.formationService.getformationfiltre(searchTerm).subscribe((formations: any[]) => {
-      formations.forEach((formation) => {
+    this.formationService.getformationfiltre(searchTerm).subscribe((formations: PageResponse<Formation>) => {
+      formations.content.forEach((formation) => {
         // Vérifiez d'abord si la propriété 'picture' existe dans la formation
         if (formation.picture) {
           // Convertissez l'image en URL base64
@@ -40,10 +41,10 @@ export class AccueilleComponent {
         }
       });
       console.log("les formations passe", formations);
-      this.envoyerFormations.emit(formations);
+      this.envoyerFormations.emit(formations.content);
     });
   }
 
-  
+
 }
 

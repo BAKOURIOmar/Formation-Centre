@@ -8,11 +8,13 @@
 export class SignupComponent {
 
 }*/
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SignupService } from '../../shared/services/signup.service';
 import { DatePipe } from '@angular/common';
+import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 type LocalDate = Date | null; // Changer le type de LocalDate à Date
 
@@ -24,6 +26,10 @@ type LocalDate = Date | null; // Changer le type de LocalDate à Date
 export class SignupComponent implements OnInit {
   hide = true;
   errorSignup: boolean = false;
+  idFormation!: number;
+  private snackBar = inject(MatSnackBar);
+  public data = inject(MAT_DIALOG_DATA);
+  private dialogRef= inject(MatDialogRef);
 
   public myForm: FormGroup = this.fb.group({
     nom: ['', Validators.required],
@@ -34,9 +40,15 @@ export class SignupComponent implements OnInit {
     dateNaissance: ['', Validators.required]
   });
 
-  constructor(private fb: FormBuilder, private signupService: SignupService, private router: Router,private datePipe: DatePipe) { }
+  constructor(private fb: FormBuilder, private signupService: SignupService,private route: ActivatedRoute, private router: Router,private datePipe: DatePipe) {
 
-  ngOnInit(): void { }
+  }
+
+  ngOnInit(): void {
+
+      this.idFormation =this.data.formationId;
+
+   }
 
 
 
@@ -51,13 +63,12 @@ export class SignupComponent implements OnInit {
 
 
       console.log(signupRequest);
-      this.signupService.signupIndividu(signupRequest).subscribe({
+      this.signupService.signupIndividu(signupRequest,this.idFormation).subscribe({
         next: (response) => {
           console.log("added");
           console.log(response);
-
-          this.router.navigateByUrl('/login');
-          this.router.navigate(['/accueille']);
+          this.openSnackBar('Inscription reussite, verrifier votre email','OK')
+          this.dialogRef.close();
         },
         error: (message) => {
 
@@ -67,5 +78,13 @@ export class SignupComponent implements OnInit {
 
 
   }
+
+  openSnackBar(message: string, action: string) : MatSnackBarRef<SimpleSnackBar>{
+    return this.snackBar.open(message, action, {
+      duration: 2000
+    })
+
+  }
+
 
 }

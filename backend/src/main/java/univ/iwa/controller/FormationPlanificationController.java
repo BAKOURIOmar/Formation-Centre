@@ -8,6 +8,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import univ.iwa.dto.Formationplanifierdto;
 import univ.iwa.dto.Userdto;
+import univ.iwa.model.Formation;
+import univ.iwa.model.Groupe;
+import univ.iwa.model.Individuals;
+import univ.iwa.model.UserInfo;
 import univ.iwa.service.*;
 
 import java.text.ParseException;
@@ -18,18 +22,21 @@ import java.util.*;
 public class FormationPlanificationController {
     @Autowired
     PlanificationService planserv;
+    @Autowired
+    GroupeService  groupeService ;
+    @Autowired EmailService emailService ;
     //ajouter une planification poour une formation
     @PostMapping("/addplanification")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
     public ResponseEntity<Formationplanifierdto> addplanification(@RequestBody Formationplanifierdto formpla) throws ParseException {   
         return new ResponseEntity<Formationplanifierdto>(planserv.addplanification(formpla),HttpStatus.OK);
     }
+    
     //recuperer tout les formation planifiee et faire le filtrage des donnes
-    @GetMapping("/getform")
+    @GetMapping("/getPlanifications")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
-    public ResponseEntity<List<Formationplanifierdto>> getallplanification(@RequestParam (required = false) String nom,@RequestParam (required = false)String date ) throws ParseException {
-       
-      return new ResponseEntity<List<Formationplanifierdto>>(planserv.afficherformation(nom,date),HttpStatus.OK);
+    public ResponseEntity<List<Formationplanifierdto>> getallplanification() throws ParseException {
+      return new ResponseEntity<List<Formationplanifierdto>>(planserv.getPlanifications(),HttpStatus.OK);
 
     }
 
@@ -47,4 +54,30 @@ public class FormationPlanificationController {
         
         return new ResponseEntity<Boolean>(planserv.supprimerplanification(id),HttpStatus.OK);
     }
+
+    @GetMapping("/send-feedback-request/{groupId}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
+    public void sendFeedbacakRequest(@PathVariable Long groupId){
+        Groupe groupe = groupeService.getGroupById(groupId);
+
+        for (Individuals individual : groupe.getInscrits()){
+            UserInfo  formateur = groupe.getFormateur();
+            Formation formation = groupe.getFormation();
+            Long individualId = individual.getId();
+            String url = "http://localhost:4200/#/feedback?individualId="+individual.getId()+"&formateurId="+formateur.getId();
+
+            String Subject = "Please let a feedback On your trainer ";
+            String Body = "Hi "+individual.getNom()+" ,\n"
+                    +"we hope this email finds you well, please let we know what you thought about your latest formation in our center about "+formation.getName()+
+                    "Organized by "+formateur.getName()+"\n"
+                    +"plese take a minute to give us your feedback using the link below,that may help us to improve the quality of our formations \n"
+                    +"         "+url+"\n"
+                    +"Best regard\n";
+            String emailto = individual.getEmail();
+
+            emailService.sendSimpleEmail(emailto,Subject,Body);
+        }
+    }
+
+
 }
