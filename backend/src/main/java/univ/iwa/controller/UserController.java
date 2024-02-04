@@ -113,5 +113,14 @@ public class UserController {
     public ResponseEntity<Userdto> registerFormateurExterne(@RequestBody Userdto userdto) {
         return new ResponseEntity<Userdto>(service.registerFormateurExterne(userdto), HttpStatus.OK);
     }
+    //Recherche par nom
+    @GetMapping("/usersByName")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    public ResponseEntity<List<Userdto>> getUsersByNameAndRole(
+        @RequestParam(name = "name", required = true) String name,
+        @RequestParam(name = "roles", required = true) String roles) {
+        List<Userdto> users = service.getUserByNameAndRole(name, roles);
+        return new ResponseEntity<List<Userdto>>(users, HttpStatus.OK);
+    }
 
 } 

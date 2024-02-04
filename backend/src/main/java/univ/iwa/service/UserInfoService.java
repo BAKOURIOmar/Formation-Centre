@@ -179,9 +179,12 @@ public class UserInfoService implements UserDetailsService {
 	    UserInfo createdUser = repository.save(user);
 	    return modelMapper.map(createdUser, Userdto.class);
 	}
-
-
-
-
-
+	
+	//Recherche l'assistant et formateur par nom
+	public List<Userdto> getUserByNameAndRole(String name, String roles) {
+	    List<UserInfo> users = repository.findByNameContainingAndRoles(name, roles);
+	    return users.stream()
+	            .map(user -> modelMapper.map(user, Userdto.class))
+	            .collect(Collectors.toList());
+	}
 } 

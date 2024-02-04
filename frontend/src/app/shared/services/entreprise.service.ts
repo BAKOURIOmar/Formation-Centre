@@ -32,4 +32,9 @@ export class EntrepriseService {
     return this.httpClient.delete<Boolean>(url);
   }
 
+  getEntrepriseByName(name: string): Observable<Entreprise[]> {
+    const url = `${this.apiurl}/getEntrepriseByName?name=${name}`;
+    return this.httpClient.get<Entreprise[]>(url);
+  }
+
 }

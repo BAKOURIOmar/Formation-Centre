@@ -74,4 +74,13 @@ public class EtrepriseService {
            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Entreprise with ID %d does not exist", id));
        }
     }
+    //Chercher entreprise par nom
+    public List<Entreprisedto> getEntrepriseByName(String name) {
+        List<Entreprise> entreprises = entrorepo.findByNameContaining(name);
+        List<Entreprisedto> entrepriseDtos = entreprises.stream()
+                .map(entreprise -> modelMapper.map(entreprise, Entreprisedto.class))
+                .collect(Collectors.toList());
+        return entrepriseDtos;
+    }
+
 }

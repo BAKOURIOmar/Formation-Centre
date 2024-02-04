@@ -45,5 +45,14 @@ public class EntrepriseController {
     public ResponseEntity<Entreprisedto> updateentreprise(@PathVariable Long id,@RequestBody Entreprisedto entreprise){
         return new ResponseEntity<Entreprisedto>(entreser.updateentreprise(id,entreprise),HttpStatus.OK);
     }
+    //Chercher l'entreprise par nom
+    @GetMapping("/getEntrepriseByName")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
+    public ResponseEntity<List<Entreprisedto>> getEntrepriseByName(
+            @RequestParam(name = "name") String name) {
+        List<Entreprisedto> entreprises = entreser.getEntrepriseByName(name);
+        return new ResponseEntity<>(entreprises, HttpStatus.OK);
+    }
+
 
 }
