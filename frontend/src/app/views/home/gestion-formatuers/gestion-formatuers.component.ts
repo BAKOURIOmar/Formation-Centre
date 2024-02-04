@@ -31,18 +31,18 @@ export class GestionFormatuersComponent {
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
-
+  
   getFormateurs(): void {
-   console.log("hshshshsh")
+    console.log("hshshshsh")
     this.formateurService.getUsersByRole('ROLE_FORMATEUR')
-      .subscribe( (data:PageResponse<User>) => {
-
-        this.processCategoriesResponse(data.content);
-
+      .subscribe((data: PageResponse<User>) => {
+        const formateursInternes = data.content.filter(user => user.type === 'INTERNE');
+        this.processCategoriesResponse(formateursInternes);
       }, (error: any) => {
         console.log("error: ", error);
       })
   }
+
 
   processCategoriesResponse(resp: any){
 
@@ -77,7 +77,7 @@ export class GestionFormatuersComponent {
     dialogRef.afterClosed().subscribe((result:any) => {
 
       if( result == 1){
-        this.openSnackBar("Formateur Actualiser", "Exitosa");
+        this.openSnackBar("Formateur Actualiser", "Succès");
         this.getFormateurs();
       } else if (result == 2) {
         this.openSnackBar("un erreur a produit l'heur de la modification de formateur", "Error");

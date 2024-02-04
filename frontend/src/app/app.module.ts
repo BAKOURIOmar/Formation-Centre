@@ -38,6 +38,8 @@ import { DetailsComponent } from './views/details/details.component';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule, DatePipe } from '@angular/common';
 import { AboutUsComponent } from './views/about-us/about-us.component';
+import { GestionFormateursExterneComponent } from './views/home/gestion-formateurs-externe/gestion-formateurs-externe.component';
+
 @NgModule({
 
   declarations: [
@@ -62,6 +64,7 @@ import { AboutUsComponent } from './views/about-us/about-us.component';
     NewEntrepriseComponent,
     DetailsComponent,
     AboutUsComponent,
+    GestionFormateursExterneComponent,
 
   ],
   imports: [

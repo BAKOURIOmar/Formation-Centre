@@ -3,7 +3,7 @@
   <!-- empieza toolbar-->
   <mat-toolbar style=" display: flex;justify-content: space-between;align-items: center;background-color: rgb(204, 94, 221);hieght:100px" class="dashboard-toolbar">
     <button mat-icon-button (click)="snav.toggle()"><mat-icon >menu</mat-icon></button>
-    <h1 class="app-name" style=" display: flex;justify-content: space-between;align-items: center;">Bienvenue, Administrateur</h1>
+    <h1 class="app-name" style=" display: flex;justify-content: space-between;align-items: center;">Bienvenue</h1>
 
     <div class="right">
       <ul>
@@ -70,6 +70,11 @@
 
         </a>
 
+        <a mat-list-item [routerLink]="menuNav[5].route" *ngIf="isAddmin()">
+          <img class="icono" src="{{ menuNav[5].icon }}" alt="Icon">
+          <span class="name">{{menuNav[5].name}}</span>
+        
+        </a>
 
       </mat-nav-list>
 
