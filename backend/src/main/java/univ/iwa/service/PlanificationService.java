@@ -80,7 +80,30 @@ public List<Formationplanifierdto> getPlanifications() throws ParseException {
 					).collect(Collectors.toList());
     return formationplanifierdtos;
 }
-
+public List<Formationplanifierdto> getPlanificationsByFormateurId(Integer idFormateur)  {
+	UserInfo formateur = userrepo.getById(idFormateur);
+	List<Formationplanifier> formationplanifiers = planirepo.findByFormateur(formateur);
+	List<Formationplanifierdto> formationplanifierdtos = formationplanifiers.stream()
+			.map(planififctaion ->{
+				Formationplanifierdto formationplanifierdto =modelMapper.map(planififctaion, Formationplanifierdto.class);
+				if(planififctaion.getFormation()!=null) {
+					formationplanifierdto.setFormationId(planififctaion.getFormation().getId());
+				}
+				if(planififctaion.getFormateur()!=null) {
+					formationplanifierdto.setFormateurId(Integer.parseInt(""+planififctaion.getFormateur().getId()) );
+				}
+				if(planififctaion.getEntreprise()!=null) {
+					formationplanifierdto.setEntrepriseId(planififctaion.getEntreprise().getId());	
+				}else {
+					formationplanifierdto.setGroupeId(planififctaion.getGroupe().getId());
+				}
+				
+				return formationplanifierdto;
+				}
+					
+					).collect(Collectors.toList());
+    return formationplanifierdtos;
+}
 
     //supprimer une formation
 //    public boolean  delete(long id ){
@@ -141,4 +164,6 @@ public List<Formationplanifierdto> getPlanifications() throws ParseException {
 
     	
    // }
+    
+    
 }

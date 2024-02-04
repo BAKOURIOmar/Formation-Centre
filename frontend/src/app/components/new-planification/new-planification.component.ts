@@ -11,6 +11,7 @@ import { FormateurService } from 'src/app/shared/services/formateur.service';
 import { FormationService } from 'src/app/shared/services/formation.service';
 import { GroupService } from 'src/app/shared/services/group.service';
 import { PlanificationService } from 'src/app/shared/services/planification.service';
+import { UserAuthService } from 'src/app/shared/services/user-auth.service';
 
 @Component({
   selector: 'app-new-planification',
@@ -24,6 +25,7 @@ export class NewPlanificationComponent {
   private formateurService = inject(FormateurService);
   private entrepriseService = inject(EntrepriseService);
   private groupService = inject(GroupService);
+  private userAuthService= inject (UserAuthService);
   private dialogRef= inject(MatDialogRef);
   public data = inject(MAT_DIALOG_DATA);
 
@@ -37,7 +39,7 @@ export class NewPlanificationComponent {
   formateurs: User[]=[];
   entreprises: Entreprise[]=[];
   groupes: Group[]=[];
-  selected :number = 1 ;
+  checked :string ="1";
 
   constructor(){
   }
@@ -102,8 +104,8 @@ export class NewPlanificationComponent {
   }
   changeValue(){
     console.log(this.planificationForm.get('groupOrEnterprise')?.value);
-    this.selected = this.planificationForm.get('groupOrEnterprise')?.value ;
-    if(this.selected===1){
+    this.checked = this.planificationForm.get('groupOrEnterprise')?.value ;
+    if(this.checked==='1'){
       this.planificationForm.get('groupeId')?.setValidators(Validators.required);
       this.planificationForm.get('entrepriseId')?.setValidators([]);
     }else{
@@ -165,19 +167,39 @@ export class NewPlanificationComponent {
 
 
   updateForm(data: any){
-    console.log("formation id "+data.eventData.formationId);
+    console.log("formation id "+data.eventData.groupeId);
+    console.log(data.eventData)
     if(data.eventData.formationId){
       this.getGroupes(data.eventData.formationId);
     }
-    this.planificationForm = this.fb.group( {
-      datedebut: [data.eventData.datedebut, Validators.required],
+    let selectradioButon=""
+    if(data.eventData.groupeId){
+       selectradioButon ="1";
+    }else{
+       selectradioButon ="2";
+      }
+      this.checked=   selectradioButon
+      this.planificationForm = this.fb.group( {
+      datedebut: [data.eventData.datedebut, Validators.required,],
       datefin: [data.eventData.datefin, Validators.required],
       title: [data.eventData.title, Validators.required],
       formationId: [data.eventData.formationId, Validators.required],
       formateurId: [data.eventData.formateurId, Validators.required],
-      groupOrEnterprise: [data.eventData.groupeId!==null?1:2, Validators.required],
+      groupOrEnterprise: [selectradioButon, Validators.required],
       entrepriseId: [data.eventData.entrepriseId],
-      groupeId: [data.eventData.groupeId, Validators.required],
-    })
+      groupeId: [+data.eventData.groupeId, Validators.required],
+    });
+    console.log("form is filled with ",this.planificationForm.value);
+
+    if (this.isFormateur()) {
+      this.planificationForm.disable(); // Deshabilitar el formulario si es formador
+    } else {
+      this.planificationForm.enable(); // Habilitar el formulario si no es formador
+    }
   }
+  isFormateur(){
+    return this.userAuthService.isFormat();
+  }
+
+
 }
