@@ -104,18 +104,19 @@ export class GestionAssistantsComponent {
     });
   }
 
-  buscar( termino: string){
+  buscar(termino: string) {
 
-    // if( termino.length === 0){
-    //   return this.getCategories();
-    // }
-
-    // this.categoryService.getCategorieById(termino)
-    //         .subscribe( (resp: any) => {
-    //           this.processCategoriesResponse(resp);
-    //         })
+    if (termino.trim()) {
+      this.formateurService.getUsersByNameAndRole(termino, 'ROLE_ASSISTANT')
+        .subscribe((data: User[]) => {
+          this.dataSource.data = data;
+        }, (error: any) => {
+          console.log("error: ", error);
+        });
+    } else {
+      this.getAssistants(); // Si le terme de recherche est vide, rechargez tous les assistants
+    }
   }
-
   openSnackBar(message: string, action: string) : MatSnackBarRef<SimpleSnackBar>{
     return this.snackBar.open(message, action, {
       duration: 2000

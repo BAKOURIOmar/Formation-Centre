@@ -110,16 +110,20 @@ export class GestionFormatuersComponent {
     });
   }
 
-  buscar( termino: string){
+  buscar(termino: string) {
 
-    // if( termino.length === 0){
-    //   return this.getCategories();
-    // }
-
-    // this.categoryService.getCategorieById(termino)
-    //         .subscribe( (resp: any) => {
-    //           this.processCategoriesResponse(resp);
-    //         })
+    if (termino.trim()) {
+      this.formateurService.getUsersByNameAndRole(termino, 'ROLE_FORMATEUR')
+        .subscribe((data: User[]) => {
+          // Filtrer les utilisateurs pour n'afficher que ceux avec le type 'INTERNE'
+          const filteredData = data.filter(user => user.type === 'INTERNE');
+          this.dataSource.data = filteredData;
+        }, (error: any) => {
+          console.log("error: ", error);
+        });
+    } else {
+      this.getFormateurs(); // Si le terme de recherche est vide, rechargez tous les formateurs
+    }
   }
 
   openSnackBar(message: string, action: string) : MatSnackBarRef<SimpleSnackBar>{
