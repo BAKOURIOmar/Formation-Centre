@@ -16,5 +16,9 @@ export class GroupService {
       return this.httpClient.get<Formation[]>(url);
   }
 
+  GivemeFeedBack(groupId : number): Observable<void>{
+    const url = `http://localhost:8080/plan/send-feedback-request/${groupId}`;
+      return this.httpClient.get<void>(url);
+  }
 
 }

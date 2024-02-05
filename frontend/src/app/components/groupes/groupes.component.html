@@ -1,0 +1,14 @@
+<ng-container *ngIf="groupes.length > 0; else emptyList">
+  <mat-card *ngFor="let groupe of groupes">
+    <mat-card-content>
+      <p>ID del Grupo: {{ groupe.id }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button color="primary" (click)="GivemeFeedBack(groupe.id)">Give me feedback</button>
+    </mat-card-actions>
+  </mat-card>
+</ng-container>
+
+<ng-template #emptyList>
+  <p>Cette formation est vide.</p>
+</ng-template>

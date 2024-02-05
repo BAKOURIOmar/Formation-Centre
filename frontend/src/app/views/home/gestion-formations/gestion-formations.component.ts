@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationComponent } from 'src/app/components/confirmation/confirmation.component';
+import { GroupesComponent } from 'src/app/components/groupes/groupes.component';
 import { NewFormateurComponent } from 'src/app/components/new-formateur/new-formateur.component';
 import { NewFormationComponent } from 'src/app/components/new-formation/new-formation.component';
 import { Formation } from 'src/app/shared/interfaces/formation.interface';
@@ -16,6 +17,7 @@ import { FormationService } from 'src/app/shared/services/formation.service';
   styleUrls: ['./gestion-formations.component.css']
 })
 export class GestionFormationsComponent {
+
 
   private formationService = inject(FormationService);
   private snackBar = inject(MatSnackBar);
@@ -143,6 +145,15 @@ openSnackBar(message: string, action: string) : MatSnackBarRef < SimpleSnackBar 
   //       })
 
   // }
+
+  giveMeFeedBack(formationId : number) {
+    const dialogRef = this.dialog.open( GroupesComponent, {
+      width: '450px',
+      height: '400px',
+      data:{formationId :formationId}
+    })
+  }
+
 
 }
 
