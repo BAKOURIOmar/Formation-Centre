@@ -23,3 +23,8 @@ mat-form-field{
 .mat-header-cell:nth-child(1){
   flex: 0 0 6%;
 }
+
+.color{
+  color:black;
+background-color: rgb(227, 97, 239);
+}

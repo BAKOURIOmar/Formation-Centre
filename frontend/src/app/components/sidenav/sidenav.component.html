@@ -1,9 +1,10 @@
 <div class="dashboard-container" [class.is-mobile]="mobileQuery.matches">
 
   <!-- empieza toolbar-->
-  <mat-toolbar style=" display: flex;justify-content: space-between;align-items: center;background-color: rgb(204, 94, 221);hieght:100px" class="dashboard-toolbar">
+  <mat-toolbar style=" display: flex;justify-content: space-between;align-items: center;background-color: rgb(204, 94, 221);height:80px" class="dashboard-toolbar">
     <button mat-icon-button (click)="snav.toggle()"><mat-icon >menu</mat-icon></button>
-    <h1 class="app-name" style=" display: flex;justify-content: space-between;align-items: center;">Bienvenue</h1>
+    <img class="icon" src="assets/img/grad.png"/>
+    <h1 class="app-name" style="padding-left:20px;display: flex;justify-content: space-between;align-items: center;margin-bottom:15px ;">Bienvenue, Administrateur</h1>
 
     <div class="right">
       <ul>
@@ -26,20 +27,20 @@
 
   <!-- empieza sidenav-->
   <mat-sidenav-container class="sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-    <mat-sidenav #snav [mode]="mobileQuery.matches? 'over': 'side'" [fixedInViewport]="mobileQuery.matches"
+    <mat-sidenav class="sidnav" #snav [mode]="mobileQuery.matches? 'over': 'side'" [fixedInViewport]="mobileQuery.matches"
       fixedTopGap="56">
 
-      <mat-nav-list>
+      <mat-nav-list >
         <!--profile-->
         <div class="profile-card">
           <div class="header">
             <h2>Admin</h2>
-            <h4>admin.admin.gmail.com</h4>
+            <h4>formationcentre@gmail.com</h4>
           </div>
         </div>
 
-        <mat-divider></mat-divider>
-
+        <mat-divider class="devider"></mat-divider>
+  <div class="listsider">
         <a mat-list-item [routerLink]="menuNav[0].route"*ngIf="isAddmin() || isAssistant() || isFormateur()">
           <img class="icono" src="{{ menuNav[0].icon }}" alt="Icon">
           <span class="name">{{menuNav[0].name}}</span>
@@ -73,8 +74,9 @@
         <a mat-list-item [routerLink]="menuNav[5].route" *ngIf="isAddmin()">
           <img class="icono" src="{{ menuNav[5].icon }}" alt="Icon">
           <span class="name">{{menuNav[5].name}}</span>
-        
+
         </a>
+      </div>
 
       </mat-nav-list>
 

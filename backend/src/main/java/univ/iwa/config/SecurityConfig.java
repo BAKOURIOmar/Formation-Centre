@@ -63,6 +63,8 @@ public class SecurityConfig {
 								.requestMatchers("/group/getAllGroupes").authenticated()
 								.requestMatchers("/plan/getPlanifications").authenticated()
 								.requestMatchers("/auth/usersByName").authenticated())
+								.requestMatchers("/plan/getFormateurPlanifications/**").authenticated()
+								)
 		
 
 			.csrf(csrf->csrf.disable())

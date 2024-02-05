@@ -55,6 +55,10 @@ public class UserInfoService implements UserDetailsService {
 		return  userDetail.map(UserInfoDetails::new)
 				.orElseThrow(() -> new UsernameNotFoundException("User not found " + username));
 	}
+	public Userdto findUserByName(String username) {
+		UserInfo user = repository.findByName(username).orElseThrow(() -> new UsernameNotFoundException("User not found " + username));
+		return modelMapper.map(user, Userdto.class);
+	}
 	
 
 	public Userdto addAssistant(Userdto userdto) {
@@ -170,6 +174,7 @@ public class UserInfoService implements UserDetailsService {
 		admin.setPassword(encoder.encode("adminadmin"));
 		repository.save(admin);
 	}
+	
 	
 	public Userdto registerFormateurExterne(Userdto userdto) {
 	    UserInfo user = modelMapper.map(userdto, UserInfo.class);
