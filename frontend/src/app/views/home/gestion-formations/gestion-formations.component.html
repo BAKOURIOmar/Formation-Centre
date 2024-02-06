@@ -17,7 +17,7 @@
       <div class="right">
           <ul>
               <li>
-                  <button mat-raised-button class="color" (click)="openProductDialog()">Ajouter Formation</button>
+                  <button mat-raised-button color="primary" (click)="openProductDialog()">Ajouter Formation</button>
               </li>
           </ul>
       </div>
@@ -99,6 +99,10 @@
                   <button mat-icon-button color="accent" (click)="delete(element.id)">
                       <mat-icon aria-label="Delete">delete</mat-icon>
                   </button>
+
+                  <button mat-icon-button color="accent" (click)="giveMeFeedBack(element.id)">
+                    <mat-icon aria-label="Ver más">more_vert</mat-icon>
+                </button>
               </td>
 
           </ng-container>
