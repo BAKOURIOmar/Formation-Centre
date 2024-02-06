@@ -1,14 +1,17 @@
-<ng-container *ngIf="groupes.length > 0; else emptyList">
-  <mat-card *ngFor="let groupe of groupes">
+<div class="ng">
+<ng-container  *ngIf="groupes.length > 0; else emptyList">
+  <img  class="imag" src="assets/img/icon2.jpeg" />
+  <mat-card class="card" *ngFor="let groupe of groupes">
     <mat-card-content>
-      <p>ID del Grupo: {{ groupe.id }}</p>
+      <p class="par">ID du Groupe:   {{ groupe.id }}</p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button color="primary" (click)="GivemeFeedBack(groupe.id)">Give me feedback</button>
+      <button mat-button class="btn" (click)="GivemeFeedBack(groupe.id)">Donne moi votre feedback sur le formateur</button>
     </mat-card-actions>
   </mat-card>
 </ng-container>
 
 <ng-template #emptyList>
-  <p>Cette formation est vide.</p>
+  <p class="par">Cette formation est vide.</p>
 </ng-template>
+</div>
