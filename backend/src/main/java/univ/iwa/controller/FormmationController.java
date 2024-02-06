@@ -160,4 +160,15 @@ return ResponseEntity.ok(formservice.getforamtions(searchkey,PageRequest.of(page
 
 	
 }
+//recuperer les formation par nom
+@GetMapping("/getFormationByName")
+@PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+public ResponseEntity<Page<Formationdto>>getformationByName(@RequestParam String name,@RequestParam(name = "page", required = false) Integer page,@RequestParam(name = "size", required = false) Integer size) throws java.io.IOException{
+	int pageNumber = (page != null) ? page : 0;
+	int pageSize = (size != null) ? size : Integer.MAX_VALUE;
+	System.out.println("-------------------------------------------");
+	System.out.println("name"+name);
+	 return ResponseEntity.ok(formservice.getFormationByName(name, PageRequest.of(pageNumber, pageSize)));	
+	
+}
 }

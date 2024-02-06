@@ -11,6 +11,7 @@ import { PageResponse } from 'src/app/shared/interfaces/pageResponse.interface';
 @Component({
   selector: 'app-accueille',
   templateUrl: './accueille.component.html',
+  styleUrls: ['./accueille.component.css']
 })
 export class AccueilleComponent {
   @Output() envoyerFormations : EventEmitter<Formation[]>=new EventEmitter<Formation[]>();

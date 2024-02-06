@@ -5,50 +5,39 @@
 }
 .card{
   margin-top: 20px;
+  background-color: #d1e0f1;
+
 }
 .bigcontainer{
   margin-top: 0px;
 }
-.details-container {
-  width: 100%;
-  margin-top: 60px;
- /*background-color: rgb(7, 7, 8);*/
-  color: rgb(13, 13, 13);
-  height: 3dvh;
-  justify-content: space-between; /* Pour espacer les éléments à l'intérieur horizontalement */
+body{
+  background-color: #d1e0f1 !important;
+  margin-top: -19px;
 }
-.bloc-intern{
-  margin-right: 50px;
-  float: right;
-  height: 500px;
-  display: flex;
-  flex-direction: column;
-}
-.bloc-image {
-  padding-top: 0px;
-  /*border: 2px,solid,#171616;
-  border-radius: 8px;*/
-}
+
+
 .details-container {
   width: 100%;
   margin-top: 50px;
-background-color: #171616;
-  color: rgb(255, 240, 240);
-  height: 400px;
+  box-shadow: 0 4px 8px 0 ;
+  color: rgb(0, 0, 0);
+  height: 450px;
   justify-content: space-between; /* Pour espacer les éléments à l'intérieur horizontalement */
 }
 .bloc-intern{
+  box-shadow: 0 4px 8px 0 ;
   margin-top: 0px;
   margin-right: 80px;
   float: right;
   height: 700px;
   display: flex;
   flex-direction: column;
-  background-color: rgb(254, 249, 255);
+  background-color: #b1cdec;
 }
 
 .bloc-image {
-  padding-top: 40px;
+
   border: 2px,solid,#171616;
   border-radius: 8px;
 }
@@ -70,7 +59,7 @@ background-color: #171616;
 
 }
 .list-item{
-  padding-top: 35px;
+  padding-top: 25px;
   font-size: 20px;
 }
 
@@ -97,19 +86,21 @@ background-color: #171616;
   margin-left: 0;
 }
 .programme{
+  box-shadow: 0 4px 8px 0 ;
   width: 850px;
-  color: white;
+  color: rgb(0, 0, 0);
   height: 200px;
   margin-right: 100px;
   padding-right: 50px;
   border: 2px,solid,#171616;
   border-radius: 8px;
   margin-top: 70px;
-  background-color: rgb(13, 13, 13);
   display: flex;
   flex-direction: column;
   align-items: center; /* Centrer horizontalement */
   justify-content: center; /* Centrer verticalement */
+
+
 
 }
 .icon{

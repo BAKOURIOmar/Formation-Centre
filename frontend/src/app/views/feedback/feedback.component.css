@@ -1,4 +1,19 @@
+html, body {
+  height: 3000px;
+  margin-top: -100px;
+  background-color: #c6c7e4;
+}
+.feedback-div{
+  margin-top: 50px;
+  padding-top: 50px;
+}
+.mat-card {
+  height: 100%;
+}
 .card-feedback{
+
+  background-color: #cbcced;
+  box-shadow: 0 4px 8px 0 ;
     margin-top: 100px;
     width: 400px;
     margin-bottom: 20px;
@@ -31,7 +46,7 @@
     font-size: 30px;
     font-weight: 600;
     margin-bottom: 20px;
-    color: #ee75e8;
+    color: #5362e9;
 
 }
 .feedback-text{
@@ -44,10 +59,10 @@
 .feedback-label {
     margin-top: 10px;
     margin-bottom: 5px;
-    color: #ccc;
+    color:#52607e;
 }
 label{
-    color:#ccc;
+    color:#52607e;
 }
 .form-control{
     width: 350px;
@@ -71,14 +86,14 @@ textarea{
 
 }
 .star-color{
-    color: #FFD700 !important; 
+    color: #FFD700 !important;
 }
 
 .btn-feedback{
     width: 350px;
     height: 50px;
-    background-color: #ee75e8 !important;
-    color: white !important;
+    background-color: #4c51e4 !important;
+    color: rgb(0, 0, 0) !important;
     border: none;
     border-radius: 4px;
     cursor: pointer;
