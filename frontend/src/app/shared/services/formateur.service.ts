@@ -45,6 +45,10 @@ export class FormateurService {
     return this.httpClient.put<User>(url,assistant);
   }
 
-
+  // Fonction pour récupérer les utilisateurs par nom
+  getUsersByNameAndRole(name: string, roles: string): Observable<User[]> {
+    const url = `${this.apiurl}/usersByName?name=${name}&roles=${roles}`;
+    return this.httpClient.get<User[]>(url);
+  }
 
 }

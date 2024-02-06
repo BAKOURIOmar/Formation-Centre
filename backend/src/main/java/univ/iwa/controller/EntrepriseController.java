@@ -24,7 +24,7 @@ public class EntrepriseController {
 
     //recuperer la liste des entreprises
     @GetMapping ("/getEntreprise")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT','ROLE_FORMATEUR')")
     public ResponseEntity<Page<Entreprisedto>> getallentreprise(
     		@RequestParam(name = "page", required = false) Integer page,
     		@RequestParam(name = "size", required = false) Integer size){
@@ -45,5 +45,14 @@ public class EntrepriseController {
     public ResponseEntity<Entreprisedto> updateentreprise(@PathVariable Long id,@RequestBody Entreprisedto entreprise){
         return new ResponseEntity<Entreprisedto>(entreser.updateentreprise(id,entreprise),HttpStatus.OK);
     }
+    //Chercher l'entreprise par nom
+    @GetMapping("/getEntrepriseByName")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
+    public ResponseEntity<List<Entreprisedto>> getEntrepriseByName(
+            @RequestParam(name = "name") String name) {
+        List<Entreprisedto> entreprises = entreser.getEntrepriseByName(name);
+        return new ResponseEntity<>(entreprises, HttpStatus.OK);
+    }
+
 
 }

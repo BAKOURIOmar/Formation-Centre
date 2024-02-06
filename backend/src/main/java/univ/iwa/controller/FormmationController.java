@@ -137,7 +137,6 @@ public class FormmationController {
 
  }
 @PostMapping("/filtreSearch")
-@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
 public ResponseEntity<Page<Formationdto>> filtreSearch(filtredto filters ,
 		@RequestParam(name = "page", required = false) Integer page,
 		@RequestParam(name = "size", required = false) Integer size) throws java.io.IOException {

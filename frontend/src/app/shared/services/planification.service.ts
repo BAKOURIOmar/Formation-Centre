@@ -16,6 +16,12 @@ export class PlanificationService {
     return this.httpClient.get<SendPlanification[]>(url);
   }
 
+
+  getFormateurPlanifications(idFormation:number):Observable<SendPlanification[]>{
+    const url = `${this.apiurl}/getFormateurPlanifications/${idFormation}`;
+    return this.httpClient.get<SendPlanification[]>(url);
+  }
+
   addPlanification(planification :SendPlanification):Observable<SendPlanification>{
     const url = `${this.apiurl}/addplanification`;
     return this.httpClient.post<SendPlanification>(url,planification);

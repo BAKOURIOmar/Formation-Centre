@@ -55,6 +55,10 @@ public class UserInfoService implements UserDetailsService {
 		return  userDetail.map(UserInfoDetails::new)
 				.orElseThrow(() -> new UsernameNotFoundException("User not found " + username));
 	}
+	public Userdto findUserByName(String username) {
+		UserInfo user = repository.findByName(username).orElseThrow(() -> new UsernameNotFoundException("User not found " + username));
+		return modelMapper.map(user, Userdto.class);
+	}
 	
 
 	public Userdto addAssistant(Userdto userdto) {
@@ -180,9 +184,12 @@ public class UserInfoService implements UserDetailsService {
 	    UserInfo createdUser = repository.save(user);
 	    return modelMapper.map(createdUser, Userdto.class);
 	}
-
-
-
-
-
+	
+	//Recherche l'assistant et formateur par nom
+	public List<Userdto> getUserByNameAndRole(String name, String roles) {
+	    List<UserInfo> users = repository.findByNameContainingAndRoles(name, roles);
+	    return users.stream()
+	            .map(user -> modelMapper.map(user, Userdto.class))
+	            .collect(Collectors.toList());
+	}
 } 

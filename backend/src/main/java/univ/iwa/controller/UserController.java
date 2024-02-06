@@ -40,31 +40,31 @@ public class UserController {
     public String welcome() {return "Welcome this endpoint is not secure";}
     
     @PostMapping("/addAssistant") 
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT','ROLE_FORMATEUR')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     public ResponseEntity<Userdto> addAssistant(@RequestBody Userdto userdto) {
         return new ResponseEntity<Userdto>(service.addAssistant(userdto),HttpStatus.OK);
     }
     
     @PutMapping("/updateAssistant/{id}")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT','ROLE_FORMATEUR')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     public ResponseEntity<Userdto> updateAssistant(@RequestBody Userdto userdto,@PathVariable Integer id) {
         return new ResponseEntity<Userdto>(service.updateAssistant(userdto, id),HttpStatus.OK);
     }
     
     @PostMapping("/addFormateur") 
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT','ROLE_FORMATEUR')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     public ResponseEntity<Userdto> addFormateur(@RequestBody Userdto userdto) {
         return new ResponseEntity<Userdto>(service.addFormateur(userdto),HttpStatus.OK); 
     }
     
     @PutMapping("/updateFormateur/{id}")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT','ROLE_FORMATEUR')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     public ResponseEntity<Userdto> updateFormateur(@RequestBody Userdto userdto,@PathVariable Integer id) {
         return new ResponseEntity<Userdto>(service.updateFormateur(userdto, id),HttpStatus.OK);
     }
     
     @DeleteMapping("/supprimerUser/{id}") 
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT','ROLE_FORMATEUR')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     public ResponseEntity<Boolean> deleteUserByid(@PathVariable Integer id) {
         return new ResponseEntity<Boolean>(service.deleteUserByid(id),HttpStatus.OK);
     }
@@ -97,14 +97,14 @@ public class UserController {
     @PostMapping("/generateToken")
     public ResponseEntity<String> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
-
+        Userdto user = service.findUserByName(authRequest.getUsername());
         if (authentication.isAuthenticated()) {
             System.out.println("gen token");
             List<String> roles = authentication.getAuthorities().stream()
                     .map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList());
 
-            return new ResponseEntity<>("{\"message\":\"" + jwtService.generateToken(authRequest.getUsername(), roles.get(0)) + "\",\"role\":\""+ roles.get(0)+"\"}", HttpStatus.OK);
+            return new ResponseEntity<>("{\"message\":\"" + jwtService.generateToken(authRequest.getUsername(), roles.get(0)) + "\",\"role\":\""+ roles.get(0)+"\",\"userId\":\""+user.getId()+"\"}", HttpStatus.OK);
         } else {
             throw new UsernameNotFoundException("invalid user request !");
         }
@@ -112,6 +112,15 @@ public class UserController {
     @PostMapping("/registerFormateurExterne")
     public ResponseEntity<Userdto> registerFormateurExterne(@RequestBody Userdto userdto) {
         return new ResponseEntity<Userdto>(service.registerFormateurExterne(userdto), HttpStatus.OK);
+    }
+    //Recherche par nom
+    @GetMapping("/usersByName")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    public ResponseEntity<List<Userdto>> getUsersByNameAndRole(
+        @RequestParam(name = "name", required = true) String name,
+        @RequestParam(name = "roles", required = true) String roles) {
+        List<Userdto> users = service.getUserByNameAndRole(name, roles);
+        return new ResponseEntity<List<Userdto>>(users, HttpStatus.OK);
     }
 
 } 
