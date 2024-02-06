@@ -49,10 +49,13 @@ public class PlanificationService {
     	planification.setFormation(formrepo.findById(formplani.getFormationId()).get());
     	planification.setFormateur(userrepo.findById(formplani.getFormateurId()).get());
     	if(formplani.getGroupeId()!=null) {
-    		planification.setGroupe(groupeReposetory.findById(formplani.getGroupeId()).get());
+    		Groupe groupe =groupeReposetory.findById(formplani.getGroupeId()).get();
+    		groupe.setFormateur(userrepo.findById(formplani.getFormateurId()).get());
+    		planification.setGroupe(groupe);
     	}else if(formplani.getEntrepriseId()!=null) {
     		planification.setEntreprise(entrepriseReposetory.findById(formplani.getEntrepriseId()).get());
     	}
+    	
     	Formationplanifier CreatedPlanification =planirepo.save(planification);
     	return modelMapper.map(CreatedPlanification,Formationplanifierdto.class);
     }
