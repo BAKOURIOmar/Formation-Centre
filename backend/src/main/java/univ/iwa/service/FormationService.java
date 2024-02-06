@@ -313,13 +313,16 @@ public class FormationService {
 	}
 
  public Page<Formationdto> getFormationByName(String name, Pageable pageable) {
+	  System.out.println("------------------------------------");
+	  System.out.println("namename"+name);
 	    try {
 	        Page<Formation> formationsPage = formrepo.findByName(name, pageable);
-	        
+	        System.out.println("hhhhhh"+formationsPage);
+	      
 	        if (formationsPage.isEmpty()) {
 	            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There are no formations with the name: " + name);
 	        }
-	        
+	        System.out.println("1111111111111111");
 	        List<Formationdto> formationdtoList = formationsPage.getContent().stream()
 	            .map(f -> {
 	                try {
@@ -332,7 +335,7 @@ public class FormationService {
 	                }
 	            })
 	            .collect(Collectors.toList());
-
+  System.out.println("++++++++++++++++++++++++++++++++++++++++++");
 	        return new PageImpl<>(formationdtoList, pageable, formationsPage.getTotalElements());
 	    } catch (Exception e) {
 	        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred", e);

@@ -1,5 +1,6 @@
 
 <app-header></app-header>
+<body >
 <mat-card class="card">
   <mat-card-content >
     <div class="bigcontainer" *ngIf="formation">
@@ -17,10 +18,10 @@
            <h3 style="padding-left: 20px; color: rgb(0, 0, 0);"><img class="icon"  src="assets/img/video-icon-6.png"/> desponibilite des vedio</h3>
            <h3 style="padding-left: 20px;color: rgb(0, 0, 0);"><img class="icon"  src="assets/img/file.png"/> desponibile des exercices </h3>
            <h3 style="padding-left: 20px; color: rgb(0, 0, 0);"><img class="icon" src="assets/img/folder.png"/> Des ressources varies</h3>
-           <button mat-raised-button style="  background-color: rgb(237, 117, 225);" class="w-100" class="inscription" (click)="inscrireFormation(formation.id)">S'inscrire</button>
-           <button mat-raised-button style="background-color: rgb(237, 117, 225);" class="w-100"  (click)="retourner()">Retouner</button>
+           <button mat-raised-button style="  background-color:rgb(91, 144, 222);" class="w-100" class="inscription" (click)="inscrireFormation(formation.id)">S'inscrire</button>
+           <button mat-raised-button style="background-color:rgb(91, 144, 222);" class="w-100"  (click)="retourner()">Retouner</button>
           </div>
-        <ul>
+        <ul >
           <li class="list-item"><img class="icon" src="assets/img/gold.png"/> Catégorie: {{ formation.categorie }}</li>
           <li  class="list-item"><img class="icon" src="assets/img/gold.png"/> Durée: {{ formation.nombreh }}</li>
           <li  class="list-item"><img class="icon" src="assets/img/gold.png"/> Prix: {{ formation.cout }}</li>

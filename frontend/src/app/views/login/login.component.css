@@ -3,21 +3,21 @@
 /*.screen {
   background: linear-gradient(90deg, #d58cc9, #dc8de0);
   position: relative;
-  height: 100vh;  Modifiez la hauteur pour qu'elle prenne 100% de la hauteur de la fenêtre 
+  height: 100vh;  Modifiez la hauteur pour qu'elle prenne 100% de la hauteur de la fenêtre
   width: 100%;
   box-shadow: 0px 0px 24px #b7b4b6;
 }*/
-.screen {
+/*.screen {
   background-color:  #dc8de0;
   position: relative;
-  height: 200vh;
   width: 100%;
   box-shadow: 0px 0px 24px #b7b4b6;
-}
+}*/
 /*.screen {
   background: transparent;
   background: linear-gradient(90deg, #C7C5F4, #ca93e1);
 }*/
+
 * {
 	box-sizing: border-box;
 	margin: 0;
@@ -32,10 +32,11 @@
   justify-content: center;
 }*/
 body {
-  background: linear-gradient(90deg, #C7C5F4, #ca93e1);
+  background: linear-gradient(90deg,#9c9bdc, #5a5ab4);
   height: 100vh;
   display: flex;
   justify-content: center;
+  overflow: hidden;
 }
 
 /*body {
@@ -46,10 +47,10 @@ body {
 
 
 .screen {
-  background-color: linear-gradient(90deg, #d58cc9, #dc8de0);
+  background-color: linear-gradient(90deg, #361e61, #7331c4);
   margin-top: 80px;
   margin-left: 50px;
-	background: linear-gradient(90deg, #d58cc9, #dc8de0);
+	background: linear-gradient(90deg, #4143be, #dc8de0);
 	position: relative;
 	height: 600px;
 	width: 360px;
@@ -206,4 +207,20 @@ body {
 
 .social-login__icon:hover {
 	transform: scale(1.5);
+}
+
+.icon{
+ width: 30px;
+}
+.acceuille{
+  color: rgb(85, 4, 114);
+
+  margin-left: 80px;
+  margin-top: 100px;
+  text-align: center;
+}
+
+.acceuille label{
+  font-size: 20px;
+  font-weight: bold;
 }

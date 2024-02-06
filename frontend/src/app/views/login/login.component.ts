@@ -43,7 +43,8 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: (response :any) =>{
           this.userAuthService.setRoles(response.role);
-          this.userAuthService.setToken(response.message)
+          this.userAuthService.setToken(response.message);
+          this.userAuthService.setUserId(response.userId)
           const role = response.role;
           console.log(response);
 

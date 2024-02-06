@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SignupComponent } from 'src/app/components/signup/signup.component';
 import { Formation } from 'src/app/shared/interfaces/formation.interface';
 import {FormationService} from'src/app/shared/services/formation.service';
 
@@ -13,6 +15,7 @@ export class DetailsComponent {
 // formationdata:FormationModel[]=[];
  formation: Formation | undefined;
 idformation:number|undefined;
+public dialog = inject(MatDialog);
 image:any;
 constructor(private route: ActivatedRoute,private formationservice:FormationService,private router: Router){}
 ngOnInit(){
@@ -52,9 +55,13 @@ processFormationResponse(formationData: Formation):void {
 
 //s 'inscrire a la formation
 inscrireFormation(formationId:number){
-  console.log("befor")
-  this.router.navigate(['/inscrire',formationId]);
-  console.log("after")
+  const dialogRef = this.dialog.open(SignupComponent, {
+    width: '500px',
+    data: {
+      formationId: formationId,
+    }
+  });
+
 }
 
 //retourner a la page d acceuille

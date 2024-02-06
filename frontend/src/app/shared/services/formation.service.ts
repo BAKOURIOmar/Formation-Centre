@@ -59,6 +59,13 @@ getformationfiltre(searchKey:string):Observable<PageResponse<Formation>>{
   console.log("le parametre de cherche ",searchKey);
   return this.httpClient.get<PageResponse<Formation>>(url, { params: params });
 }
-
+//recuperer formation par nom
+getformationbyname(name:string):Observable<PageResponse<Formation>>{
+  const url=`${this.apiurl}/getFormationByName`
+  let params=new HttpParams();
+  params=params.append('name', name);
+  console.log("le nom de cherche ",name);
+  return this.httpClient.get<PageResponse<Formation>>(url,{params:params});
+}
 
 }

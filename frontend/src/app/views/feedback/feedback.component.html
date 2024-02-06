@@ -1,4 +1,5 @@
-
+<body>
+  <div class="feedback-div">
 <mat-card class="card-feedback">
   <div class="title">
     <h2 class="feedback-title">Feedback</h2>
@@ -6,7 +7,7 @@
       Please provide your feedback here
     </p>
   </div>
-  <label> Rating : 
+  <label> Rating :
     <mat-star-rating class="star-color"  [rating]="rating"  [starCount]="starCount"  (ratingUpdated)="onRatingChanged($event)">
     </mat-star-rating>
   </label>
@@ -23,9 +24,11 @@
     ></textarea>
   <!-- </mat-form-field> -->
 
-  <button mat-raised-button 
+  <button mat-raised-button
   class="btn-feedback"
   (click)="onSubmit()"
   >Submit Your Feedback</button>
   </form>
   </mat-card>
+</div>
+</body>

@@ -1,0 +1,31 @@
+.footer-body{
+  background-color: rgb(203, 220, 236);
+  margin-right: 40px;
+  padding-left: 180px;
+}
+.footerfooteer{
+  background-color: rgb(178, 205, 231);
+}
+.title{
+
+ padding-top: 25px;
+  text-align: center
+}
+.image{
+  height: 300px;
+  width: 300px;
+}
+.paragraphe{
+  padding-top: 20px;
+  font-size: 16px;
+  line-height: 1.6;
+
+}
+.carousel{
+   height: 80vh;
+   max-width: 90%;
+   margin-left: 5%;
+}
+.carousel img{
+  max-height:70vh;
+}

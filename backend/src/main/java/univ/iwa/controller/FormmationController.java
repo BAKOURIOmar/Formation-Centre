@@ -137,7 +137,6 @@ public class FormmationController {
 
  }
 @PostMapping("/filtreSearch")
-@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
 public ResponseEntity<Page<Formationdto>> filtreSearch(filtredto filters ,
 		@RequestParam(name = "page", required = false) Integer page,
 		@RequestParam(name = "size", required = false) Integer size) throws java.io.IOException {
@@ -159,6 +158,17 @@ public ResponseEntity<Page<Formationdto>> filterforamtion(@RequestParam String s
 			int pageSize = (size != null) ? size : Integer.MAX_VALUE;
 return ResponseEntity.ok(formservice.getforamtions(searchkey,PageRequest.of(pageNumber, pageSize))) ;
 
+	
+}
+//recuperer les formation par nom
+@GetMapping("/getFormationByName")
+@PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+public ResponseEntity<Page<Formationdto>>getformationByName(@RequestParam String name,@RequestParam(name = "page", required = false) Integer page,@RequestParam(name = "size", required = false) Integer size) throws java.io.IOException{
+	int pageNumber = (page != null) ? page : 0;
+	int pageSize = (size != null) ? size : Integer.MAX_VALUE;
+	System.out.println("-------------------------------------------");
+	System.out.println("name"+name);
+	 return ResponseEntity.ok(formservice.getFormationByName(name, PageRequest.of(pageNumber, pageSize)));	
 	
 }
 }

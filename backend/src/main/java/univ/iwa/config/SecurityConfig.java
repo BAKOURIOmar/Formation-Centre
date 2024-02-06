@@ -62,6 +62,12 @@ public class SecurityConfig {
 								.requestMatchers("/form/getformations").permitAll()
 								.requestMatchers("/group/getAllGroupes").authenticated()
 								.requestMatchers("/plan/getPlanifications").authenticated()
+								.requestMatchers("/plan/send-feedback-request/**").authenticated()
+								.requestMatchers("/auth/usersByName").authenticated()
+								.requestMatchers("/plan/getFormateurPlanifications/**").authenticated()
+
+								.requestMatchers("/form/getFormationByName").authenticated()
+
 								)
 		
 

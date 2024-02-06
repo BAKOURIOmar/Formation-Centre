@@ -29,7 +29,7 @@ export class FeedbackComponent {
 
   constructor(private route: ActivatedRoute,
               private feedbackService :FeedbackService  ,
-              private snackBar: MatSnackBar,        
+              private snackBar: MatSnackBar,
     ) {}
 
   ngOnInit() {
@@ -38,16 +38,16 @@ export class FeedbackComponent {
     })
 
 
-  
+
       this.route.queryParamMap.subscribe(params => {
         const individualId = params.get('individualId');
         this.individualId = Number(individualId);
         const formateurId = params.get('formateurId');
         this.formateurId = Number(formateurId);
       });
-    
-    
-  
+
+
+
   }
     onRatingChanged(rating:number){
     console.log(rating);
@@ -69,13 +69,14 @@ export class FeedbackComponent {
 
     this.feedbackService.addFeedback(feedback).subscribe(
       (data) => {
-        this.snackBar.open('feedback added successfully', 'close', {
-          duration: 2000,
-        });
+
         console.log('feedback added successfully');
       },
       (error) => {
-        console.log('error in adding feedback');
+         this.snackBar.open('feedback added successfully', 'close', {
+          duration: 2000,
+        });
+        console.log('error in adding feedback'+error);
       }
     )
 

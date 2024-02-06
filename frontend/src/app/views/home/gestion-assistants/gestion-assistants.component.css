@@ -13,6 +13,7 @@ ul li {
 
 .right{
   margin-left: auto;
+
 }
 
 mat-form-field{
@@ -23,3 +24,4 @@ mat-form-field{
 .mat-header-cell:nth-child(1){
   flex: 0 0 6%;
 }
+

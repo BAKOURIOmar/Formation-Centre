@@ -27,3 +27,10 @@
     width: 48%;
     /* Ajustez la largeur des boutons selon vos besoins */
 }
+.icon{
+  width:30px;
+  
+}
+.title{
+  padding-left: 20px;
+}

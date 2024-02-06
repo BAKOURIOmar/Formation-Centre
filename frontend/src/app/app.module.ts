@@ -44,6 +44,7 @@ import { GestionFormateursExterneComponent } from './views/home/gestion-formateu
 import { FeedbackComponent } from './views/feedback/feedback.component';
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
 import { NewPlanificationComponent } from './components/new-planification/new-planification.component';
+import { GroupesComponent } from './components/groupes/groupes.component';
 @NgModule({
 
   declarations: [
@@ -72,6 +73,7 @@ import { NewPlanificationComponent } from './components/new-planification/new-pl
     FeedbackComponent,
     StarRatingComponent,
     NewPlanificationComponent,
+    GroupesComponent,
 
   ],
   imports: [

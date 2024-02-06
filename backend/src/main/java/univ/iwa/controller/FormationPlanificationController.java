@@ -1,7 +1,10 @@
 package univ.iwa.controller;
 
 import lombok.SneakyThrows;
+
+import org.hibernate.annotations.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,6 +42,13 @@ public class FormationPlanificationController {
       return new ResponseEntity<List<Formationplanifierdto>>(planserv.getPlanifications(),HttpStatus.OK);
 
     }
+    
+    @GetMapping("/getFormateurPlanifications/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_FORMATEUR')")
+    public ResponseEntity<List<Formationplanifierdto>> getPlanificationsByFormateurId(@PathVariable Integer id) throws ParseException {
+      return new ResponseEntity<List<Formationplanifierdto>>(planserv.getPlanificationsByFormateurId(id),HttpStatus.OK);
+
+    }
 
 
     //update la planification d une formation
@@ -57,10 +67,11 @@ public class FormationPlanificationController {
 
     @GetMapping("/send-feedback-request/{groupId}")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_ASSISTANT')")
-    public void sendFeedbacakRequest(@PathVariable Long groupId){
+    public void sendFeedbacakRequest(@PathVariable Long groupId) throws Exception{
         Groupe groupe = groupeService.getGroupById(groupId);
 
         for (Individuals individual : groupe.getInscrits()){
+        	if(groupe.getFormateur()!=null && groupe.getFormation() !=null) {
             UserInfo  formateur = groupe.getFormateur();
             Formation formation = groupe.getFormation();
             Long individualId = individual.getId();
@@ -76,6 +87,10 @@ public class FormationPlanificationController {
             String emailto = individual.getEmail();
 
             emailService.sendSimpleEmail(emailto,Subject,Body);
+        }else {
+        	throw new Exception("le groupe est sans formateur ");
+        }
+        
         }
     }
 

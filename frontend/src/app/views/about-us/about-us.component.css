@@ -1,6 +1,8 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
+  background-color: rgb(203, 220, 236);
+  margin-top: -30px ;
 }
 
 html {
@@ -21,6 +23,7 @@ html {
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   margin: 8px;
+  background-color: rgb(203, 220, 236);
 }
 
 .about-section {
@@ -28,14 +31,15 @@ html {
   box-sizing: border-box;
   margin: 8px;
   margin-top: 30px;
-  padding: 50px;
+  padding: 20px;
   text-align: center;
-  background: linear-gradient(90deg, #d58cc9, #dc8de0);
+  background-color: rgb(203, 220, 236);
   color: rgb(3, 3, 3);
 }
 
 .container {
  padding-top:26px;
+ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .container::after, .row::after {

@@ -14,5 +14,5 @@ import java.util.Optional;
 public interface UserInfoRepository extends JpaRepository<UserInfo, Integer> { 
 	Optional<UserInfo> findByName(String username);
 	Page<UserInfo> findByRoles(String roles,Pageable pageable);
-
+	List<UserInfo> findByNameContainingAndRoles(String name, String roles);
 }

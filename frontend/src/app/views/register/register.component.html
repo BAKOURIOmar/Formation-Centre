@@ -1,5 +1,6 @@
-<h2 mat-dialog-title> Bienvenue Formateur </h2>
-<mat-dialog-content>
+<div style="background-color: rgb(214, 214, 247);">
+<h2 class="title" mat-dialog-title><img  class="icon" src="assets/img/formateur.png"/> Bienvenue Formateur </h2>
+<mat-dialog-content >
 
     <form [formGroup]="formateurForm">
         <div class="product-container">
@@ -33,7 +34,7 @@
             </mat-form-field>-->
 
             <mat-form-field>
-                <input matInput placeholder="Mot de passe" formControlName="password" required />
+                <input matInput type="password" placeholder="Mot de passe" formControlName="password" required />
                 <mat-error *ngIf="formateurForm.get('name')?.hasError('required')">
                     * Mot de passe est obligatoire
                 </mat-error>
@@ -53,4 +54,4 @@
     <button mat-raised-button color="warn" (click)="onCancel()">Annuler</button>
 </mat-dialog-actions>
 
-
+</div>
