@@ -91,7 +91,7 @@ import { GroupesComponent } from './components/groupes/groupes.component';
     HomeRoutingModule,
     FullCalendarModule,
     MatIconModule,
-    
+
   ],
   providers: [DatePipe ,
     AuthGuard,
